@@ -1,10 +1,10 @@
-# FINTRAC-LVCTR
+##  FINTRAC-LVCTR
 HTML page to generate JSON-LD formatted Large Virtual Currency Transaction Report (LVCTR) for upload into F2R @ FINTRAC.
 
-#INTRODUCTION
+## INTRODUCTION
 The initial HTML file has been created to demonstrate how to create the JSON-LD formatted Large Virtual Currency Transaction Report that can be upload to the F2R system for Reporting Entities. It is meant to help AML compliance officers test out and convey to their technical teams how to create of the LVCTR.  This is AS-IS code and at this time is meant to help with getting to the June 1, 2021 deadline.  It is hoped that by making this open to the Dealers in Virtual Currency (DiVC) community in Canada the repository will grow and expand to make it a fully functional library for a wide variety of technical implementations to the benefit of all involved and who need this.  Ultimately, where it goes is up to the community!
 
-#TABS
+## TABS
 1. Root tab
 This tab holds the base information about the entity, including, the reporting entity number, the internal report reference code, activity sector code, and various other sundry items.  It is meant to hold the fields that are global in nature.  
 
@@ -13,10 +13,11 @@ This tab holds the various identities for the person(s) or entity/entities that 
 
 3. Transaction tab
 This tab holds the details about the transaction and references to the persons or entities (subject) in the Identities tab.
-#FILL TEST DATA BUTTON
+
+4. FILL TEST DATA button
 This button allows for the most basic version of the data to be filled in to test out the JSON file.  It is by no means complete and it is hoped through the community various other use cases will be added to allow for the variety of DiVC’s transaction reporting sets.
 
-#ASPECTS WORTH NOTING
+## ASPECTS WORTH NOTING
 
 During the creation of this HTML page there were certain items that were not clear in the documentation provided by FINTRAC, that while it may be apparent to existing reporting entities who use batch modes for EFT reporting, where not really clear to the uninitiated.  This section will be updated as more discoveries are made.
 
@@ -32,7 +33,7 @@ This is in relation to where the transaction took place.  Given that most entiti
 4. $id/$sref
 At this time it seems that these two are tied together and that the $id is the person or entity that is setup in the Identities tab and then referenced in the various Transaction tab section.  It seems to work that way so far, but we have yet to test out all the various use cases.
 
-#OTHER NOTES
+## OTHER NOTES
 
 1. This project is AS-IS.  
 As this is a work-in-progress, not all aspects and variations of the code have been tested and thought through.  As more information becomes available and/or the community pitches in, it is hoped that this README file (or other parts) will grow and adapt to the specific needs, various permutations, and other use cases.
@@ -63,14 +64,20 @@ Once the user selects submit, they must do a select all and copy the output to b
 
 d) Expand the “FILL TEST DATA” button for other use cases
 As more learnings and the variety of use cases arises, it is hoped that this button will be expanded to include a dropdown list of the various uses cases to allow DiVC to test them out and see what results are provided.
-#FINAL THOUGHTS
+
+## FINAL THOUGHTS
 Given that the initial cost to develop this was not free, any and all donations are welcome to help pay for the initial development and continue to provide support for the project.  It is not a requirement, and the code is still free, but it would definitely help!
 
 BTC - 1P2w7F1h29faKmpTmYegK6sM2HA7oMuT89
+
 ETH - 0x38ef1B2297553Feaf65ad13A21A9C6daA5eE2849
+
 LTC - D6uGRoM95omCmJFbWZ2Bmg3bDVNoQ7Qago
+
 DOGE - D6uGRoM95omCmJFbWZ2Bmg3bDVNoQ7Qago
 
+
 Thanks in advance!
+
 Joseph Iuso, CAMS
 
