@@ -1,0 +1,2633 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style data-merge-styles="true"></style>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Large Virtual Currency Transaction Report Form</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!--
+<script type="text/javascript" src="vendors_main.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<script charset="utf-8" src="2.js"></script>
+-->
+</head>
+<body onload="MyBodyLoad()">
+<script type="text/javascript">
+/*
+$( document ).ready(function() {
+    $('#myTab a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+});
+*/
+var level = 0;
+var before = 0;
+var after = 0;
+var r_tmp = "";
+var rArrayRoot = null;
+var rArr = null;
+var dArr = null;
+var EOL = ",";
+var BR = "<br>";
+var r_key = "";
+var r_ind = 0;
+
+function MyBodyLoad()
+{
+
+   document.getElementById("btn_transactions[X]_add").click();
+   
+   document.getElementById("btn_transactions[0]_startingActions[X]_add").click();
+   document.getElementById("btn_transactions[0]_completingActions[X]_add").click();
+
+   document.getElementById("btn_definitions[X]_add").click();         
+   
+   
+   document.getElementById("root_definitions[0]_select").selectedIndex = 3;
+   select_ALL_select(document.getElementById("root_definitions[0]_select"));
+   document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 1;
+   select_ALL_select(document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select"));
+   document.getElementById("btn_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add").click();         
+   
+   
+   document.getElementById("btn_transactions[0]_details_transactionIdentifiers[X]_add").click();   
+   document.getElementById("btn_transactions[0]_startingActions[0]_sendingVirtualCurrencyAddresses[X]_add").click();
+   
+   document.getElementById("btn_transactions[0]_startingActions[0]_conductors[X]_add").click();
+   document.getElementById("btn_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[X]_add").click();   
+   document.getElementById("btn_transactions[0]_completingActions[0]_beneficiaries[X]_add").click();      
+   
+}
+
+function MySubstring(str,start,end)
+{
+   var tmp = "";
+   if(start==""){tmp = str.substring(0,str.indexOf(end));}
+   else {str.substring(str.indexOf(start)+1,str.indexOf(end));}
+   return tmp;
+}
+function button_ALL_add(o)
+{ 
+  var AR = o.id.split("_");
+  var ART = [];
+  for(var t=1;t<AR.length-1;t++){ART.push(AR[t]);}  
+  var str = MySubstring(ART[ART.length-1],"","["); 
+  var n = 0;
+  var s = MySubstring(o.id,"[","]");
+  if(s!="X"){n = parseInt(s);}  
+  var num = parseInt(document.getElementById(str+"[X]_num").value);
+  num++;
+  ART[ART.length-1] = str+"["+num.toString()+"]";
+  MyClone(str+"[X]_array_list",str+"[X]",ART);
+  document.getElementById(str+"[X]_num").value = num.toString();  
+}
+
+function select_ALL_select(o)
+{
+  var tmp="";
+  var ch_old="";
+  var parent = "";
+  var AR = o.id.split("_");
+  var val = o.value;
+  for(i=0;i<AR.length-1;i++){parent+=AR[i]+"_";}
+  parent+="fieldset";  
+  //console.log(parent);
+  document.getElementById(parent).innerHTML = "";  
+  if(val!="")
+  {     
+     var ART = [];
+	 for(i=0;i<AR.length-1;i++)
+	 {
+	    tmp+=AR[i]+"_";
+		if(AR[i].indexOf("[")>-1)
+		{
+           ch_old+=MySubstring(AR[i],"","[")+"[X]_";
+		}
+		else{ch_old+=AR[i]+"_";}		
+	 }
+	 ART.push(tmp+val+"_");
+	 ch_old+=val+"_";
+     MyClone(parent,ch_old,ART);
+  }  
+}
+
+function MyClone(parent,child_old,ART)
+{
+  child_new = ART[ART.length-1];
+  //console.log("parent="+parent);
+  //console.log("child_old="+child_old);
+  //console.log("child_new="+child_new);
+  var itm = document.getElementById(child_old);    
+  var cln = itm.cloneNode(true);
+  cln.setAttribute("id", child_new);
+    
+  MyRanameIdByTagNames(cln,child_old,child_new);
+  for(var i=0;i<ART.length-1;i++)
+  {
+	 child_new = ART[i];
+	 child_old = MySubstring(child_new,"","[") + "[X]";
+	 MyRanameIdByTagNames(cln,child_old,child_new);
+  }
+  var ob_parent = document.getElementById(parent);
+  ob_parent.appendChild(cln);  
+}
+
+function MyRanameIdByTagNames(obj,child_old,child_new)
+{
+  MyRanameIdByTagName(obj, "label", child_old,child_new);
+  MyRanameIdByTagName(obj, "legend",child_old,child_new);
+  MyRanameIdByTagName(obj, "select",child_old,child_new);
+  MyRanameIdByTagName(obj, "button",child_old,child_new);
+  MyRanameIdByTagName(obj, "div",child_old,child_new);
+  MyRanameIdByTagName(obj, "fieldset",child_old,child_new);
+  MyRanameIdByTagName(obj, "input",child_old,child_new);  
+}
+
+function MyRanameIdByTagName(vobj, TagName,child_old,child_new)
+{  
+  var obj = vobj.getElementsByTagName(TagName);
+  for (var i = 0; i < obj.length; i++) 
+  {
+    var s_id = obj[i].id;
+	if(TagName=="label"){s_id = obj[i].getAttribute("for");}
+    if ((s_id != "")&&(s_id != null))
+	{	  
+      if(TagName=="button")
+	  {
+		 child_old = child_old.replace("root_","");
+         child_new = child_new.replace("root_","");			
+		 //console.log("child_old="+child_old);
+		 //console.log("child_new="+child_new);
+	  }
+
+      var s_id2 = s_id.replace(child_old,child_new);	  
+	  if(TagName=="label")
+	  {
+	     obj[i].setAttribute("for", s_id2);
+	  }
+	  else
+	  {
+	     obj[i].setAttribute("id", s_id2);
+      }	  
+    }        
+  }
+}
+
+function MyRemove(vparent,vchild,num,n)
+{
+  //console.log("vparent="+vparent);
+  //console.log("vchild="+vchild);
+  //console.log("child_new="+child_new);
+  var child = null;
+  var parent = document.getElementById(vparent);  
+  var x = 0;
+  var tmp = "";
+  for (var i = 0; i <= num; i++) 
+  {
+     if(i==n)
+	 {
+		child = document.getElementById(vchild);        		
+        parent.removeChild(child);  
+	 }
+	 else if(i>n)
+	 {
+	 	x = i - 1;		
+		var child_current_id = vchild.replace(n,i);
+		child = document.getElementById(child_current_id);			    		
+		MyRanameIdByTagNames(child,child_current_id, vchild);
+		tmp = child.id;
+	    tmp = tmp.replace(i,x)
+	    child.setAttribute("id", tmp);		
+	 }
+  }
+}
+
+function button_ALL_remove(ob)
+{
+  var AR = ob.id.split("_");
+  //console.log(AR);
+  var ART = [];
+  for(var t=1;t<AR.length-1;t++){ART.push(AR[t]);}  
+  var str = MySubstring(ART[ART.length-1],"","[");  
+  var num_total = parseInt(document.getElementById(str+"[X]_num").value);
+  var parent = str + "[X]_array_list";
+  var child = ART[ART.length-1];
+  var str2 = getNumString(child);
+  var n_current = parseInt(str2);
+    
+  MyRemove(parent,child,num_total,n_current);
+  num_total--;  
+  document.getElementById(str+"[X]_num").value = num_total.toString();
+  
+  if(str == "transactions")
+  {
+     document.getElementById("startingActions[X]_num").value = num_total.toString();  
+     document.getElementById("transactionIdentifiers[X]_num").value = num_total.toString();  
+     document.getElementById("sendingVirtualCurrencyAddresses[X]_num").value = num_total.toString();  
+     document.getElementById("sourcesOfVirtualCurrency[X]_num").value = num_total.toString();  
+     document.getElementById("conductors[X]_num").value = num_total.toString();  
+     document.getElementById("onBehalfOfs[X]_num").value = num_total.toString();  
+     document.getElementById("completingActions[X]_num").value = num_total.toString();  
+     document.getElementById("receivingVirtualCurrencyAddresses[X]_num").value = num_total.toString();    
+     document.getElementById("accountHolders[X]_num").value = num_total.toString();  
+     document.getElementById("involvements[X]_num").value = num_total.toString();  
+     document.getElementById("beneficiaries[X]_num").value = num_total.toString();  
+  }
+}
+
+function MyCheckBoxClick(o)
+{
+   if(o.checked){o.value=true;}
+   else{o.value=false;}
+}
+
+function MyOnBlur(o)
+{
+   //console.log("required="+o.required);
+   var lab = "";
+   var id = o.id;
+   var val = o.value;
+   var error = "";
+   if(id.lastIndexOf("_")>-1){lab = id.substring(id.lastIndexOf("_")+1,id.length);}   
+   
+   if((o.value=="")&&(o.required)){
+      AddDivById(id,"The " + lab + " is required");
+   }
+   else{
+       error = MyValidation(lab, val);
+       if(error==""){DelDivById(id);}
+	   else {AddDivById(id,error);}	   
+   }   
+}
+
+function MyValidation(id, val)
+{    	
+	arr_str = ["$schema"];
+	arr_str10 = ["telephoneExtension", "ministerialDirectiveCode","unitNumber", "buildingNumber"];
+	arr_str20 = ["telephoneNumber","postalCode", "transactionReference"];
+	arr_str32 = ["$id","$ref"];
+	arr_str50 = ["registrationNumber", "identificationNumber", "financialInstitutionNumber", "branchNumber", "accountNumber", "policyNumber", "identifyingNumber", "clientNumber"];
+	arr_str100 = ["registrationJurisdictionProvinceOther", "legalName", "employerName","alias", "surname", "other", "givenName", "locality", "provinceOther", "district", "city", "streetAddress", "identificationJurisdictionProvinceOther", "accountVirtualCurrencyTypeCode","virtualCurrencyTypeCode"];
+	arr_str200 = ["businessNature", "occupation", "residenceCountryCode", "identificationTypeOther", "relationshipTypeOther", "deviceTypeOther", "deviceIpAddress", "deviceIdentificationNumber", "email", "username", "obtained", "sendingVirtualCurrencyAddresses[X]_item", "receivingVirtualCurrencyAddresses", "referenceNumber", "otherRelatedNumber", "accountTypeOther", "accountVirtualCurrencyTypeOther", "dispositionTypeOther", "virtualCurrencyTypeOther", "transactionMethodTypeOther", "transactionIdentifiers", "transactionPurpose"];
+	arr_str500 = ["unstructuredAddressDetails"]
+	arr_alpha2 = ["registrationJurisdictionCountryCode", "registrationJurisdictionProvinceCode", "unstructuredCountryCode", "provinceCode", "countryCode", "identificationJurisdictionCountryCode", "identificationJurisdictionProvinceCode"];
+	arr_alpha3 = ["currencyTypeCode", "accountCurrencyTypeCode"];
+	arr_ERR20 = ["locationReference"];
+	arr_RR200 = ["reportReference"];
+	
+	arr_int5 = ["identificationTypeCode", "relationshipTypeCode", "deviceTypeCode", "twentyFourHourAggregationTypeCode", "activitySectorCode", "accountTypeCode", "dispositionTypeCode", "transactionMethodTypeCode"];
+	arr_int7 = ["reportingEntityNumber"];
+	arr_num0 = ["contactNumber"];
+	arr_curAmt = ["canadianEquivalentAmount", "virtualCurrencyAmount", "canadianExchangeRate"];
+	arr_LDT = ["birthDate", "accountOpenDate"];
+	arr_ZDT = ["requestDateTime", "twentyFourHourStartDateTime", "twentyFourHourEndDateTime", "transactionDateTime"];	
+	arr_Boolean = ["registrationIndicator", "onBehalfOfIndicator", "conductorIndicator", "sourceOfVirtualCurrencyIndicator", "involvementIndicator", "beneficiaryIndicator", "thresholdIndicator", "clientIndicator"];
+	
+    //LettersNumbers	
+    if(ArrExists(arr_str, id)){if(!Validation_String(val,"LettersNumbers")){return id + ". String validation ERROR! No special symbols";}}
+	if(ArrExists(arr_str10, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>10){ return id + ". String validation ERROR! Lengths more than 10 characters";}}
+	}
+	if(ArrExists(arr_str20, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>20){ return id + ". String validation ERROR! Lengths more than 20 characters";}}
+	}
+	if(ArrExists(arr_str32, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>32){ return id + ". String validation ERROR! Lengths more than 32 characters";}}
+	}
+	if(ArrExists(arr_str50, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>50){ return id + ". String validation ERROR! Lengths more than 50 characters";}}
+	}
+	if(ArrExists(arr_str200, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers200")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>200){ return id + ". String validation ERROR! Lengths more than 200 characters";}}
+	}
+	if(ArrExists(arr_str500, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers500")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>500){ return id + ". String validation ERROR! Lengths more than 500 characters";}}
+	}
+	if(ArrExists(arr_str100, id))
+	{
+	   if(!Validation_String(val,"LettersNumbers100")){return id + ". String validation ERROR! No special symbols";}
+	   else{if(val.length>100){ return id + ". String validation ERROR! Lengths more than 100 characters";}}
+	}
+	if(ArrExists(arr_alpha2, id))
+	{
+	   if(!Validation_String(val,"StringWithoutNumber")){return id + ". String validation ERROR! Only A-Z characters";}
+	   else{if(val.length!=2){ return id + ". String validation ERROR! Lengths should be equal 2 characters";}}
+	}
+	if(ArrExists(arr_alpha3, id))
+	{
+	   if(!Validation_String(val,"StringWithoutNumber")){return id + ". String validation ERROR! Only A-Z characters";}
+	   else{if(val.length!=3){ return id + ". String validation ERROR! Lengths should be equal 3 characters";}}
+	}
+
+    //Reference and externalReportReference
+	if(ArrExists(arr_RR200, id))
+	{
+	   if(!Validation_String(val,"locationReference")){return id + ". String validation ERROR! Should be capital letters, numbers and _ ";}
+	   else{if(val.length>200){ return id + ". String validation ERROR! Lengths more than 200 characters";}}
+	}
+	if(ArrExists(arr_ERR20, id))
+	{
+	   if(!Validation_String(val,"externalReportReference")){return id + ". String validation ERROR! Should be capital letters, numbers and _ or -";}
+	   else{if(val.length>20){ return id + ". String validation ERROR! Lengths more than 20 characters";}}
+	}
+
+    //Integer
+	if(ArrExists(arr_int5, id))
+	{
+	   if(!Validation_String(val,"Integer")){ return id + ". String validation ERROR! Should only include numbers";}  
+	   else{if(val.length>5){ return id + ". Number is greater than 5 digits";}}
+	}	
+	if(ArrExists(arr_int7, id))
+	{
+	   if(!Validation_String(val,"Integer")){ return id + ". String validation ERROR! Should only include numbers";}  
+	   else{if(val.length>7){ return id + ". Number is greater than 7 digits";}}
+	}
+
+	//Number
+	if(ArrExists(arr_num0, id))
+	{
+	   if(!Validation_String(val,"Numbers")){ return id + ". String validation ERROR! Should only include numbers";}  
+	   else
+	   {
+	      var v = parseInt(val);
+	      if(v<0){ return id + ". Number is less than 0";}
+	   }
+	}	
+	
+	//currencyAmount
+	if(ArrExists(arr_curAmt, id))
+	{
+	   if(!Validation_String(val,"currencyAmount")){ return id + ". String validation ERROR! Should be Money format";}  
+	}
+
+    //localDate
+    if(ArrExists(arr_LDT, id))
+	{
+	   if(!Validation_String(val,"localDate")){ return id + ". DateTime validation ERROR! Should be modified to the format of YYYY-MM-DD";}  
+	}	
+	
+	//zonedDateTime
+    if(ArrExists(arr_ZDT, id))
+	{
+	   if(!Validation_String(val,"zonedDateTime")){ return id + ". zonedDateTime validation ERROR! Should be modified to YYYY-MM-DDTHH:MM:SS+ZZ:ZZ";}  
+	}	
+
+	//DateTime Special
+    if(ArrExists(arr_Boolean, id))
+	{
+	   if(!Validation_String(val,"Boolean")){ return id + ". Bollean validation ERROR! Should be only TRU or FALSE";}  
+	}	
+	
+	return "";
+}
+
+
+function Validation_String(inputtxt, mtype)
+{
+
+   var letters = /^(\s?[a-zA-Z0-9]+)*\s?$/;   
+   if(mtype=="LettersNumbers"){letters = /^[A-Za-z0-9]+$/;}
+   if(mtype=="StringWithoutNumber"){letters = /^[A-Za-z]+$/;}
+   if(mtype=="LettersOnlyLower"){letters = /^[a-z]+$/;}
+   if(mtype=="LettersOnlyUpper"){letters = /^[A-Z]+$/;}
+   if(mtype=="Integer"){letters = /^[0-9]+$/;}
+   if(mtype=="Numbers"){letters = /^[-0-9]+$/;}
+   if(mtype=="externalReportReference"){letters = /^[A-Z0-9_-]+$/;} 
+   if(mtype=="locationReference"){letters = /^[A-Z0-9_]+$/;}    
+   if(mtype=="currencyAmount"){letters = /^[0-9]*(\\.[0-9]+)?$/;}  
+   if(mtype=="localDate"){letters = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;}  
+   if(mtype=="zonedDateTime"){letters = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[-|+][0-9]{2}:[0-9]{2}$/;} 
+   if(mtype=="Boolean"){letters = /^[TRUE|true|FALSE|false]+$/;}    
+   if(inputtxt.match(letters)) { return true;}
+   else { return false; }
+}
+
+function DelDivById(id)
+{
+   var el = "V_" + id;
+   var element =  document.getElementById(el);
+   if (typeof(element) != 'undefined' && element != null)
+   {
+	  var pn = element.parentNode;
+	  pn.removeChild(element);
+   }
+}
+
+function AddDivById(id,text)
+{
+   var el = "V_" + id;
+   var element =  document.getElementById(el);
+   if (typeof(element) == 'undefined' || element == null)
+   {
+      var o = document.getElementById(id);
+	  var pn = o.parentNode;
+	  var ce = document.createElement("div");
+	  ce.id = el;
+	  ce.innerHTML = text;
+	  ce.style.color = "red";
+	  pn.appendChild(ce);
+   }
+   else
+   {
+      element.innerHTML = text;
+   }
+}
+
+function button_test_add()
+{   
+   //MyGetZDT();
+   MyForm = document.getElementById("MyForm");
+   MyInputs = MyForm.getElementsByTagName("input");
+   MyInputs["root_$schema"].value = "DEV1";
+   MyInputs["root_reportingEntityNumber"].value = "160292";
+   MyInputs["root_reportReference"].value = "SAMPLE_TRANSACTION";
+   
+   MyInputs["root_details_twentyFourHourAggregationTypeCode"].value = 4;
+   //MyInputs["root_details_twentyFourHourStartDateTime"].value = MyGetZDT("Z",-50,"h");
+   //MyInputs["root_details_twentyFourHourEndDateTime"].value = MyGetZDT("Z",-26,"h");
+   MyInputs["root_details_twentyFourHourStartDateTime"].value = "2021-04-21T00:00:00-05:00";
+   MyInputs["root_details_twentyFourHourEndDateTime"].value = "2021-04-21T23:59:59-05:00";
+   MyInputs["root_details_ministerialDirectiveCode"].value = "";
+   MyInputs["root_details_activitySectorCode"].value = "11";
+   MyInputs["root_details_contactNumber"].value = "77700";
+
+   MyInputs["root_transactions[0]_details_locationReference"].value = "1";
+   MyInputs["root_transactions[0]_details_thresholdIndicator"].click();      
+   MyInputs["root_transactions[0]_details_transactionReference"].value = "TRANS-20210421-001";   
+   //MyInputs["root_transactions[0]_details_transactionDateTime"].value = MyGetZDT("Z",-27,"h");
+   MyInputs["root_transactions[0]_details_transactionDateTime"].value = "2021-04-21T09:34:56-05:00";
+   MyInputs["root_transactions[0]_details_transactionMethodTypeCode"].value = 8;
+   MyInputs["root_transactions[0]_details_transactionIdentifiers[0]_item"].value = "2f2269ac15164d4a21d2a6328bb20c3c";
+   MyInputs["root_transactions[0]_details_transactionPurpose"].value = "Buy VC to invest";
+   
+   
+   MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyAmount"].value = "100";
+   MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyTypeCode"].value = "BTC";
+   MyInputs["root_transactions[0]_startingActions[0]_details_canadianExchangeRate"].value = 75000.00;
+   MyInputs["root_transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]_item"].value = "f3bdc01703c3645c0eb3267d5e599d28";
+   MyInputs["root_transactions[0]_startingActions[0]_details_obtained"].value = "Buy VC to invest";
+   
+   MyInputs["root_definitions[0]_LvctrPersonDetails_$id"].value = "jaerv73f";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_givenName"].value = "Joseph";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_surname"].value = "Iuso";
+   
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "204";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "370";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Main St E";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Hamilton";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "L8N1J6";
+   
+   MyInputs["root_definitions[0]_LvctrPersonDetails_telephoneNumber"].value = "6478870623";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_birthDate"].value = "1965-11-29";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_occupation"].value = "CEO";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_employerName"].value = "UMF";
+   
+   
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode"].value = "1";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationNumber"].value = "P45568-49567-70307";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionCountryCode"].value = "CA";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionProvinceCode"].value = "ON";   
+   
+   MyInputs["root_transactions[0]_startingActions[0]_details_conductorIndicator"].click();
+   
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientIndicator"].click();
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientNumber"].value = "smitha";   
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_username"].value = "smitha";   
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_email"].value = "smitha@hotmail.com";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceTypeCode"].value = 3;
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceIdentificationNumber"].value = "03e73331cd0f94093a4bb22dfdb3baee";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceIpAddress"].value = "24.16.223.12";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_requestDateTime"].value = "2021-04-21T09:34:56-05:00";
+   //MyGetZDT("Z",500,"s");   
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_subject_$ref"].value = "jaerv73f";
+   
+   
+   
+   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeCode"].value = 11;
+   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeOther"].value = "OTHER";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value = MyGetZDT("L",-7,"d");   
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value ="2021-04-20";   
+   MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyAmount"].value = "1.17";
+   MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyTypeCode"].value = "BTC";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyTypeOther"].value = "NA";
+   MyInputs["root_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]_item"].value = "f73b8bd9432cddec84c42783d7f61aa0";
+   
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "BTC";
+   MyInputs["root_transactions[0]_completingActions[0]_details_canadianEquivalentAmount"].value = "81000";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_referenceNumber"].value = "1212121222";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_otherRelatedNumber"].value = "1212121222";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_financialInstitutionNumber"].value = "000";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_branchNumber"].value = "000000";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountNumber"].value = "000000000";
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeCode"].value = 4;
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeOther"].value = "OTHER";   
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "CAD";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountVirtualCurrencyTypeCode"].value = "BTC";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountVirtualCurrencyTypeOther"].value = "NA";
+   MyInputs["root_transactions[0]_completingActions[0]_details_currencyTypeCode"].value = "CAD";
+
+   MyInputs["root_transactions[0]_completingActions[0]_details_beneficiaryIndicator"].click();
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_clientNumber"].value = "392039";
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_username"].value = "smitha";
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_email"].value = "smitha@hotmail.com";
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_subject_$ref"].value = "jaerv73f";      
+}
+
+function MyGetZDT(ty, z, str)
+{
+   var d = new Date();
+   var x = "0";
+   var n = 0;
+   var MyReturn = "";
+   
+   if(str=="s"){d = new Date(d.getFullYear(),d.getMonth(),d.getDate()-1,d.getHours(),d.getMinutes(),d.getSeconds()+z);}
+   if(str=="m"){d = new Date(d.getFullYear(),d.getMonth(),d.getDate()-1,d.getHours(),d.getMinutes()+z,d.getSeconds());}
+   if(str=="h"){d = new Date(d.getFullYear(),d.getMonth(),d.getDate()-1,d.getHours()+z,d.getMinutes(),d.getSeconds());}
+   if(str=="d"){d = new Date(d.getFullYear(),d.getMonth(),d.getDate()+z-1,d.getHours(),d.getMinutes(),d.getSeconds());}
+   if(str=="M"){d = new Date(d.getFullYear(),d.getMonth()+z,d.getDate()-1,d.getHours(),d.getMinutes(),d.getSeconds());}
+   if(str=="y"){d = new Date(d.getFullYear()+z,d.getMonth(),d.getDate()-1,d.getHours(),d.getMinutes(),d.getSeconds());}
+   
+   MyReturn += d.getFullYear().toString() + "-";
+   
+   n = d.getMonth() + 1;   
+   x = "0";
+   if(n<10){x+=n.toString();}
+   else{x=n.toString();}
+   MyReturn += x + "-";
+   
+   n = d.getDate() + 1;   
+   x = "0";
+   if(n<10){x+=n.toString();}
+   else{x=n.toString();}   
+   MyReturn += x;
+   
+   if(ty=="L") {return MyReturn;}
+   
+   MyReturn += "T";
+   
+   n = d.getHours();
+   x = "0";
+   if(n<10){x+=n.toString();}
+   else{x=n.toString();}
+   MyReturn += x + ":";
+
+   n = d.getMinutes();
+   x = "0";
+   if(n<10){x+=n.toString();}
+   else{x=n.toString();}
+   MyReturn += x + ":";
+
+   n = d.getSeconds();
+   x = "0";
+   if(n<10){x+=n.toString();}
+   else{x=n.toString();}
+   MyReturn += x;
+   
+   n = d.getTimezoneOffset();
+   if(n>0){MyReturn += "-";}
+   else{MyReturn += "+";}   
+   y = 0;
+   for(var i=0;y <n;i++)
+   {
+      y = i*60;
+   }
+   i--;
+   x = "0";
+   if(i<10){x+=i.toString();}
+   else{x=i.toString();}   
+   MyReturn += x + ":";
+   var s = i*60 - n;
+   x = "0";
+   if(i<10){x+=s.toString();}
+   else{x=s.toString();}   
+   MyReturn += x;   
+      
+   return MyReturn;
+}
+
+function button_Submit_click()
+{
+  var tmp = "";
+  var tmp2 = "";
+  document.getElementById("container_root").style.display = "none";
+  document.getElementById("container_json").style.display = "block";            
+  document.getElementById("container_json").innerHTML = MyGetJSON();
+}
+function GetDetails(KEY)
+{
+  var tmp = "";
+  tmp += "\"details\": {" + BR;
+  tmp += GetBlock(KEY, true) + BR;
+  tmp += "}";
+  return tmp;
+}
+
+function GetBlock(key, my_type)
+{
+  var tmp = "";
+  var str = "";  
+  var tmpArr = [];
+  var BlockArr = [];
+  for(var i=0;i<rArrayRoot.length;i++)
+  {  
+     tmpArr = rArrayRoot[i];	 
+	 str = tmpArr[tmpArr.length-1];
+	 if(my_type)
+	 {
+	    if(str==key)
+		{
+		   BlockArr.push(GetElementAsJsonString(rArrayRoot[i]));
+		}
+	 }
+	 else 
+	 {
+	    if(str==key)
+		{
+		   BlockArr.push(GetElementAsString(rArrayRoot[i]));
+		}
+	 }
+  }
+  for(var n=0;n<BlockArr.length;n++)
+  {
+	    tmp += BlockArr[n];
+		if(n<BlockArr.length-1)
+		{
+		  tmp += EOL;
+		  tmp += BR;
+		}				
+  }
+  return tmp;
+}
+/*
+0: "definitions[0]_LvctrPersonDetails"
+1: "definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress"
+2: "definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]"
+
+0: "transactions[0]"
+1: "transactions[0]_details"
+2: "transactions[0]_details_transactionIdentifiers[0]"
+3: "transactions[0]_startingActions[0]"
+4: "transactions[0]_startingActions[0]_details"
+5: "transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]"
+6: "transactions[0]_startingActions[0]_conductors[0]"
+7: "transactions[0]_startingActions[0]_conductors[0]_details"
+8: "transactions[0]_startingActions[0]_conductors[0]_subject"
+9: "transactions[0]_completingActions[0]"
+10: "transactions[0]_completingActions[0]_details"
+11: "transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]"
+12: "transactions[0]_completingActions[0]_beneficiaries[0]"
+13: "transactions[0]_completingActions[0]_beneficiaries[0]_details"
+14: "transactions[0]_completingActions[0]_beneficiaries[0]_subject"
+*/
+function MyGetJSON()
+{  
+  rArrayRoot = GetArrayRoot();
+  rArr = GetRelationsByKey(rArrayRoot,"transactions[0]");
+  dArr = GetRelationsByKey(rArrayRoot,"definitions[0]");
+  r_tmp = "";
+  r_tmp += "{" + BR;
+  r_tmp += GetBlock("", true) + EOL + BR;
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("details", true) + BR;
+  r_tmp += "}" + EOL + BR;
+  
+  r_tmp += "\"definitions\": [" + BR;      
+  r_tmp += "{" + BR;
+  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails", true) + EOL + BR;
+  r_tmp += "\"address\": {" + BR;
+  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
+  r_tmp += "}" + EOL + BR;
+  r_tmp += "\"identifications\": [{" + BR;
+  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]", true) + BR;
+  r_tmp += "}]" + BR;
+  r_tmp += "}" + BR;
+  r_tmp += "]" + EOL + BR;
+  
+  r_tmp += "\"transactions\": [" + BR;      
+  r_tmp += "{" + BR;
+  r_tmp += GetBlock("transactions[0]", true) + "," + BR;		  
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("transactions[0]_details", true) + EOL + BR;
+  r_tmp += "\"transactionIdentifiers\": [" + GetBlock("transactions[0]_details_transactionIdentifiers[0]", false) + "]" + BR;
+  r_tmp += "}" + EOL + BR;
+
+  r_tmp += "\"startingActions\": [" + BR;      
+  r_tmp += "{" + BR;  
+  r_tmp += GetBlock("transactions[0]_startingActions[0]", true) + EOL + BR;		  
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("transactions[0]_startingActions[0]_details", true) + EOL + BR;
+  r_tmp += "\"sendingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]", false) + "]" + BR;
+  r_tmp += "}" + EOL + BR;
+
+  if(ArrExists(rArr, "transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]"))
+  {
+     r_tmp += "\"sourcesOfVirtualCurrency\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]_details", true) + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"sourcesOfVirtualCurrency\": []";
+  }
+  r_tmp += EOL + BR;  
+  if(ArrExists(rArr, "transactions[0]_startingActions[0]_conductors[0]"))
+  {
+     r_tmp += "\"conductors\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]_details", true) + BR;	 
+     r_tmp += "}" + EOL + BR;
+	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_startingActions[0]_conductors[0]_subject", true) + "}" + BR; 
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"conductors\": []";
+  }
+  r_tmp += BR; 
+  //r_tmp += "]" + EOL + BR;	
+  //r_tmp += "]" + BR;	
+
+  r_tmp += "}" + BR;
+  r_tmp += "]," + BR;
+
+  r_tmp += "\"completingActions\": [" + BR;      
+  r_tmp += "{" + BR;  
+  r_tmp += GetBlock("transactions[0]_completingActions[0]", true) + EOL + BR;  
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("transactions[0]_completingActions[0]_details", true) + EOL + BR;
+  r_tmp += "\"receivingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]", false) + "]" + BR;  
+  //r_tmp += "}" + BR;
+  r_tmp += "}" + EOL + BR;
+ 
+
+  if(ArrExists(rArr, "transactions[0]_completingActions[0]_accountHolders[0]"))
+  {
+     r_tmp += "\"accountHolders\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]_details", true) + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"accountHolders\": []";
+  }
+  r_tmp += EOL + BR;    
+  if(ArrExists(rArr, "transactions[0]_completingActions[0]_involvements[0]"))
+  {
+     r_tmp += "\"involvements\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]_details", true) + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"involvements\": []";
+  }
+  r_tmp += EOL + BR;
+
+  if(ArrExists(rArr, "transactions[0]_completingActions[0]_beneficiaries[0]"))
+  {
+     r_tmp += "\"beneficiaries\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_details", true) + BR;
+     r_tmp += "}" + EOL + BR;
+	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_subject", true) + "}" + BR; 
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"beneficiaries\": []";
+  }
+  r_tmp += BR; 
+
+  
+  
+  r_tmp += "}" + BR;
+  r_tmp += "]" + BR;
+  
+  r_tmp += "}" + BR;
+  r_tmp += "]" + BR;
+    
+  r_tmp += "}" + BR;
+
+  console.log(rArrayRoot);
+  console.log(rArr);
+  console.log(dArr);
+  
+  return r_tmp;
+}
+
+function MyGetJSON_OLD()
+{  
+  rArrayRoot = GetArrayRoot();
+  rArr = GetRelationsByKey(rArrayRoot,"transactions[0]");
+  dArr = GetRelationsByKey(rArrayRoot,"definitions[0]");
+  r_tmp = "";
+  r_tmp += "{" + BR;
+  r_tmp += GetBlock("", true) + EOL + BR;
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("details", true) + BR;
+  r_tmp += "}" + EOL + BR;
+  
+  r_tmp += "\"definitions\": [" + BR;      
+  r_tmp += "{" + BR;
+  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails", true) + EOL + BR;
+  r_tmp += "\"address\": {" + BR;
+  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
+  r_tmp += "}" + EOL + BR;
+  r_tmp += "\"identifications\": [{" + BR;
+  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]", true) + BR;
+  r_tmp += "}]" + BR;
+  r_tmp += "}" + BR;
+  r_tmp += "]" + EOL + BR;
+  
+  r_tmp += "\"transactions\": [" + BR;      
+  r_tmp += "{" + BR;
+  r_tmp += GetBlock("transactions[0]", true) + "," + BR;		  
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("transactions[0]_details", true) + EOL + BR;
+  r_tmp += "\"transactionIdentifiers\": [" + GetBlock("transactions[0]_details_transactionIdentifiers[0]", false) + "]" + BR;
+  r_tmp += "}" + EOL + BR;
+
+  r_tmp += "\"startingActions\": [" + BR;      
+  r_tmp += "{" + BR;  
+  r_tmp += GetBlock("transactions[0]_startingActions[0]", true) + EOL + BR;		  
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("transactions[0]_startingActions[0]_details", true) + EOL + BR;
+  r_tmp += "\"sendingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]", false) + "]" + BR;
+  r_tmp += "}" + EOL + BR;
+
+  if(ArrExists(rArr, "transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]"))
+  {
+     r_tmp += "\"sourcesOfVirtualCurrency\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]_details", true) + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"sourcesOfVirtualCurrency\": []";
+  }
+  r_tmp += EOL + BR;  
+  if(ArrExists(rArr, "transactions[0]_startingActions[0]_conductors[0]"))
+  {
+     r_tmp += "\"conductors\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]_details", true) + BR;	 
+     r_tmp += "}" + EOL + BR;
+	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_startingActions[0]_conductors[0]_subject", true) + "}" + BR; 
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"conductors\": []";
+  }
+  r_tmp += BR; 
+  //r_tmp += "]" + EOL + BR;	
+  //r_tmp += "]" + BR;	
+
+  r_tmp += "}" + BR;
+  r_tmp += "]," + BR;
+
+  r_tmp += "\"completingActions\": [" + BR;      
+  r_tmp += "{" + BR;  
+  r_tmp += GetBlock("transactions[0]_completingActions[0]", true) + EOL + BR;  
+  r_tmp += "\"details\": {" + BR;
+  r_tmp += GetBlock("transactions[0]_completingActions[0]_details", true) + EOL + BR;
+  r_tmp += "\"receivingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]", false) + "]" + BR;  
+  //r_tmp += "}" + BR;
+  r_tmp += "}" + EOL + BR;
+ 
+
+  if(ArrExists(rArr, "transactions[0]_completingActions[0]_accountHolders[0]"))
+  {
+     r_tmp += "\"accountHolders\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]_details", true) + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"accountHolders\": []";
+  }
+  r_tmp += EOL + BR;    
+  if(ArrExists(rArr, "transactions[0]_completingActions[0]_involvements[0]"))
+  {
+     r_tmp += "\"involvements\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]_details", true) + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"involvements\": []";
+  }
+  r_tmp += EOL + BR;
+
+  if(ArrExists(rArr, "transactions[0]_completingActions[0]_beneficiaries[0]"))
+  {
+     r_tmp += "\"beneficiaries\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_details", true) + BR;
+     r_tmp += "}" + EOL + BR;
+	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_subject", true) + "}" + BR; 
+     r_tmp += "}" + BR;
+     r_tmp += "]";
+  }
+  else
+  {
+     r_tmp += "\"beneficiaries\": []";
+  }
+  r_tmp += BR; 
+
+    
+  r_tmp += "}" + BR;
+  r_tmp += "]" + BR;
+  
+  r_tmp += "}" + BR;
+  r_tmp += "]" + BR;
+    
+  r_tmp += "}" + BR;
+
+  console.log(rArrayRoot);
+  console.log(rArr);
+  console.log(dArr);
+  
+  return r_tmp;
+}
+
+function GetGroups()
+{
+  level = 0;
+  var sufix_key = "";  
+  tt = ArrWithoutRecords(rArr, "details", false);
+  for(var i=0;i<tt.length;i++)
+  {
+     r_key = getStringNum(tt[i]);	 
+	 var tmpArr = r_key.split("_");
+	 if(tmpArr.length > 0){sufix_key = tmpArr[tmpArr.length-1];}else{sufix_key = r_key;}
+	 
+
+	 r_tmp += "\"" + r_key + "\": [" + BR;     
+	 r_tmp += "{" + BR;
+	 r_tmp += GetBlock(tt[i], true);		
+	 r_tmp += EOL + BR;
+	 s = getStringNum(tt[i]) + "_details" + getNumString(tt[i]);
+     if(ArrExists(rArr, s))
+	 {
+		r_tmp += GetDetails(s);
+	 }
+	 r_tmp += "}" + BR;
+	 if(i!=0){r_tmp += "]";} + EOL	 
+	 if(i<tt.length-1){r_tmp += EOL + BR}
+	 else{r_tmp += "]";}
+  }
+}
+
+function GetBlockByKey(KEY, name)
+{
+  var tmp = "";
+  tmp += "\"" + name + "\":" + BR;
+  tmp += "{" + BR;
+  tmp += GetBlock(KEY, true) + BR;
+  tmp += "}";
+  return tmp;
+}
+
+function GetRecords(KEY)
+{
+  var tt = []
+  for(var i=0;i<rArrayRoot.length;i++)
+  {
+     if(rArrayRoot[i][0]==KEY)
+	 {
+	    tt.push(rArrayRoot[i]);
+	 }
+  }
+  return tt;
+}
+
+function GetRelationsFull(arr)
+{
+  var ReturnArr = [];
+  var tmpArr = [];
+  var str = "";
+  
+  for(var i=0;i<arr.length;i++)
+  {
+     tmpArr = arr[i];
+  	 str = tmpArr[tmpArr.length-1];
+	 if(!ArrExists(ReturnArr, str)){ReturnArr.push(str);}	 
+  }
+  return ReturnArr;
+}
+
+function GetRelationsByKey(arr,KEY)
+{
+  var ReturnArr = [];
+  var tmpArr = [];
+  var str = "";
+  
+  for(var i=0;i<arr.length;i++)
+  {
+     if(arr[i][0]==KEY)
+	 {
+        tmpArr = arr[i];
+  	    str = tmpArr[tmpArr.length-1];
+	    if(!ArrExists(ReturnArr, str)){ReturnArr.push(str);}	 
+	 }
+  }
+  return ReturnArr;
+}
+
+function GetRelationsByKey2(arr,KEY)
+{
+  var ReturnArr = [];
+  var tmpArr = [];
+  var tmpArr2 = [];
+  var str = "";
+  
+  for(var i=0;i<arr.length;i++)
+  {
+     if(arr[i][0]==KEY)
+	 {
+        tmpArr = arr[i];
+  	    str = tmpArr[tmpArr.length-1];
+	    if(!ArrExists(ReturnArr, str)){ReturnArr.push(str);}	 
+	 }
+  }
+  return ReturnArr;
+}
+
+function ArrExists(arr, str)
+{
+  for(var i=0;i<arr.length;i++)
+  {
+	 if(arr[i]==str){ return true;}
+  }   
+  return false;
+}
+
+function ArrExists2(arr, str)
+{
+  for(var i=0;i<arr.length;i++)
+  {
+	 var s = arr[i];
+	 if(s.indexOf(str)>-1){ return true;}
+  }   
+  return false;
+}
+function ArrWithoutRecords(arr, str, exact)
+{
+  var tt = [];
+  var tmp = "";
+  for(var i=0;i<arr.length;i++)
+  {
+     tmp = arr[i];
+	 if(exact)
+	 {
+	    if(tmp!=str)
+	    { 
+	      tt.push(arr[i]);
+	    }
+	 }
+	 else
+	 {
+	    if(tmp.indexOf(str)==-1)
+	    { 
+	      tt.push(arr[i]);
+	    }	 
+	 }
+  }   
+  return tt;
+}
+
+function GetElementAsJsonString(arr)
+{   
+   var tmp="";   
+   var MyReturn="";   
+   var val = "";
+   if(arr[arr.length-2]=="text"){val = "\"" + arr[arr.length-3] + "\"";}
+   else{val = arr[arr.length-3];}
+   tmp = "\"" + arr[arr.length-5] + "\"";
+   MyReturn = tmp + ": " + val;   
+   //console.log(MyReturn);
+   return MyReturn;
+}
+
+function GetElementAsString(arr)
+{   
+   var val = "";
+   if(arr[arr.length-2]=="text"){val = "\"" + arr[arr.length-3] + "\"";}
+   else{val = arr[arr.length-3];}
+   return val;
+}
+
+function GetArrayRoot()
+{
+   var MyForm = document.getElementById("MyForm");
+   var MyInputs = MyForm.getElementsByTagName("input");
+   var ArrayRoot = [];
+   var ArrayItem = null;
+   var ArrayTmp = null;
+   var num = "";
+   var i=0;
+   var tmp = "";
+   var str = "";
+   var str2 = "";
+   var str3 = "";
+   var str4 = "";
+   var n = ""
+   var x = 0;
+   
+   for(i=0; i<MyInputs.length;i++)
+   {
+      str = MyInputs[i].id;
+	  if(str.indexOf("root_")>-1)
+	  {
+	    str2 = str.replace("root_", "");      		
+		ArrayItem = str2.split("_");
+		x = ArrayItem.length;
+		str3 = ArrayItem[ArrayItem.length-1];
+		n = getNumString(str3);
+		if(n!="")
+		{
+		   str3 = str3.replace(n,"");
+		   ArrayItem[ArrayItem.length-1] = str3;
+		}
+		ArrayItem.push(n);
+		ArrayItem.push(MyInputs[i].value);
+		ArrayItem.push(MyInputs[i].type);
+		str4 = "";
+		if(x>1){str4 = str2.substring(0,str2.lastIndexOf("_"))+n;}
+		ArrayItem.push(str4);
+		ArrayRoot.push(ArrayItem);
+	  }
+   }
+   return ArrayRoot;
+}
+
+function getNumString(str)
+{
+   var tmp = str.split("");
+   var num = "";   
+   for(i=0; i<tmp.length;i++)
+   {
+      if((tmp[i]=="0")||(tmp[i]=="1")||(tmp[i]=="2")||(tmp[i]=="3")||(tmp[i]=="4")||(tmp[i]=="5")||(tmp[i]=="6")||(tmp[i]=="7")||(tmp[i]=="8")||(tmp[i]=="9"))
+	  {
+	     num += tmp[i];
+	  }
+   }
+   return num;
+}
+
+function getStringNum(str)
+{
+   var tmp = str.split("");
+   var num = "";   
+   for(i=0; i<tmp.length;i++)
+   {
+      if((tmp[i]=="0")||(tmp[i]=="1")||(tmp[i]=="2")||(tmp[i]=="3")||(tmp[i]=="4")||(tmp[i]=="5")||(tmp[i]=="6")||(tmp[i]=="7")||(tmp[i]=="8")||(tmp[i]=="9"))
+	  {
+	     var xx = 0;
+	  }
+	  else
+	  {
+	     num += tmp[i];
+	  }
+   }
+   return num;
+}
+
+
+</script>
+<div class="container-fluid" id="container_json" style="display:none"></div>
+ <div class="container-fluid" id="container_root">
+      <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-6 col-xl-2 bd-sidebar">
+	  <form class="bd-search d-flex align-items-center" id="MyForm">
+	   <input id="MyRelations" type="hidden" value="">
+	   <input id="definitions[X]_num" type="hidden" value="-1">
+	   
+	   <input id="identifications[X]_num" type="hidden" value="-1">
+	   <input id="LvctrPersonIdentificationDetails[X]_num" type="hidden" value="-1">
+	   <input id="LvctrEntityIdentificationDetails[X]_num" type="hidden" value="-1">
+	   
+	   <input id="authorizedPersons[X]_num" type="hidden" value="-1">
+	   <input id="transactions[X]_num" type="hidden" value="-1">
+	   <input id="startingActions[X]_num" type="hidden" value="-1">	   
+	   <input id="transactionIdentifiers[X]_num" type="hidden" value="-1">
+	   <input id="sendingVirtualCurrencyAddresses[X]_num" type="hidden" value="-1">
+	   <input id="sourcesOfVirtualCurrency[X]_num" type="hidden" value="-1">
+	   <input id="conductors[X]_num" type="hidden" value="-1">
+	   <input id="onBehalfOfs[X]_num" type="hidden" value="-1">
+	   <input id="completingActions[X]_num" type="hidden" value="-1">	   
+	   <input id="receivingVirtualCurrencyAddresses[X]_num" type="hidden" value="-1">	   
+	   <input id="accountHolders[X]_num" type="hidden" value="-1">	   
+	   <input id="involvements[X]_num" type="hidden" value="-1">	   
+	   <input id="beneficiaries[X]_num" type="hidden" value="-1">	   
+       
+	     <div class="form-group field field-object">
+		    <fieldset id="root_">
+			   <legend id="root_title">Large Virtual Currency Transaction Report Form</legend>				
+		   	   <div class="row">				   
+	              <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+	                 <button id="button_test" type="button" class="btn btn-warning btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_test_add()">FILL TEST DATA</button>
+	              </p>
+	            </div>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+				   <li class="nav-item">
+				      <a class="nav-link active" id="root-tab" data-toggle="tab" href="#root" role="tab" aria-controls="root" aria-selected="true">Root</a>
+				   </li>
+				   <li class="nav-item">
+				      <a class="nav-link" id="identities-tab" data-toggle="tab" href="#identities" role="tab" aria-controls="identities" aria-selected="false">Identities</a>
+				   </li>
+				   <li class="nav-item">
+				      <a class="nav-link" id="transaction-tab" data-toggle="tab" href="#transaction" role="tab" aria-controls="transaction" aria-selected="false">Transaction</a>
+				   </li>
+				</ul>
+
+                <div class="tab-content" id="myTabContent">
+                   <!--<div class="tab-pane fade show active" id="root" role="tabpanel" aria-labelledby="root-tab">-->
+				   <div class="tab-pane active" id="root" role="tabpanel" aria-labelledby="root-tab">
+				   <!---->
+				    <div class="form-group field field-string">
+				        <label class="control-label" for="root_$schema">$schema<span class="required">*</span></label>
+					    <input class="form-control" id="root_$schema" label="$schema" required="" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+			         </div>
+				     <div class="form-group field field-string">
+				       <label class="control-label" for="@context">@context<span class="required">*</span></label>
+					   <input class="form-control" id="root_@context" label="@context" required="" placeholder="" type="text" readonly="readonly" value="http://fintrac-canafe.gc.ca/reporting/api/lvctr/2021">
+			        </div>
+				    <div class="form-group field field-string">
+				       <label class="control-label" for="root_@type">@type<span class="required">*</span></label>
+					   <input class="form-control" id="root_@type" label="@type" required="" placeholder="" type="text" readonly="readonly" value="LvctrForm">
+			        </div>
+				    <div class="form-group field field-number">
+				       <label class="control-label" for="root_reportingEntityNumber">reportingEntityNumber<span class="required">*</span></label>
+				       <input class="form-control" id="root_reportingEntityNumber" label="reportingEntityNumber" required="" pattern="[0-9]" placeholder="" type="number" step="any" value="" onblur="MyOnBlur(this)">
+				    </div>
+				    <div class="form-group field field-string">
+				       <label class="control-label" for="root_reportReference">reportReference<span class="required">*</span></label>
+					   <input class="form-control" id="root_reportReference" label="reportReference" required="" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+			        </div>	
+					
+					<div class="form-group field field-object">
+				       <fieldset id="root_details_">
+				       <legend id="root_details__title">details<span class="required">*</span></legend>
+				       <div class="form-group field field-undefined">
+				          <label class="control-label" for="root_details_@type">@type<span class="required">*</span></label>
+					      <input class="form-control" id="root_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrFormDetails">					  
+				       </div>
+				       <div class="form-group field field-integer">
+				          <label class="control-label" for="root_details_twentyFourHourAggregationTypeCode">twentyFourHourAggregationTypeCode<span class="required">*</span></label>
+					      <input class="form-control" id="root_details_twentyFourHourAggregationTypeCode" label="twentyFourHourAggregationTypeCode" required="" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+				       </div>
+				       <div class="form-group field field-string">
+				         <label class="control-label" for="root_details_twentyFourHourStartDateTime">twentyFourHourStartDateTime<span class="required">*</span></label>
+					     <input class="form-control" id="root_details_twentyFourHourStartDateTime" label="twentyFourHourStartDateTime" required="" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       </div>
+				       <div class="form-group field field-string">
+				         <label class="control-label" for="root_details_twentyFourHourEndDateTime">twentyFourHourEndDateTime<span class="required">*</span></label>
+					     <input class="form-control" id="root_details_twentyFourHourEndDateTime" label="twentyFourHourEndDateTime" required="" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       </div>
+					   <div class="form-group field field-string">
+					      <label class="control-label" for="root_details_ministerialDirectiveCode">ministerialDirectiveCode</label>
+					      <input class="form-control" id="root_details_ministerialDirectiveCode" label="ministerialDirectiveCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+					   <div class="form-group field field-integer">
+					      <label class="control-label" for="root_details_activitySectorCode">activitySectorCode<span class="required">*</span></label>
+					      <input class="form-control" id="root_details_activitySectorCode" label="activitySectorCode" required="" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+					   </div>
+					   <div class="form-group field field-number">
+					      <label class="control-label" for="root_details_contactNumber">contactNumber</label>
+					      <input class="form-control" id="root_details_contactNumber" label="contactNumber" placeholder="" type="number" step="any" min="0" value="" onblur="MyOnBlur(this)">
+					   </div>
+				       </fieldset>
+				    </div>
+					
+				   <!---->
+				   </div>
+                   <!--<div class="tab-pane fade" id="identities" role="tabpanel" aria-labelledby="identities-tab">-->
+				   <div class="tab-pane" id="identities" role="tabpanel" aria-labelledby="identities-tab">
+				   <!---->
+				   <div class="form-group field field-array">
+				      <fieldset class="field field-array field-array-of-undefined" id="root_definitions_">
+				        <legend id="root_definitions[X]_title">definitions</legend>				 				
+				        <div class="row array-item-list" id="definitions[X]_array_list"></div>									   				  
+				        <div class="row">				   
+				           <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+				              <button id="btn_definitions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+					       </p>
+				        </div>
+				     </fieldset>
+				   </div>
+				   <!---->
+				   </div>
+				   <!--<div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="transaction-tab">-->
+                   <div class="tab-pane" id="transaction" role="tabpanel" aria-labelledby="transaction-tab">
+				   <!---->
+				   <div class="form-group field field-array">                    
+					<fieldset class="field field-array field-array-of-object" id="root_transactions[X]_fieldset">
+                        <legend id="root_transactions[X]_title">transactions<span class="required">*</span></legend>
+                           <div class="row array-item-list" id="transactions[X]_array_list"></div>                      
+                           <div class="row">
+                              <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+								 <button id="btn_transactions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>								 
+							   </p>
+                           </div>
+                    </fieldset>
+                    </div>
+				   <!---->
+				   </div>
+                </div>
+				
+            </fieldset>
+            </div>
+			<button id="button_Submit" type="button" class="btn btn-info" onclick="button_Submit_click()">Submit</button>
+            </form>
+		</div>
+    </div>
+	</div>
+	
+					    <!--DOM Object Libriaries1-->
+				<div id="DOM_Libriary" style="display:none">
+					
+
+                              <div class="array-item" id="transactions[X]">
+                                 <div class="col-xs-9">
+                                    <div class="form-group field field-object">
+                                       <fieldset id="root_transactions[X]_">
+                                          <div class="form-group field field-string">
+                                             <label class="control-label" for="root_transactions[X]_@type">@type<span class="required">*</span></label>
+											 <input class="form-control" id="root_transactions[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrTransaction">
+                                          </div>
+                                          <div class="form-group field field-object">
+                                             <fieldset id="root_transactions[X]_details_">
+                                                <legend id="root_transactions[X]_details_title">details<span class="required">*</span></legend>
+                                                <div class="form-group field field-undefined">
+                                                   <label class="control-label" for="root_transactions[X]_details_@type">@type<span class="required">*</span></label>
+												   <input class="form-control" id="root_transactions[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrTransactionDetails">
+                                                </div>
+                                                <div class="form-group field field-boolean">
+                                                   <div class="checkbox ">
+												      <label><input type="checkbox" id="root_transactions[X]_details_thresholdIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>thresholdIndicator</span></label>
+												    </div>
+                                                </div>
+                                                <div class="form-group field field-string">
+												   <label class="control-label" for="root_transactions[X]_details_transactionReference">transactionReference</label>
+												   <input class="form-control" id="root_transactions[X]_details_transactionReference" label="transactionReference" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+												</div>
+                                                <div class="form-group field field-string">
+												   <label class="control-label" for="root_transactions[X]_details_transactionDateTime">transactionDateTime</label>
+												   <input class="form-control" id="root_transactions[X]_details_transactionDateTime" label="transactionDateTime" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+												</div>
+                                                <div class="form-group field field-integer">
+												   <label class="control-label" for="root_transactions[X]_details_transactionMethodTypeCode">transactionMethodTypeCode</label>
+												   <input class="form-control" id="root_transactions[X]_details_transactionMethodTypeCode" label="transactionMethodTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+												</div>
+                                                <div class="form-group field field-string">
+												   <label class="control-label" for="root_transactions[X]_details_transactionMethodTypeOther">transactionMethodTypeOther</label>
+												   <input class="form-control" id="root_transactions[X]_details_transactionMethodTypeOther" label="transactionMethodTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+												</div>
+                                                <div class="form-group field field-array">
+                                                   <fieldset class="field field-array field-array-of-string" id="root_transactions[X]_details_transactionIdentifiers">
+                                                      <legend id="root_transactions[X]_details_transactionIdentifiers[X]_title">transactionIdentifiers</legend>
+                                                      <div class="row array-item-list" id="transactionIdentifiers[X]_array_list"></div>
+                                                      <div class="row">
+                                                         <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+														    <button id="btn_transactions[X]_details_transactionIdentifiers[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>															
+													     </p>
+                                                      </div>
+                                                   </fieldset>
+                                                </div>
+                                                <div class="form-group field field-string">
+												   <label class="control-label" for="root_transactions[X]_details_transactionPurpose">transactionPurpose</label>
+												   <input class="form-control" id="root_transactions[X]_details_transactionPurpose" label="transactionPurpose" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+												</div>
+                                                <div class="form-group field field-string">
+												   <label class="control-label" for="root_transactions[X]_details_locationReference">locationReference</label>
+												   <input class="form-control" id="root_transactions[X]_details_locationReference" label="locationReference" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+												</div>
+                                             </fieldset>
+                                          </div>										  
+                                          <div class="form-group field field-array">
+                                             <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions">
+                                                <legend id="root_transactions[X]_startingActions[X]_title">startingActions<span class="required">*</span></legend>
+                                                <div class="row array-item-list" id="startingActions[X]_array_list"></div>
+                                                <div class="row">
+                                                   <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+												      <button id="btn_transactions[X]_startingActions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+												   </p>
+                                                </div>
+                                             </fieldset>
+                                          </div>
+                                          <div class="form-group field field-array">
+                                             <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions">
+                                                <legend id="root_transactions[X]_completingActions[X]_title">completingActions<span class="required">*</span></legend>
+                                                <div class="row array-item-list" id="completingActions[X]_array_list">
+                                                </div>
+                                                <div class="row">
+                                                   <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+												      <button id="btn_transactions[X]_completingActions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+												   </p>
+                                                </div>
+                                             </fieldset>
+                                          </div>
+                                       </fieldset>
+                                    </div>
+                                 </div>
+                                 <div class="col-xs-3 array-item-toolbox">
+                                    <div class="btn-group" style="display: flex; justify-content: space-around;">
+									   <button id="btn_transactions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>									   									   
+									 </div>
+                                 </div>
+                             </div>
+
+
+                                                   <div class="array-item" id="startingActions[X]">
+                                                      <div class="col-xs-9">
+                                                         <div class="form-group field field-object">
+                                                            <fieldset id="root_transactions[X]_startingActions[X]_">
+                                                               <div class="form-group field field-string">
+                                                                  <label class="control-label" for="root_transactions[X]_startingActions[X]_@type">@type<span class="required">*</span></label>
+																  <input class="form-control" id="root_transactions[X]_startingActions[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrStartingAction">
+                                                               </div>
+                                                               <div class="form-group field field-object">
+                                                                  <fieldset id="root_transactions[X]_startingActions[X]_details_">
+                                                                     <legend id="root_transactions[X]_startingActions[X]_details_title">details<span class="required">*</span></legend>
+                                                                     <div class="form-group field field-undefined">
+                                                                        <label class="control-label" for="root_transactions[X]_startingActions[X]_details_@type">@type<span class="required">*</span></label>
+																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrStartingActionDetails">
+                                                                     </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_virtualCurrencyAmount">virtualCurrencyAmount</label>
+																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyAmount" label="virtualCurrencyAmount" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																     </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeCode">virtualCurrencyTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeCode" label="virtualCurrencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeOther">virtualCurrencyTypeOther</label>
+																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeOther" label="virtualCurrencyTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_canadianExchangeRate">canadianExchangeRate</label>
+																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_canadianExchangeRate" label="canadianExchangeRate" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-array">
+                                                                        <fieldset class="field field-array field-array-of-string" id="root_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses">
+                                                                           <legend id="root_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses[X]_title">sendingVirtualCurrencyAddresses</legend>
+                                                                           <div class="row array-item-list" id="sendingVirtualCurrencyAddresses[X]_array_list"></div>
+                                                                           <div class="row">
+                                                                              <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																			     <button id="btn_transactions[X]_startingActions[X]_sendingVirtualCurrencyAddresses[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																			  </p>
+                                                                           </div>
+                                                                        </fieldset>
+                                                                     </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_obtained">obtained</label>
+																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_obtained" label="obtained" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-boolean">
+                                                                        <div class="checkbox ">
+																		   <label><input type="checkbox" id="root_transactions[X]_startingActions[X]_details_sourceOfVirtualCurrencyIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>sourceOfVirtualCurrencyIndicator</span></label>
+																		</div>
+                                                                     </div>
+                                                                     <div class="form-group field field-boolean">
+                                                                        <div class="checkbox ">
+																		   <label><input type="checkbox" id="root_transactions[X]_startingActions[X]_details_conductorIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>conductorIndicator</span></label>
+																		</div>
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                               <div class="form-group field field-array">
+                                                                  <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency">
+                                                                     <legend id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_title">sourcesOfVirtualCurrency</legend>
+                                                                     <div class="row array-item-list" id="sourcesOfVirtualCurrency[X]_array_list"></div>
+                                                                     <div class="row">
+                                                                        <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																		   <button id="btn_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		</p>
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                               <div class="form-group field field-array">
+                                                                  <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions[X]_conductors">
+                                                                     <legend id="root_transactions[X]_startingActions[X]_conductors[X]_title">conductors</legend>
+                                                                     <div class="row array-item-list" id="conductors[X]_array_list"></div>
+                                                                     <div class="row">
+                                                                        <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																		   <button id="btn_transactions[X]_startingActions[X]_conductors[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		</p>
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                            </fieldset>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-xs-3 array-item-toolbox">
+                                                         <div class="btn-group" style="display: flex; justify-content: space-around;">
+														    <button id="btn_transactions[X]_startingActions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														</div>
+                                                      </div>
+                                                   </div>
+
+
+
+                                                   <div class="array-item" id="completingActions[X]">
+                                                      <div class="col-xs-9">
+                                                         <div class="form-group field field-object">
+                                                            <fieldset id="root_transactions[X]_completingActions[X]_">
+                                                               <div class="form-group field field-string">
+                                                                  <label class="control-label" for="root_transactions[X]_completingActions[X]_@type">@type<span class="required">*</span></label>
+																  <input class="form-control" id="root_transactions[X]_completingActions[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrCompletingAction">
+                                                               </div>
+                                                               <div class="form-group field field-object">
+                                                                  <fieldset id="root_transactions[X]_completingActions[X]_details_">
+                                                                     <legend id="root_transactions[X]_completingActions[X]_details_title">details<span class="required">*</span></legend>
+                                                                     <div class="form-group field field-undefined">
+                                                                        <label class="control-label" for="root_transactions[X]_completingActions[X]_details_@type">@type<span class="required">*</span></label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrCompletingActionDetails">
+                                                                     </div>
+                                                                     <div class="form-group field field-integer">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_dispositionTypeCode">dispositionTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_dispositionTypeCode" label="dispositionTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_dispositionTypeOther">dispositionTypeOther</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_dispositionTypeOther" label="dispositionTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_virtualCurrencyAmount">virtualCurrencyAmount</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_virtualCurrencyAmount" label="virtualCurrencyAmount" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_virtualCurrencyTypeCode">virtualCurrencyTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_virtualCurrencyTypeCode" label="virtualCurrencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_virtualCurrencyTypeOther">virtualCurrencyTypeOther</label>
+																	    <input class="form-control" id="root_transactions[X]_completingActions[X]_details_virtualCurrencyTypeOther" label="virtualCurrencyTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-array">
+                                                                        <fieldset class="field field-array field-array-of-string" id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses">
+                                                                           <legend id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_title">receivingVirtualCurrencyAddresses</legend>
+                                                                           <div class="row array-item-list" id="receivingVirtualCurrencyAddresses[X]_array_list"></div>
+                                                                           <div class="row">
+                                                                              <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																			     <button id="btn_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																			  </p>
+                                                                           </div>
+                                                                        </fieldset>
+                                                                     </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_currencyTypeCode">currencyTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_currencyTypeCode" label="currencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_canadianEquivalentAmount">canadianEquivalentAmount</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_canadianEquivalentAmount" label="canadianEquivalentAmount" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_referenceNumber">referenceNumber</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_referenceNumber" label="referenceNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_otherRelatedNumber">otherRelatedNumber</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_otherRelatedNumber" label="otherRelatedNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_financialInstitutionNumber">financialInstitutionNumber</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_financialInstitutionNumber" label="financialInstitutionNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_completingActions[X]_details_branchNumber">branchNumber</label>
+																	   <input class="form-control" id="root_transactions[X]_completingActions[X]_details_branchNumber" label="branchNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountNumber">accountNumber</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountNumber" label="accountNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-integer">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountTypeCode">accountTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountTypeCode" label="accountTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountTypeOther">accountTypeOther</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountTypeOther" label="accountTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountCurrencyTypeCode">accountCurrencyTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountCurrencyTypeCode" label="accountCurrencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountVirtualCurrencyTypeCode">accountVirtualCurrencyTypeCode</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountVirtualCurrencyTypeCode" label="accountVirtualCurrencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountVirtualCurrencyTypeOther">accountVirtualCurrencyTypeOther</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountVirtualCurrencyTypeOther" label="accountVirtualCurrencyTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountOpenDate">accountOpenDate</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountOpenDate" label="accountOpenDate" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+                                                                     <div class="form-group field field-boolean">
+                                                                        <div class="checkbox ">
+																		   <label><input type="checkbox" id="root_transactions[X]_completingActions[X]_details_involvementIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>involvementIndicator</span></label>
+																		 </div>
+                                                                     </div>
+                                                                     <div class="form-group field field-boolean">
+                                                                        <div class="checkbox ">
+																		   <label><input type="checkbox" id="root_transactions[X]_completingActions[X]_details_beneficiaryIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>beneficiaryIndicator</span></label>
+																		</div>
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                               <div class="form-group field field-array">
+                                                                  <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions[X]_accountHolders">
+                                                                     <legend id="root_transactions[X]_completingActions[X]_accountHolders[X]_title">accountHolders</legend>
+                                                                     <div class="row array-item-list" id="accountHolders[X]_array_list"></div>
+                                                                     <div class="row">
+                                                                        <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																		   <button id="btn_transactions[X]_completingActions[X]_accountHolders[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		</p>																		
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                               <div class="form-group field field-array">
+                                                                  <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions[X]_involvements">
+                                                                     <legend id="root_transactions[X]_completingActions[X]_involvements[X]_title">involvements</legend>
+                                                                     <div class="row array-item-list" id="involvements[X]_array_list"></div>
+                                                                     <div class="row">
+                                                                        <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																		   <button id="btn_transactions[X]_completingActions[X]_involvements[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		</p>
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                               <div class="form-group field field-array">
+                                                                  <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions[X]_beneficiaries">
+                                                                     <legend id="root_transactions[X]_completingActions[X]_beneficiaries[X]_title">beneficiaries</legend>
+                                                                     <div class="row array-item-list" id="beneficiaries[X]_array_list"></div>
+                                                                     <div class="row">
+                                                                        <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																		   <button id="btn_transactions[X]_completingActions[X]_beneficiaries[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		</p>
+                                                                     </div>
+                                                                  </fieldset>
+                                                               </div>
+                                                            </fieldset>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-xs-3 array-item-toolbox">
+                                                         <div class="btn-group" style="display: flex; justify-content: space-around;">
+														   <!-- <button id="btn_transactions[X]_completingActions[X]_beneficiaries[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>-->
+														   <button id="btn_transactions[X]_completingActions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														  </div>
+                                                      </div>
+                                                   </div>
+								
+
+                             <div class="array-item" id="transactionIdentifiers[X]">
+							     <div class="col-xs-9">
+								    <div class="form-group field field-string">
+									   <input class="form-control" id="root_transactions[X]_details_transactionIdentifiers[X]_item" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+									 </div>
+								</div>
+								<div class="col-xs-3 array-item-toolbox">
+								   <div class="btn-group" style="display: flex; justify-content: space-around;">
+								      <button id="btn_transactions[X]_details_transactionIdentifiers[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+								   </div>
+								 </div>
+							  </div>
+
+                              <div class="array-item" id="sendingVirtualCurrencyAddresses[X]">
+							     <div class="col-xs-9">
+								    <div class="form-group field field-string">
+									   <input class="form-control" id="root_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses[X]_item" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+									</div>
+								 </div>
+								 <div class="col-xs-3 array-item-toolbox">
+								    <div class="btn-group" style="display: flex; justify-content: space-around;">
+									   <button id="btn_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+									</div>
+								</div>
+							  </div>
+
+
+                                                  <div class="array-item" id="conductors[X]">
+												     <div class="col-xs-9">
+													    <div class="form-group field field-object">
+														   <fieldset id="root_transactions[X]_startingActions[X]_conductors[X]_">
+														   <div class="form-group field field-string">
+														      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_@type">@type<span class="required">*</span></label>
+															  <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrConductor">
+															</div>
+															<div class="form-group field field-object">
+															   <fieldset id="root_transactions[X]_startingActions[X]_conductors[X]_details_">
+															      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_details_title">details<span class="required">*</span></legend>
+																  <div class="form-group field field-undefined">
+																     <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_@type">@type<span class="required">*</span></label>
+																	 <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrConductingDetails">
+																    </div>
+																	<div class="form-group field field-boolean">
+																	   <div class="checkbox ">
+																	      <label><input type="checkbox" id="root_transactions[X]_startingActions[X]_conductors[X]_details_clientIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>clientIndicator</span></label>
+																	   </div>
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_clientNumber">clientNumber</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_clientNumber" label="clientNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_username">username</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_username" label="username" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_email">email</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_email" label="email" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-integer">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode">deviceTypeCode</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode" label="deviceTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeOther">deviceTypeOther</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeOther" label="deviceTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceIdentificationNumber">deviceIdentificationNumber</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceIdentificationNumber" label="deviceIdentificationNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceIpAddress">deviceIpAddress</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceIpAddress" label="deviceIpAddress" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-string">
+																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_requestDateTime">requestDateTime</label>
+																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_requestDateTime" label="requestDateTime" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	</div>
+																	<div class="form-group field field-boolean">
+																	   <div class="checkbox ">
+																	      <label>
+																		     <input type="checkbox" id="root_transactions[X]_startingActions[X]_conductors[X]_details_onBehalfOfIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>onBehalfOfIndicator</span>
+																		  </label>
+																	   </div>
+																	</div>
+															  </fieldset>
+															</div>
+															<div class="form-group field field-object">
+															   <fieldset id="root_transactions[X]_startingActions[X]_conductors[X]_subject_">
+															      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_subject_title">subject</legend>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_subject_$ref">$ref</label>
+																	  <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_subject_$ref" label="$ref" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+															   </fieldset>
+															</div>
+															<div class="form-group field field-array">
+															   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs">
+															      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_title">onBehalfOfs</legend>
+																  <div class="row array-item-list" id="onBehalfOfs[X]_array_list"></div>
+																  <div class="row">
+																     <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+																	    <button id="btn_transactions[X]_startingActions[X]_onBehalfOfs[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																	 </p>
+																  </div>
+																</fieldset>
+															</div>
+														  </fieldset>
+													    </div>
+													</div>
+													<div class="col-xs-3 array-item-toolbox">
+													   <div class="btn-group" style="display: flex; justify-content: space-around;">
+														  <button id="btn_transactions[X]_startingActions[X]_conductors[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+													   </div>
+													</div>
+												</div>
+												
+												
+                                                <div class="array-item" id="onBehalfOfs[X]">
+												   <div class="col-xs-9">
+												      <div class="form-group field field-object">													  
+													     <fieldset id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_">
+														    <div class="form-group field field-string">
+															   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_@type">@type<span class="required">*</span></label>
+															   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrOnBehalfOf">
+															</div>
+															<div class="form-group field field-object">
+															   <fieldset id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_">
+															      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details__title">details<span class="required">*</span></legend>
+															      <div class="form-group field field-undefined">
+															         <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_@type">@type<span class="required">*</span></label>
+																	 <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrOnBehalfOfDetails">
+															       </div>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_clientNumber">clientNumber</label>
+																      <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_clientNumber" label="clientNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_email">email</label>
+																      <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_email" label="email" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+																   <div class="form-group field field-integer">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode">relationshipTypeCode</label>
+																      <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode" label="relationshipTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																   </div>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeOther">relationshipTypeOther</label>
+																      <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeOther" label="relationshipTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+															   </fieldset>
+															</div>
+															<div class="form-group field field-object">
+															   <fieldset id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_subject_">
+															      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_subject_title">subject</legend>
+																  <div class="form-group field field-string">
+																     <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_subject_$ref">$ref</label>
+																	 <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_subject_$ref" label="$ref" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+															   </fieldset>
+															</div>
+														</fieldset>
+												     </div>
+												  </div>
+												  <div class="col-xs-3 array-item-toolbox">
+												      <div class="btn-group" style="display: flex; justify-content: space-around;">
+												         <button id="btn_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+												      </div>
+												   </div>
+												</div>												
+
+                                                  <div class="array-item" id="sourcesOfVirtualCurrency[X]">
+												     <div class="col-xs-9">
+													    <div class="form-group field field-object">
+														   <fieldset id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_">
+														      <div class="form-group field field-string">
+															     <label class="control-label" for="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_@type">@type<span class="required">*</span></label>
+																 <input class="form-control" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_@type" label="@type" required="" placeholder="" type="text" readonly="readonly" value="LvctrSourceOfVirtualCurrency">
+															   </div>
+															   <div class="form-group field field-object">
+															   <fieldset id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_">
+															      <legend id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_title">details<span class="required">*</span></legend>
+																  <div class="form-group field field-undefined">
+																     <label class="control-label" for="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_@type">@type<span class="required">*</span></label>
+																	 <input class="form-control" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrSourceOfVirtualCurrencyDetails">
+																   </div>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_accountNumber">accountNumber</label>
+																	  <input class="form-control" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_accountNumber" label="accountNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_policyNumber">policyNumber</label>
+																	  <input class="form-control" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_policyNumber" label="policyNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+																   <div class="form-group field field-string">
+																      <label class="control-label" for="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_identifyingNumber">identifyingNumber</label>
+																	  <input class="form-control" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_details_identifyingNumber" label="identifyingNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																   </div>
+																</fieldset>
+														        </div>
+																<div class="form-group field field-object">
+																   <fieldset id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_name_">
+																      <legend id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_name_title">name</legend>
+																	  <div class="form-group field field-string">
+																	     <label class="control-label" for="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_name_$ref">$ref</label>
+																		 <input class="form-control" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_name_$ref" label="$ref" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	  </div>
+																   </fieldset>
+																 </div>
+															 </fieldset>
+														</div>
+													 </div>
+													 <div class="col-xs-3 array-item-toolbox">
+													    <div class="btn-group" style="display: flex; justify-content: space-around;">
+														   <button id="btn_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														</div>
+													 </div>
+												</div>
+
+
+
+							 
+							 <div class="array-item" id="receivingVirtualCurrencyAddresses[X]">
+							    <div class="col-xs-9">
+								   <div class="form-group field field-string">
+								      <input class="form-control" id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_item" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+								   </div>
+								</div>
+							    <div class="col-xs-3 array-item-toolbox">
+								   <div class="btn-group" style="display: flex; justify-content: space-around;">
+								      <button id="btn_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+								   </div>
+								</div>
+							</div>
+
+
+
+												   				
+
+																
+												   <div class="array-item" id="beneficiaries[X]">
+												      <div class="col-xs-9">
+													     <div class="form-group field field-object">
+														    <fieldset id="root_transactions[X]_completingActions[X]_beneficiaries[X]_">
+															   <div class="form-group field field-string">
+															      <label class="control-label" for="root_transactions[X]_completingActions[X]_beneficiaries[X]_@type">@type<span class="required">*</span></label>
+																  <input class="form-control" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrBeneficiary">
+															   </div>
+															   <div class="form-group field field-object">
+															      <fieldset id="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_">
+																     <legend id="root_transactions[X]_completingActions[X]_beneficiaries[X]_details__title">details<span class="required">*</span></legend>
+																	 <div class="form-group field field-undefined">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_@type">@type<span class="required">*</span></label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrBenefitingDetails">
+																	 </div>
+																	 <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_clientNumber">clientNumber</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_clientNumber" label="clientNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+																	 <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_username">username</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_username" label="username" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+																	 <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_email">email</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_details_email" label="email" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+																  </fieldset>
+																</div>
+																<div class="form-group field field-object">
+																   <fieldset id="root_transactions[X]_completingActions[X]_beneficiaries[X]_subject_">
+																      <legend id="root_transactions[X]_completingActions[X]_beneficiaries[X]_subject__title">subject</legend>
+																	  <div class="form-group field field-string">
+																	     <label class="control-label" for="root_transactions[X]_completingActions[X]_beneficiaries[X]_subject_$ref">$ref</label>
+																		 <input class="form-control" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_subject_$ref" label="$ref" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	  </div>
+																	</fieldset>
+																</div>
+															</fieldset>
+														</div>
+													  </div>
+													  <div class="col-xs-3 array-item-toolbox">
+													     <div class="btn-group" style="display: flex; justify-content: space-around;">
+														    <button id="btn_transactions[X]_completingActions[X]_beneficiaries[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														 </div>
+													  </div>
+													</div>
+												   
+												   <div class="array-item" id="involvements[X]">
+												      <div class="col-xs-9">
+													     <div class="form-group field field-object">
+														    <fieldset id="root_transactions[X]_completingActions[X]_involvements[X]_">
+															   <div class="form-group field field-string">
+															      <label class="control-label" for="root_transactions[X]_completingActions[X]_involvements[X]_@type">@type<span class="required">*</span></label>
+																  <input class="form-control" id="root_transactions[X]_completingActions[X]_involvements[X]_@type" label="@type" placeholder="" type="text" readonly="readonly" value="LvctrInvolvement">
+															   </div>
+															   <div class="form-group field field-object">
+															      <fieldset id="root_transactions[X]_completingActions[X]_involvements[X]_details_">
+																     <legend id="root_transactions[X]_completingActions[X]_involvements[X]_details__title">details<span class="required">*</span></legend>
+																	 <div class="form-group field field-undefined">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_involvements[X]_details_@type">@type<span class="required">*</span></label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_involvements[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrInvolvementDetails">
+																	  </div>
+																	  <div class="form-group field field-string">
+																	     <label class="control-label" for="root_transactions[X]_completingActions[X]_involvements[X]_details_accountNumber">accountNumber</label>
+																		 <input class="form-control" id="root_transactions[X]_completingActions[X]_involvements[X]_details_accountNumber" label="accountNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	  </div>
+																	  <div class="form-group field field-string">
+																	     <label class="control-label" for="root_transactions[X]_completingActions[X]_involvements[X]_details_policyNumber">policyNumber</label>
+																		 <input class="form-control" id="root_transactions[X]_completingActions[X]_involvements[X]_details_policyNumber" label="policyNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	  </div>
+																	  <div class="form-group field field-string">
+																	     <label class="control-label" for="root_transactions[X]_completingActions[X]_involvements[X]_details_identifyingNumber">identifyingNumber</label>
+																		 <input class="form-control" id="root_transactions[X]_completingActions[X]_involvements[X]_details_identifyingNumber" label="identifyingNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	  </div>
+																	</fieldset>
+																 </div>
+																 <div class="form-group field field-object">
+																    <fieldset id="root_transactions[X]_completingActions[X]_involvements[X]_name_">
+																	   <legend id="root_transactions[X]_completingActions[X]_involvements[X]_name_title">name</legend>
+																	      <div class="form-group field field-string">
+																		     <label class="control-label" for="root_transactions[X]_completingActions[X]_involvements[X]_name_$ref">$ref</label>
+																			 <input class="form-control" id="root_transactions[X]_completingActions[X]_involvements[X]_name_$ref" label="$ref" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																		  </div>
+																	</fieldset>
+																 </div>
+															 </fieldset>
+														 </div>
+														</div>
+														<div class="col-xs-3 array-item-toolbox">
+														   <div class="btn-group" style="display: flex; justify-content: space-around;">
+														      <button id="btn_transactions[X]_completingActions[X]_involvements[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														   </div>
+														</div>
+													</div>												   
+												   
+												   
+												   <div id="accountHolders[X]" class="array-item">
+												      <div class="col-xs-9">
+													     <div class="form-group field field-object">
+														    <fieldset id="root_transactions[X]_completingActions[X]_accountHolders[X]_">
+															   <div class="form-group field field-string">
+															      <label class="control-label" for="root_transactions[X]_completingActions[X]_accountHolders[X]_@type">@type<span class="required">*</span></label>
+																  <input class="form-control" id="root_transactions[X]_completingActions[X]_accountHolders[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrAccountHolder">																  
+																</div>
+																<div class="form-group field field-object">
+																  <fieldset id="root_transactions[X]_completingActions[X]_accountHolders[X]_details_">
+																     <legend id="root_transactions[X]_completingActions[X]_accountHolders[X]_details_title">details<span class="required">*</span></legend>
+																	 <div class="form-group field field-undefined">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_accountHolders[X]_details_@type">@type<span class="required">*</span></label>
+																	    <input class="form-control" id="root_transactions[X]_completingActions[X]_accountHolders[X]_details_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrAccountHolderDetails">																			
+																	 </div>
+																	 <div class="form-group field field-string">
+																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_accountHolders[X]_details_username">username</label>
+																		<input class="form-control" id="root_transactions[X]_completingActions[X]_accountHolders[X]_details_username" label="username" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	 </div>
+																  </fieldset>
+																</div>
+																<div class="form-group field field-object">
+																   <fieldset id="root_transactions[X]_completingActions[X]_accountHolders[X]_name_">
+																      <legend id="root_transactions[X]_completingActions[X]_accountHolders[X]_name_title">name</legend>
+																	  <div class="form-group field field-string">
+																	     <label class="control-label" for="root_transactions[X]_completingActions[X]_accountHolders[X]_name_$ref">$ref</label>
+																		 <input class="form-control" id="root_transactions[X]_completingActions[X]_accountHolders[X]_name_$ref" label="$ref" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+																	  </div>
+																    </fieldset>
+																</div>
+															</fieldset>
+														</div>
+													  </div>													  
+													  <div class="col-xs-3 array-item-toolbox">
+													     <div class="btn-group" style="display: flex; justify-content: space-around;">
+															<button id="btn_transactions[X]_completingActions[X]_accountHolders[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+															   <i class="glyphicon glyphicon-remove"></i>
+															</button>
+														</div>
+													   </div>
+													</div>
+
+
+
+
+
+
+					  <div class="array-item" id="definitions[X]">
+	  					 <div class="col-xs-9">
+						    <div class="form-group field field-undefined">
+							   <div class="panel panel-default panel-body">
+							      <div class="form-group">
+								     <select id="root_definitions[X]_select" class="form-control" onchange="select_ALL_select(this)">
+									    <option value="">Select Option</option>
+										<option value="LvctrPersonName">LvctrPersonName</option>
+										<option value="LvctrEntityName">LvctrEntityName</option>
+										<option value="LvctrPersonDetails">LvctrPersonDetails</option>
+										<option value="LvctrEntityDetails">LvctrEntityDetails</option>
+									</select>
+							      </div>
+								  <div class="form-group field field-undefined" id="root_definitions[X]_fieldset">
+								  <!--fieldset-->
+							      </div>
+						        </div>
+							</div>
+						</div>
+						<div class="col-xs-3 array-item-toolbox">
+						   <div class="btn-group" style="display: flex; justify-content: space-around;">
+						      <button id="btn_definitions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+							    <i class="glyphicon glyphicon-remove"></i>
+							  </button>
+							</div>
+						</div>
+					  </div>	
+
+					<fieldset id="root_definitions[X]_LvctrPersonName_">
+						<div class="form-group field field-undefined">
+						    <label class="control-label" for="root_definitions[X]_LvctrPersonName_@type">@type<span class="required">*</span></label>
+							<input class="form-control" id="root_definitions[X]_LvctrPersonName_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrPersonName">
+						</div>
+						<div class="form-group field field-string">
+						    <label class="control-label" for="root_definitions[X]_LvctrPersonName_$id">$id</label>
+							<input class="form-control" id="root_definitions[X]_LvctrPersonName_$id" label="$id" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+						<div class="form-group field field-string">
+						    <label class="control-label" for="root_definitions[X]_LvctrPersonName_givenName">givenName</label>
+							<input class="form-control" id="root_definitions[X]_LvctrPersonName_givenName" label="givenName" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+						<div class="form-group field field-string">
+						    <label class="control-label" for="root_definitions[X]_LvctrPersonName_other">other</label>
+						    <input class="form-control" id="root_definitions[X]_LvctrPersonName_other" label="other" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+						<div class="form-group field field-string">
+						    <label class="control-label" for="root_definitions[X]_LvctrPersonName_surname">surname</label>
+						    <input class="form-control" id="root_definitions[X]_LvctrPersonName_surname" label="surname" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+					</fieldset> 
+
+                    <fieldset id="root_definitions[X]_LvctrEntityName_">
+				     	<div class="form-group field field-undefined">
+				     	   <label class="control-label" for="root_definitions[X]_LvctrEntityName_@type">@type<span class="required">*</span></label>
+				     	   <input class="form-control" id="root_definitions[X]_LvctrEntityName_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrEntityName">
+				     	</div>
+				     	<div class="form-group field field-string">
+				     	   <label class="control-label" for="root_definitions[X]_LvctrEntityName_$id">$id</label>
+				     	   <input class="form-control" id="root_definitions[X]_LvctrEntityName_$id" label="$id" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				     	</div>
+				     	<div class="form-group field field-string">
+				     	   <label class="control-label" for="root_definitions[X]_LvctrEntityName_legalName">legalName</label>
+				     	   <input class="form-control" id="root_definitions[X]_LvctrEntityName_legalName" label="legalName" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				     	</div>
+					</fieldset>					
+				
+					<fieldset id="root_definitions[X]_LvctrEntityDetails_">
+				       	<div class="form-group field field-undefined">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_@type">@type<span class="required">*</span></label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrEntityDetails">
+				       	</div>
+				       	<div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_$id">$id</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_$id" label="$id" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+				       	<div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_legalName">legalName</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_legalName" label="legalName" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+                        <div class="form-group field field-undefined">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address">address</label>
+                           <div class="panel panel-default panel-body">
+				       	      <div class="form-group">
+				       	         <select id="root_definitions[X]_LvctrEntityDetails_address_select" class="form-control" onchange="select_ALL_select(this)">
+								    <option value="">Select Option</option>
+				       	            <option value="LvctrStructuredAddress">LvctrStructuredAddress</option>
+                                    <option value="LvctrUnstructuredAddress">LvctrUnstructuredAddress</option>
+                                 </select>
+                              </div>
+                              <div class="form-group field field-object" id="root_definitions[X]_LvctrEntityDetails_address_fieldset">
+                              </div>
+                           </div>
+                       </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_telephoneNumber">telephoneNumber</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_telephoneNumber" label="telephoneNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_telephoneExtension">telephoneExtension</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_telephoneExtension" label="telephoneExtension" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_businessNature">businessNature</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_businessNature" label="businessNature" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>                       
+					   <div class="form-group field field-boolean">
+					      <div class="checkbox ">
+						     <label>
+							     <input type="checkbox" id="root_definitions[X]_LvctrEntityDetails_registrationIndicator" value="false" onclick="MyCheckBoxClick(this)"><span>registrationIndicator</span>
+							</label>
+					      </div>
+					   </div>					   					   
+					   <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_registrationNumber">registrationNumber</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_registrationNumber" label="registrationNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+					   
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionCountryCode">registrationJurisdictionCountryCode</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionCountryCode" label="registrationJurisdictionCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionProvinceCode">registrationJurisdictionProvinceCode</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionProvinceCode" label="registrationJurisdictionProvinceCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionProvinceOther">registrationJurisdictionProvinceOther</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionProvinceOther" label="registrationJurisdictionProvinceOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-array">
+                          <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrEntityIdentificationDetails">
+                             <legend id="root_definitions[X]_LvctrEntityDetails_title">identifications</legend>                    
+                             <!--root_definitions[X]_LvctrEntityIdentificationDetails[X]_array_list   root_definitions[X]_LvctrEntityIdentificationDetails[X]-->
+							 <div class="row array-item-list" id="LvctrEntityIdentificationDetails[X]_array_list">
+							 </div>
+                             <div class="row">
+                                <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+								<button id="btn_definitions[X]_LvctrEntityIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+								</p>
+                             </div>
+                          </fieldset>
+                       </div>
+					   
+					   <div class="form-group field field-array">
+					      <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons">
+						     <legend id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_title">authorizedPersons</legend>
+							 <div class="row array-item-list" id="authorizedPersons[X]_array_list">
+							</div>
+							<div class="row">
+							   <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+							      <button id="btn_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+							   </p>
+							</div>
+						 </fieldset>
+						</div>					   					   					   
+                    </fieldset>
+				
+							    <div class="array-item" id="authorizedPersons[X]">
+								   <div class="col-xs-9">
+								      <div class="form-group field field-object">
+									     <fieldset id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_">
+										    <div class="form-group field field-undefined">
+											   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_@type">@type<span class="required">*</span></label>
+												<input class="form-control" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrPersonName">
+											</div>
+											<div class="form-group field field-string">
+											   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_$id">$id</label>
+											   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_$id" label="$id" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+											</div>
+											<div class="form-group field field-string">
+											   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_givenName">givenName</label>
+											   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_givenName" label="givenName" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+											</div>
+											<div class="form-group field field-string">
+											   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_other">other</label>
+											   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_other" label="other" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+											</div>
+											<div class="form-group field field-string">
+											   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_surname">surname</label>
+											   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_surname" label="surname" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+											</div>
+									    </fieldset>
+									 </div>
+								    </div>
+									<div class="col-xs-3 array-item-toolbox">
+									   <div class="btn-group" style="display: flex; justify-content: space-around;">
+									      <button id="btn_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this);"><i class="glyphicon glyphicon-remove"></i></button>
+									   </div>
+									</div>
+								</div>
+				
+				
+				
+				
+					<fieldset id="root_definitions[X]_LvctrPersonDetails_">
+				       	<div class="form-group field field-undefined">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_@type">@type<span class="required">*</span></label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_@type" label="@type" required="" placeholder="" type="text" readonly="readonly" value="LvctrPersonDetails">
+				       	</div>
+				       	<div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_$id">$id</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_$id" label="$id" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+				       	<div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_givenName">givenName</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_givenName" label="givenName" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+				       	<div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_other">other</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_other" label="other" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+				       	<div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_surname">surname</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_surname" label="surname" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+                        <div class="form-group field field-string">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_alias">alias</label>
+				       	   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_alias" label="alias" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+				       	</div>
+                        <div class="form-group field field-undefined">
+				       	   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address">address</label>
+                           <div class="panel panel-default panel-body">
+				       	      <div class="form-group">
+				       	         <select id="root_definitions[X]_LvctrPersonDetails_address_select" class="form-control" onchange="select_ALL_select(this)">
+								    <option value="">Select Option</option>
+				       	            <option value="LvctrStructuredAddress">LvctrStructuredAddress</option>
+                                    <option value="LvctrUnstructuredAddress">LvctrUnstructuredAddress</option>
+                                 </select>
+                              </div>
+                              <div class="form-group field field-object" id="root_definitions[X]_LvctrPersonDetails_address_fieldset">
+                              </div>
+                           </div>
+                       </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_telephoneNumber">telephoneNumber</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_telephoneNumber" label="telephoneNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_telephoneExtension">telephoneExtension</label>
+						  <input class="form-control" id="[root_definitions[X]_LvctrPersonDetails_telephoneExtension" label="telephoneExtension" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_birthDate">birthDate</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_birthDate" label="birthDate" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_residenceCountryCode">residenceCountryCode</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_residenceCountryCode" label="residenceCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_occupation">occupation</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_occupation" label="occupation" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-string">
+					      <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_employerName">employerName</label>
+						  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_employerName" label="employerName" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					   </div>
+                       <div class="form-group field field-array">
+                          <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_fieldset">
+                             <legend id="root_definitions[X]_LvctrPersonDetails_title">identifications</legend>                    
+                             <!--root_definitions[X]_LvctrPersonIdentificationDetails[X]_array_list   root_definitions[X]_LvctrPersonIdentificationDetails[X]   
+							 LvctrPersonDetails_LvctrPersonIdentificationDetails[X]-->
+							 <div class="row array-item-list" id="LvctrPersonIdentificationDetails[X]_array_list">
+							 </div>
+                             <div class="row">
+                                <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
+								<button id="btn_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+								</p>
+                             </div>
+                          </fieldset>
+                       </div>
+                    </fieldset>
+					
+                    <div class="array-item" id="LvctrPersonIdentificationDetails[X]">
+                      <div class="col-xs-9">
+                        <div class="form-group field field-object">         
+		 			      <fieldset id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_">
+					       <div class="form-group field field-undefined">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_@type">@type<span class="required">*</span></label>
+	                          <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_@type" label="@type" required="" placeholder="" type="text" readonly="readonly" value="LvctrPersonIdentificationDetails">
+                           </div>
+                           <div class="form-group field field-integer">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode">identificationTypeCode</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode" label="identificationTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeOther">identificationTypeOther</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeOther" label="identificationTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationNumber">identificationNumber</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationNumber" label="identificationNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationJurisdictionCountryCode">identificationJurisdictionCountryCode</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationJurisdictionCountryCode" label="identificationJurisdictionCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationJurisdictionProvinceCode">identificationJurisdictionProvinceCode</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationJurisdictionProvinceCode" label="identificationJurisdictionProvinceCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationJurisdictionProvinceOther">identificationJurisdictionProvinceOther</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationJurisdictionProvinceOther" label="identificationJurisdictionProvinceOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                        </fieldset> 
+                      </div>
+                    </div>
+                    <div class="col-xs-3 array-item-toolbox">
+                       <div class="btn-group" style="display: flex; justify-content: space-around;">
+					      <button id="btn_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+					         <i class="glyphicon glyphicon-remove"></i>
+					       </button>
+						</div>
+                    </div>
+                  </div>
+
+					
+                    <div class="array-item" id="LvctrEntityIdentificationDetails[X]">
+                      <div class="col-xs-9">
+                        <div class="form-group field field-object">         
+		 			      <fieldset id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_">
+					       <div class="form-group field field-undefined">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_@type">@type<span class="required">*</span></label>
+	                          <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_@type" label="@type" required="" placeholder="" type="text" readonly="readonly" value="LvctrEntityIdentificationDetails">
+                           </div>
+                           <div class="form-group field field-integer">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode">identificationTypeCode</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode" label="identificationTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeOther">identificationTypeOther</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeOther" label="identificationTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationNumber">identificationNumber</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationNumber" label="identificationNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationJurisdictionCountryCode">identificationJurisdictionCountryCode</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationJurisdictionCountryCode" label="identificationJurisdictionCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationJurisdictionProvinceCode">identificationJurisdictionProvinceCode</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationJurisdictionProvinceCode" label="identificationJurisdictionProvinceCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                           <div class="form-group field field-string">
+					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationJurisdictionProvinceOther">identificationJurisdictionProvinceOther</label>
+					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationJurisdictionProvinceOther" label="identificationJurisdictionProvinceOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					       </div>
+                        </fieldset> 
+                      </div>
+                    </div>
+                    <div class="col-xs-3 array-item-toolbox">
+                       <div class="btn-group" style="display: flex; justify-content: space-around;">
+					      <button id="btn_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+					         <i class="glyphicon glyphicon-remove"></i>
+					       </button>
+						</div>
+                    </div>
+                  </div>
+				
+
+				
+                    <fieldset id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_">
+                       <div class="form-group field field-undefined">
+                            <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_@type">@type<span class="required">*</span></label>
+				            <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_@type" label="@type" required="" placeholder="" type="text" readonly="readonly" value="LvctrStructuredAddress">
+                        </div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber">unitNumber</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber" label="unitNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber">buildingNumber</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber" label="buildingNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress">streetAddress</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress" label="streetAddress" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_city">city</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_city" label="city" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_district">district</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_district" label="district" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode">countryCode</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode" label="countryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode">provinceCode</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode" label="provinceCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceOther">provinceOther</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceOther" label="provinceOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_locality">locality</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_locality" label="locality" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode">postalCode</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode" label="postalCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                    </fieldset>
+
+                    <fieldset id="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_">
+                      <div class="form-group field field-undefined">
+                            <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_@type">@type<span class="required">*</span></label>
+				            <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrUnstructuredAddress">
+                      </div>
+                      <div class="form-group field field-string">
+					     <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode">unstructuredCountryCode</label>
+						 <input class="form-control" id="rroot_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode" label="unstructuredCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					  </div>
+                      <div class="form-group field field-string">
+					     <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails">unstructuredAddressDetails</label>
+						 <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails" label="unstructuredAddressDetails" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					  </div>
+                    </fieldset>
+
+                    <fieldset id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_">
+                       <div class="form-group field field-undefined">
+                            <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_@type">@type<span class="required">*</span></label>
+				            <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrStructuredAddress">
+                        </div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_unitNumber">unitNumber</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_unitNumber" label="unitNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_buildingNumber">buildingNumber</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_buildingNumber" label="buildingNumber" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_streetAddress">streetAddress</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_streetAddress" label="streetAddress" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_city">city</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_city" label="city" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_district">district</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_district" label="district" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_countryCode">countryCode</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_countryCode" label="countryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_provinceCode">provinceCode</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_provinceCode" label="provinceCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_provinceOther">provinceOther</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_provinceOther" label="provinceOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_locality">locality</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_locality" label="locality" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                        <div class="form-group field field-string">
+						   <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_postalCode">postalCode</label>
+						   <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrStructuredAddress_postalCode" label="postalCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						</div>
+                    </fieldset>
+
+                    <fieldset id="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_">
+                      <div class="form-group field field-undefined">
+                            <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_@type">@type<span class="required">*</span></label>
+				            <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_@type" label="@type" placeholder="" required="" type="text" readonly="readonly" value="LvctrUnstructuredAddress">
+                      </div>
+                      <div class="form-group field field-string">
+					     <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode">unstructuredCountryCode</label>
+						 <input class="form-control" id="rroot_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode" label="unstructuredCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					  </div>
+                      <div class="form-group field field-string">
+					     <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails">unstructuredAddressDetails</label>
+						 <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails" label="unstructuredAddressDetails" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+					  </div>
+                    </fieldset>
+
+
+
+
+						
+			    </div>
+					<!--DOM Object Libriaries-->
+
+	
+</body></html>
