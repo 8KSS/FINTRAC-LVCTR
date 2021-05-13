@@ -3,7 +3,7 @@ HTML page to generate JSON-LD formatted Large Virtual Currency Transaction Repor
 
 ## DISCLAIMER
 1. The source is free and not endorsed by FINTRAC or others.
-2. When using the HTML form in the browser, _**none of the information entered is transmitted or stored**_.  The HTML page runs as a stand-alone through your browser.
+2. When using the HTML form in the browser, _**none of the information entered is transmitted or stored**_.  The HTML page runs stand-alone through your browser.
 
 
 ## INTRODUCTION
