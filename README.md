@@ -1,5 +1,10 @@
 ##  FINTRAC-LVCTR
-HTML page to generate JSON-LD formatted Large Virtual Currency Transaction Report (LVCTR) for upload into F2R @ FINTRAC.
+HTML page to generate JSON-LD formatted Large Virtual Currency Transaction Report (LVCTR) for upload into F2R @ FINTRAC.  
+
+## DISCLAIMER
+1. The source is free and not endorsed by FINTRAC or others.
+2. When using the HTML form in the browser, _**none of the information entered is transmitted or stored**_.  The HTML page runs as a stand-alone through your browser.
+
 
 ## INTRODUCTION
 The initial HTML file has been created to demonstrate how to create the JSON-LD formatted Large Virtual Currency Transaction Report that can be upload to the F2R system for Reporting Entities. It is meant to help AML compliance officers test out and convey to their technical teams how to create of the LVCTR.  This is AS-IS code and at this time is meant to help with getting to the June 1, 2021 deadline.  It is hoped that by making this open to the Dealers in Virtual Currency (DiVC) community in Canada the repository will grow and expand to make it a fully functional library for a wide variety of technical implementations to the benefit of all involved and who need this.  Ultimately, where it goes is up to the community!
