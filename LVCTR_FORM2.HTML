@@ -16,7 +16,7 @@
 -->
 </head>
 <body onload="MyBodyLoad()">
-<script type="text/javascript">
+<script type="text/javascript" id="MyScript">
 /*
 $( document ).ready(function() {
     $('#myTab a').on('click', function (e) {
@@ -37,32 +37,235 @@ var EOL = ",";
 var BR = "<br>";
 var r_key = "";
 var r_ind = 0;
+var MyForm = null;
+var MyInputs = null;
 
 function MyBodyLoad()
 {
 
-   document.getElementById("btn_transactions[X]_add").click();
+   document.getElementById("root_transactions[X]_add").click();
    
-   document.getElementById("btn_transactions[0]_startingActions[X]_add").click();
-   document.getElementById("btn_transactions[0]_completingActions[X]_add").click();
+   document.getElementById("root_transactions[0]_startingActions[X]_add").click();
+   document.getElementById("root_transactions[0]_completingActions[X]_add").click();
 
-   document.getElementById("btn_definitions[X]_add").click();         
-   
-   
+   document.getElementById("root_definitions[X]_add").click();         
+      
    document.getElementById("root_definitions[0]_select").selectedIndex = 3;
    select_ALL_select(document.getElementById("root_definitions[0]_select"));
    document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 1;
    select_ALL_select(document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select"));
-   document.getElementById("btn_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add").click();         
+   document.getElementById("root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add").click();         
    
    
-   document.getElementById("btn_transactions[0]_details_transactionIdentifiers[X]_add").click();   
-   document.getElementById("btn_transactions[0]_startingActions[0]_sendingVirtualCurrencyAddresses[X]_add").click();
+   document.getElementById("root_transactions[0]_details_transactionIdentifiers[X]_add").click();   
+   document.getElementById("root_transactions[0]_startingActions[0]_sendingVirtualCurrencyAddresses[X]_add").click();
    
-   document.getElementById("btn_transactions[0]_startingActions[0]_conductors[X]_add").click();
-   document.getElementById("btn_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[X]_add").click();   
-   document.getElementById("btn_transactions[0]_completingActions[0]_beneficiaries[X]_add").click();      
+   document.getElementById("root_transactions[0]_startingActions[0]_conductors[X]_add").click();
+   document.getElementById("root_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[X]_add").click();   
+   document.getElementById("root_transactions[0]_completingActions[0]_beneficiaries[X]_add").click();      
    
+}
+
+function test_select(o)
+{
+  var t = o.value;  
+  var add = null;
+  var remove = null;
+  
+  if((t=="")||(t=="1"))
+  {
+      remove = document.getElementById("root_definitions[1]_remove");
+	  if(remove){remove.click();}  
+  }
+  if(t=="2")
+   {
+      remove = document.getElementById("root_definitions[1]_remove");
+	  if(!remove)
+	  {
+	    document.getElementById("root_definitions[X]_add").click();
+		document.getElementById("root_definitions[1]_select").selectedIndex = 3;
+        select_ALL_select(document.getElementById("root_definitions[1]_select"));
+
+		document.getElementById("root_definitions[1]_LvctrPersonDetails_address_select").selectedIndex = 1;
+        select_ALL_select(document.getElementById("root_definitions[1]_LvctrPersonDetails_address_select"));
+	  }
+	  document.getElementById("root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add").click(); 
+   }
+  //alert(s);
+}
+function select_input(o)
+{
+   var id = o.id;
+   id = id.replace("select_", "");
+   document.getElementById(id).value = o.value;
+}
+
+function button_test_add()
+{
+   MyForm = document.getElementById("MyForm");
+   MyInputs = MyForm.getElementsByTagName("input");
+   var t = document.getElementById("select_test_select").value;
+   //alert(t);
+   if((t=="")||(t=="1"))
+   {
+	  test_root();
+      test_Person0("46067");
+      test_transactions();
+      test_transaction_startingActions();   
+      test_transaction_conductors("46067");
+      test_transaction_completingActions();
+      test_transaction_beneficiaries("46067");
+   }
+   else if(t=="2")
+   {
+      test_root();
+      test_Person0("46067");
+	  test_Person1("46071");
+      test_transactions();
+      test_transaction_startingActions();   
+      test_transaction_conductors("46067");
+      test_transaction_completingActions();
+      test_transaction_beneficiaries("46071");   
+   }
+}
+
+function test_root()
+{   
+   MyInputs["root_$schema"].value = "DEV1";
+   MyInputs["root_reportingEntityNumber"].value = "160292";
+   MyInputs["root_reportReference"].value = "SAMPLE_TRANSACTION";   
+   document.getElementById("select_root_details_twentyFourHourAggregationTypeCode").value = "4";
+   select_input(document.getElementById("select_root_details_twentyFourHourAggregationTypeCode"));
+   MyInputs["root_details_twentyFourHourStartDateTime"].value = "2021-04-21T00:00:00-05:00";
+   MyInputs["root_details_twentyFourHourEndDateTime"].value = "2021-04-21T23:59:59-05:00";
+   MyInputs["root_details_ministerialDirectiveCode"].value = "";
+   document.getElementById("select_root_details_activitySectorCode").value = "11";
+   select_input(document.getElementById("select_root_details_activitySectorCode"));   
+   MyInputs["root_details_contactNumber"].value = "77700";
+}
+
+function test_Person0(id)
+{
+   MyInputs["root_definitions[0]_LvctrPersonDetails_$id"].value = id;
+   MyInputs["root_definitions[0]_LvctrPersonDetails_givenName"].value = "Joseph";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_surname"].value = "Iuso";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_telephoneNumber"].value = "6478870623";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_birthDate"].value = "1970-10-31";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_occupation"].value = "CEO";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_employerName"].value = "UMF";
+   
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "204";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "370";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Main St E";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Hamilton";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "L8N1J6";
+         
+   //MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode"].value = "1";
+   document.getElementById("select_root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode").value = "4";
+   select_input(document.getElementById("select_root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode"));
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationNumber"].value = "P45568-49567-70307";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionCountryCode"].value = "CA";
+   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionProvinceCode"].value = "ON";   
+}
+
+function test_Person1(id)
+{
+   MyInputs["root_definitions[1]_LvctrPersonDetails_$id"].value = id;
+   MyInputs["root_definitions[1]_LvctrPersonDetails_givenName"].value = "Peter";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_surname"].value = "Pan";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_telephoneNumber"].value = "6479871234";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_birthDate"].value = "1970-01-14";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_occupation"].value = "Developer";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_employerName"].value = "ABC";
+   
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "301";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "12";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Front St";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Toronto";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "M4J2P5";     
+   
+   //MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationTypeCode"].value = "1";
+   document.getElementById("select_root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationTypeCode").value = "4";
+   select_input(document.getElementById("select_root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationTypeCode"));
+   MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationNumber"].value = "P45532-49123-75557";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationJurisdictionCountryCode"].value = "CA";
+   MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationJurisdictionProvinceCode"].value = "ON";   
+}
+
+function test_transactions()
+{
+   MyInputs["root_transactions[0]_details_locationReference"].value = "1";
+   MyInputs["root_transactions[0]_details_thresholdIndicator"].click();      
+   MyInputs["root_transactions[0]_details_transactionReference"].value = "ETH123123123";   
+   MyInputs["root_transactions[0]_details_transactionDateTime"].value = "2021-04-21T09:34:56-05:00";
+   //MyInputs["root_transactions[0]_details_transactionMethodTypeCode"].value = 8;
+   document.getElementById("select_root_transactions[0]_details_transactionMethodTypeCode").value = "8";
+   select_input(document.getElementById("select_root_transactions[0]_details_transactionMethodTypeCode"));   
+   MyInputs["root_transactions[0]_details_transactionIdentifiers[0]_item"].value = "0x40b8b4122abd8d1513c092863e6f82313c37842f204a1b3753d8dd7ff3a8f52a";
+   MyInputs["root_transactions[0]_details_transactionPurpose"].value = "Deposit to VC wallet";      
+}
+
+function test_transaction_startingActions()
+{
+   MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyAmount"].value = "7.82771671";
+   MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyTypeCode"].value = "ETH";
+   MyInputs["root_transactions[0]_startingActions[0]_details_canadianExchangeRate"].value = 3333;
+   MyInputs["root_transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]_item"].value = "0x49db23aa2439be15b9f73c5d400c33e47ca2966e";
+   MyInputs["root_transactions[0]_startingActions[0]_details_obtained"].value = "From external unname wallet";      
+}
+
+function test_transaction_conductors(id)
+{      
+   MyInputs["root_transactions[0]_startingActions[0]_details_conductorIndicator"].click();      
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientIndicator"].click();
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientNumber"].value = id;   
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_username"].value = "momomah";   
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_email"].value = "momo@mah.com";
+   //MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceTypeCode"].value = 4;
+   document.getElementById("select_root_transactions[0]_startingActions[0]_conductors[0]_details_deviceTypeCode").value = "4";
+   select_input(document.getElementById("select_root_transactions[0]_startingActions[0]_conductors[0]_details_deviceTypeCode"));      
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceTypeOther"].value = "unknown";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceIdentificationNumber"].value = "cko8x0ez000003g63bziguh9i";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceIpAddress"].value = "2604:3d08:4982:6900:dc0:3e38:61b4:c1cc";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_requestDateTime"].value = "2021-04-21T09:34:56-05:00";
+   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_subject_$ref"].value = id;
+}
+
+function test_transaction_completingActions()
+{
+   
+   //MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeCode"].value = 11;
+   document.getElementById("select_root_transactions[0]_completingActions[0]_details_dispositionTypeCode").value = "17";
+   select_input(document.getElementById("select_root_transactions[0]_completingActions[0]_details_dispositionTypeCode"));   
+   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeOther"].value = "";
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value ="2021-04-20";   
+   MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyAmount"].value = "7.82771671";
+   MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyTypeCode"].value = "ETH";
+   MyInputs["root_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]_item"].value = "0x12e692ba9d86a622931bd0ebadca34d693f5d319";
+   
+   MyInputs["root_transactions[0]_completingActions[0]_details_canadianEquivalentAmount"].value = "30499";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeCode"].value = 4;
+   document.getElementById("select_root_transactions[0]_completingActions[0]_details_accountTypeCode").value = "4";
+   select_input(document.getElementById("select_root_transactions[0]_completingActions[0]_details_accountTypeCode"));   
+
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeOther"].value = "OTHER";   
+   MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "CAD";
+   MyInputs["root_transactions[0]_completingActions[0]_details_currencyTypeCode"].value = "CAD";
+}
+
+function test_transaction_beneficiaries(id)
+{
+   MyInputs["root_transactions[0]_completingActions[0]_details_beneficiaryIndicator"].click();
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_clientNumber"].value = id;
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_username"].value = "momomah";
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_email"].value = "momo@mah.com";
+   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_subject_$ref"].value = id;      
 }
 
 function MySubstring(str,start,end)
@@ -84,7 +287,11 @@ function button_ALL_add(o)
   var num = parseInt(document.getElementById(str+"[X]_num").value);
   num++;
   ART[ART.length-1] = str+"["+num.toString()+"]";
-  MyClone(str+"[X]_array_list",str+"[X]",ART);
+  //for(i=0;i<AR.length-1;i++){parent+=AR[i]+"_";}
+  //parent+="array_list"; 
+  //MyClone(str+"[X]_array_list",str+"[X]",ART);
+  parent = o.id.replace("_add","_array_list");
+  MyClone(parent,str+"[X]",ART);
   document.getElementById(str+"[X]_num").value = num.toString();  
 }
 
@@ -120,9 +327,16 @@ function select_ALL_select(o)
 function MyClone(parent,child_old,ART)
 {
   child_new = ART[ART.length-1];
-  //console.log("parent="+parent);
-  //console.log("child_old="+child_old);
-  //console.log("child_new="+child_new);
+  
+  /*
+  if(parent.indexOf("LvctrPersonIdentificationDetails")>-1)
+  {
+  console.log("parent="+parent);
+  console.log("child_old="+child_old);
+  console.log("child_new="+child_new);
+  }
+  */
+  
   var itm = document.getElementById(child_old);    
   var cln = itm.cloneNode(true);
   cln.setAttribute("id", child_new);
@@ -157,7 +371,7 @@ function MyRanameIdByTagName(vobj, TagName,child_old,child_new)
     var s_id = obj[i].id;
 	if(TagName=="label"){s_id = obj[i].getAttribute("for");}
     if ((s_id != "")&&(s_id != null))
-	{	  
+	{	
       if(TagName=="button")
 	  {
 		 child_old = child_old.replace("root_","");
@@ -167,6 +381,16 @@ function MyRanameIdByTagName(vobj, TagName,child_old,child_new)
 	  }
 
       var s_id2 = s_id.replace(child_old,child_new);	  
+      /*
+	  if(child_old.indexOf("LvctrPersonIdentificationDetails")>-1)	
+	  {
+		 console.log("child_old="+child_old);
+		 console.log("child_new="+child_new);	  
+		 console.log("s_id="+s_id);	  
+		 console.log("s_id2="+s_id2);	  
+		 console.log("TagName="+TagName);	  
+	  }
+      */
 	  if(TagName=="label")
 	  {
 	     obj[i].setAttribute("for", s_id2);
@@ -210,13 +434,17 @@ function MyRemove(vparent,vchild,num,n)
 
 function button_ALL_remove(ob)
 {
+  var parent = "";
   var AR = ob.id.split("_");
   //console.log(AR);
   var ART = [];
   for(var t=1;t<AR.length-1;t++){ART.push(AR[t]);}  
   var str = MySubstring(ART[ART.length-1],"","[");  
   var num_total = parseInt(document.getElementById(str+"[X]_num").value);
-  var parent = str + "[X]_array_list";
+  for(i=0;i<AR.length-2;i++){parent+=AR[i]+"_";}
+  parent+= str + "[X]_array_list";
+  //var parent = str + "[X]_array_list";
+  //var parent = ob.id.replace("_remove","_array_list");
   var child = ART[ART.length-1];
   var str2 = getNumString(child);
   var n_current = parseInt(str2);
@@ -451,107 +679,26 @@ function AddDivById(id,text)
    }
 }
 
-function button_test_add()
-{   
-   //MyGetZDT();
-   MyForm = document.getElementById("MyForm");
-   MyInputs = MyForm.getElementsByTagName("input");
-   MyInputs["root_$schema"].value = "DEV1";
-   MyInputs["root_reportingEntityNumber"].value = "160292";
-   MyInputs["root_reportReference"].value = "SAMPLE_TRANSACTION";
-   
-   MyInputs["root_details_twentyFourHourAggregationTypeCode"].value = 4;
-   //MyInputs["root_details_twentyFourHourStartDateTime"].value = MyGetZDT("Z",-50,"h");
-   //MyInputs["root_details_twentyFourHourEndDateTime"].value = MyGetZDT("Z",-26,"h");
-   MyInputs["root_details_twentyFourHourStartDateTime"].value = "2021-04-21T00:00:00-05:00";
-   MyInputs["root_details_twentyFourHourEndDateTime"].value = "2021-04-21T23:59:59-05:00";
-   MyInputs["root_details_ministerialDirectiveCode"].value = "";
-   MyInputs["root_details_activitySectorCode"].value = "11";
-   MyInputs["root_details_contactNumber"].value = "77700";
-
-   MyInputs["root_transactions[0]_details_locationReference"].value = "1";
-   MyInputs["root_transactions[0]_details_thresholdIndicator"].click();      
-   MyInputs["root_transactions[0]_details_transactionReference"].value = "TRANS-20210421-001";   
-   //MyInputs["root_transactions[0]_details_transactionDateTime"].value = MyGetZDT("Z",-27,"h");
-   MyInputs["root_transactions[0]_details_transactionDateTime"].value = "2021-04-21T09:34:56-05:00";
-   MyInputs["root_transactions[0]_details_transactionMethodTypeCode"].value = 8;
-   MyInputs["root_transactions[0]_details_transactionIdentifiers[0]_item"].value = "2f2269ac15164d4a21d2a6328bb20c3c";
-   MyInputs["root_transactions[0]_details_transactionPurpose"].value = "Buy VC to invest";
-   
-   
-   MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyAmount"].value = "100";
-   MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyTypeCode"].value = "BTC";
-   MyInputs["root_transactions[0]_startingActions[0]_details_canadianExchangeRate"].value = 75000.00;
-   MyInputs["root_transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]_item"].value = "f3bdc01703c3645c0eb3267d5e599d28";
-   MyInputs["root_transactions[0]_startingActions[0]_details_obtained"].value = "Buy VC to invest";
-   
-   MyInputs["root_definitions[0]_LvctrPersonDetails_$id"].value = "jaerv73f";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_givenName"].value = "Joseph";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_surname"].value = "Iuso";
-   
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "204";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "370";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Main St E";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Hamilton";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "L8N1J6";
-   
-   MyInputs["root_definitions[0]_LvctrPersonDetails_telephoneNumber"].value = "6478870623";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_birthDate"].value = "1965-11-29";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_occupation"].value = "CEO";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_employerName"].value = "UMF";
-   
-   
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode"].value = "1";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationNumber"].value = "P45568-49567-70307";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionCountryCode"].value = "CA";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionProvinceCode"].value = "ON";   
-   
-   MyInputs["root_transactions[0]_startingActions[0]_details_conductorIndicator"].click();
-   
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientIndicator"].click();
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientNumber"].value = "smitha";   
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_username"].value = "smitha";   
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_email"].value = "smitha@hotmail.com";
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceTypeCode"].value = 3;
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceIdentificationNumber"].value = "03e73331cd0f94093a4bb22dfdb3baee";
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_deviceIpAddress"].value = "24.16.223.12";
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_requestDateTime"].value = "2021-04-21T09:34:56-05:00";
-   //MyGetZDT("Z",500,"s");   
-   MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_subject_$ref"].value = "jaerv73f";
-   
-   
-   
-   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeCode"].value = 11;
-   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeOther"].value = "OTHER";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value = MyGetZDT("L",-7,"d");   
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value ="2021-04-20";   
-   MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyAmount"].value = "1.17";
-   MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyTypeCode"].value = "BTC";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyTypeOther"].value = "NA";
-   MyInputs["root_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]_item"].value = "f73b8bd9432cddec84c42783d7f61aa0";
-   
-   //MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "BTC";
-   MyInputs["root_transactions[0]_completingActions[0]_details_canadianEquivalentAmount"].value = "81000";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_referenceNumber"].value = "1212121222";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_otherRelatedNumber"].value = "1212121222";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_financialInstitutionNumber"].value = "000";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_branchNumber"].value = "000000";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_accountNumber"].value = "000000000";
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeCode"].value = 4;
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeOther"].value = "OTHER";   
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "CAD";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_accountVirtualCurrencyTypeCode"].value = "BTC";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_accountVirtualCurrencyTypeOther"].value = "NA";
-   MyInputs["root_transactions[0]_completingActions[0]_details_currencyTypeCode"].value = "CAD";
-
-   MyInputs["root_transactions[0]_completingActions[0]_details_beneficiaryIndicator"].click();
-   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_clientNumber"].value = "392039";
-   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_username"].value = "smitha";
-   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_email"].value = "smitha@hotmail.com";
-   MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_subject_$ref"].value = "jaerv73f";      
+//MyScript
+function readTextFile(file)
+{
+    var allText = "";
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+	rawFile.setRequestHeader("Access-Control-Allow-Origin", "*");
+    rawFile.setRequestHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                allText = rawFile.responseText;
+            }
+        }
+    }
+    rawFile.send(null);
+	return allText;
 }
 
 function MyGetZDT(ty, z, str)
@@ -704,7 +851,8 @@ function MyGetJSON()
 {  
   rArrayRoot = GetArrayRoot();
   rArr = GetRelationsByKey(rArrayRoot,"transactions[0]");
-  dArr = GetRelationsByKey(rArrayRoot,"definitions[0]");
+  var dArr0 = GetRelationsByKey(rArrayRoot,"definitions[0]");
+  var dArr1 = GetRelationsByKey(rArrayRoot,"definitions[1]");
   r_tmp = "";
   r_tmp += "{" + BR;
   r_tmp += GetBlock("", true) + EOL + BR;
@@ -721,7 +869,21 @@ function MyGetJSON()
   r_tmp += "\"identifications\": [{" + BR;
   r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]", true) + BR;
   r_tmp += "}]" + BR;
-  r_tmp += "}" + BR;
+  r_tmp += "}";
+  if(ArrExists(dArr1, "definitions[1]_LvctrPersonDetails"))
+  {
+     r_tmp += EOL + BR;
+	 r_tmp += "{" + BR;
+     r_tmp += GetBlock("definitions[1]_LvctrPersonDetails", true) + EOL + BR;
+     r_tmp += "\"address\": {" + BR;
+     r_tmp += GetBlock("definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
+     r_tmp += "}" + EOL + BR;
+     r_tmp += "\"identifications\": [{" + BR;
+     r_tmp += GetBlock("definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]", true) + BR;
+     r_tmp += "}]" + BR;
+     r_tmp += "}";
+  }
+  r_tmp += BR;
   r_tmp += "]" + EOL + BR;
   
   r_tmp += "\"transactions\": [" + BR;      
@@ -1287,10 +1449,29 @@ function getStringNum(str)
 	     <div class="form-group field field-object">
 		    <fieldset id="root_">
 			   <legend id="root_title">Large Virtual Currency Transaction Report Form</legend>				
-		   	   <div class="row">				   
+		   	   <div class="row">
+                  <!--			   
 	              <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
 	                 <button id="button_test" type="button" class="btn btn-warning btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_test_add()">FILL TEST DATA</button>
 	              </p>
+				  -->
+				      <div class="col-xs-2 text-right array-item-add">
+				      </div>
+					  <div class="col-xs-7 text-right array-item-add">
+				        <div class="form-group">
+								     <select id="select_test_select" class="form-control" onchange="test_select(this)">
+									    <option value="">Select Option</option>
+										<option value="1">1 - Conductor-Beneficiary: Same Person</option>
+										<option value="2">2 - Conductor-Beneficiary: Different Persons</option>
+										<!--<option value="3">Conductor(Entity+Person)-Beneficiary(Entity+Person): Same Enters</option>
+										<option value="3">Conductor(Entity+Person)-Beneficiary(Entity+Person): Different Enters</option>-->
+									</select>
+					     </div>
+					 </div>
+					 <div class="col-xs-3 text-right array-item-add">
+	                     <button id="button_test" type="button" class="btn btn-warning btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_test_add()">FILL TEST DATA</button>
+				    </div>
+
 	            </div>
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -1339,7 +1520,17 @@ function getStringNum(str)
 				       </div>
 				       <div class="form-group field field-integer">
 				          <label class="control-label" for="root_details_twentyFourHourAggregationTypeCode">twentyFourHourAggregationTypeCode<span class="required">*</span></label>
-					      <input class="form-control" id="root_details_twentyFourHourAggregationTypeCode" label="twentyFourHourAggregationTypeCode" required="" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+						  <input type="hidden" id="root_details_twentyFourHourAggregationTypeCode" value="">
+					      <!--<input class="form-control" id="root_details_twentyFourHourAggregationTypeCode" label="twentyFourHourAggregationTypeCode" required="" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+						  <div class="form-group">
+									 <select id="select_root_details_twentyFourHourAggregationTypeCode" class="form-control" label="twentyFourHourAggregationTypeCode" required="" onchange="select_input(this)">
+									    <option value="">Select Option</option>
+										<option value="1">1 - Beneficiary</option>
+										<option value="2">2 - Conductor</option>
+										<option value="3">3 - On behalf of (i.e. 3rd party)</option>
+										<option value="4">4 - Not applicable</option>
+									</select>
+					     </div>
 				       </div>
 				       <div class="form-group field field-string">
 				         <label class="control-label" for="root_details_twentyFourHourStartDateTime">twentyFourHourStartDateTime<span class="required">*</span></label>
@@ -1355,7 +1546,33 @@ function getStringNum(str)
 					   </div>
 					   <div class="form-group field field-integer">
 					      <label class="control-label" for="root_details_activitySectorCode">activitySectorCode<span class="required">*</span></label>
-					      <input class="form-control" id="root_details_activitySectorCode" label="activitySectorCode" required="" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+					      <!--<input class="form-control" id="root_details_activitySectorCode" label="activitySectorCode" required="" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+						  <input type="hidden" id="root_details_activitySectorCode" value="">
+  						  <div class="form-group">
+									 <select id="select_root_details_activitySectorCode" class="form-control" label="activitySectorCode" required="" onchange="select_input(this)">
+									    <option value="">Select Option</option>
+										<option value="1">1 - Accountant</option>
+										<option value="2">2 - Bank</option>										
+										<option value="17">17 - British Columbia notary</option>
+										<option value="3">3 - Caisse populaire</option>
+										<option value="5">5 - Casino</option>
+										<option value="6">6 - Co-op credit society</option>
+										<option value="14">14 - Credit union</option>
+										<option value="19">19 - Credit union central</option>
+										<option value="4">4 - Crown agent</option>
+										<option value="18">18 - Dealer in precious metals and stones</option>
+										<option value="20">20 - Financial services cooperative</option>
+										<option value="21">21 - Foreign money services business</option>
+										<option value="9">9 - Life insurance broker or agent</option>
+										<option value="10">10 - Life insurance company</option>
+										<option value="11">11 - Money services business</option>
+										<option value="12">12 - Provincial savings office</option>
+										<option value="13">13 - Real estate</option>
+										<option value="15">15 - Securities dealer</option>
+										<option value="16">16 - Trust and/or loan company</option>
+									</select>
+					     </div>
+
 					   </div>
 					   <div class="form-group field field-number">
 					      <label class="control-label" for="root_details_contactNumber">contactNumber</label>
@@ -1372,10 +1589,10 @@ function getStringNum(str)
 				   <div class="form-group field field-array">
 				      <fieldset class="field field-array field-array-of-undefined" id="root_definitions_">
 				        <legend id="root_definitions[X]_title">definitions</legend>				 				
-				        <div class="row array-item-list" id="definitions[X]_array_list"></div>									   				  
+				        <div class="row array-item-list" id="root_definitions[X]_array_list"></div>									   				  
 				        <div class="row">				   
 				           <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-				              <button id="btn_definitions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+				              <button id="root_definitions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 					       </p>
 				        </div>
 				     </fieldset>
@@ -1388,10 +1605,10 @@ function getStringNum(str)
 				   <div class="form-group field field-array">                    
 					<fieldset class="field field-array field-array-of-object" id="root_transactions[X]_fieldset">
                         <legend id="root_transactions[X]_title">transactions<span class="required">*</span></legend>
-                           <div class="row array-item-list" id="transactions[X]_array_list"></div>                      
+                           <div class="row array-item-list" id="root_transactions[X]_array_list"></div>                      
                            <div class="row">
                               <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-								 <button id="btn_transactions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>								 
+								 <button id="root_transactions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>								 
 							   </p>
                            </div>
                     </fieldset>
@@ -1442,7 +1659,18 @@ function getStringNum(str)
 												</div>
                                                 <div class="form-group field field-integer">
 												   <label class="control-label" for="root_transactions[X]_details_transactionMethodTypeCode">transactionMethodTypeCode</label>
-												   <input class="form-control" id="root_transactions[X]_details_transactionMethodTypeCode" label="transactionMethodTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+												   <!--<input class="form-control" id="root_transactions[X]_details_transactionMethodTypeCode" label="transactionMethodTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+						   						  <input type="hidden" id="root_transactions[X]_details_transactionMethodTypeCode" value="">
+												  <div class="form-group">
+												     <select id="select_root_transactions[X]_details_transactionMethodTypeCode" class="form-control" label="transactionMethodTypeCode" required="" onchange="select_input(this)">
+												        <option value="">Select Option</option>
+												        <option value="1">1 - In person</option>
+												        <option value="8">8 - Online</option>										
+												        <option value="7">7 - Other</option>
+												        <option value="9">9 - Virtual currency ATM</option>
+												     </select>
+												  </div>
+
 												</div>
                                                 <div class="form-group field field-string">
 												   <label class="control-label" for="root_transactions[X]_details_transactionMethodTypeOther">transactionMethodTypeOther</label>
@@ -1451,10 +1679,10 @@ function getStringNum(str)
                                                 <div class="form-group field field-array">
                                                    <fieldset class="field field-array field-array-of-string" id="root_transactions[X]_details_transactionIdentifiers">
                                                       <legend id="root_transactions[X]_details_transactionIdentifiers[X]_title">transactionIdentifiers</legend>
-                                                      <div class="row array-item-list" id="transactionIdentifiers[X]_array_list"></div>
+                                                      <div class="row array-item-list" id="root_transactions[X]_details_transactionIdentifiers[X]_array_list"></div>
                                                       <div class="row">
                                                          <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-														    <button id="btn_transactions[X]_details_transactionIdentifiers[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>															
+														    <button id="root_transactions[X]_details_transactionIdentifiers[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>															
 													     </p>
                                                       </div>
                                                    </fieldset>
@@ -1472,10 +1700,10 @@ function getStringNum(str)
                                           <div class="form-group field field-array">
                                              <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions">
                                                 <legend id="root_transactions[X]_startingActions[X]_title">startingActions<span class="required">*</span></legend>
-                                                <div class="row array-item-list" id="startingActions[X]_array_list"></div>
+                                                <div class="row array-item-list" id="root_transactions[X]_startingActions[X]_array_list"></div>
                                                 <div class="row">
                                                    <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-												      <button id="btn_transactions[X]_startingActions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+												      <button id="root_transactions[X]_startingActions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 												   </p>
                                                 </div>
                                              </fieldset>
@@ -1483,11 +1711,11 @@ function getStringNum(str)
                                           <div class="form-group field field-array">
                                              <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions">
                                                 <legend id="root_transactions[X]_completingActions[X]_title">completingActions<span class="required">*</span></legend>
-                                                <div class="row array-item-list" id="completingActions[X]_array_list">
+                                                <div class="row array-item-list" id="root_transactions[X]_completingActions[X]_array_list">
                                                 </div>
                                                 <div class="row">
                                                    <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-												      <button id="btn_transactions[X]_completingActions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+												      <button id="root_transactions[X]_completingActions[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 												   </p>
                                                 </div>
                                              </fieldset>
@@ -1497,7 +1725,7 @@ function getStringNum(str)
                                  </div>
                                  <div class="col-xs-3 array-item-toolbox">
                                     <div class="btn-group" style="display: flex; justify-content: space-around;">
-									   <button id="btn_transactions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>									   									   
+									   <button id="root_transactions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>									   									   
 									 </div>
                                  </div>
                              </div>
@@ -1527,7 +1755,7 @@ function getStringNum(str)
 																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeCode" label="virtualCurrencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 																	 </div>
                                                                      <div class="form-group field field-string">
-																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeOther">virtualCurrencyTypeOther</label>
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_twentyFourHourAggregationTypeCode">virtualCurrencyTypeOther</label>
 																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeOther" label="virtualCurrencyTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 																	 </div>
                                                                      <div class="form-group field field-string">
@@ -1537,10 +1765,10 @@ function getStringNum(str)
                                                                      <div class="form-group field field-array">
                                                                         <fieldset class="field field-array field-array-of-string" id="root_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses">
                                                                            <legend id="root_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses[X]_title">sendingVirtualCurrencyAddresses</legend>
-                                                                           <div class="row array-item-list" id="sendingVirtualCurrencyAddresses[X]_array_list"></div>
+                                                                           <div class="row array-item-list" id="root_transactions[X]_startingActions[X]_sendingVirtualCurrencyAddresses[X]_array_list"></div>
                                                                            <div class="row">
                                                                               <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																			     <button id="btn_transactions[X]_startingActions[X]_sendingVirtualCurrencyAddresses[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																			     <button id="root_transactions[X]_startingActions[X]_sendingVirtualCurrencyAddresses[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																			  </p>
                                                                            </div>
                                                                         </fieldset>
@@ -1564,10 +1792,10 @@ function getStringNum(str)
                                                                <div class="form-group field field-array">
                                                                   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency">
                                                                      <legend id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_title">sourcesOfVirtualCurrency</legend>
-                                                                     <div class="row array-item-list" id="sourcesOfVirtualCurrency[X]_array_list"></div>
+                                                                     <div class="row array-item-list" id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_array_list"></div>
                                                                      <div class="row">
                                                                         <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																		   <button id="btn_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		   <button id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																		</p>
                                                                      </div>
                                                                   </fieldset>
@@ -1575,10 +1803,10 @@ function getStringNum(str)
                                                                <div class="form-group field field-array">
                                                                   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions[X]_conductors">
                                                                      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_title">conductors</legend>
-                                                                     <div class="row array-item-list" id="conductors[X]_array_list"></div>
+                                                                     <div class="row array-item-list" id="root_transactions[X]_startingActions[X]_conductors[X]_array_list"></div>
                                                                      <div class="row">
                                                                         <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																		   <button id="btn_transactions[X]_startingActions[X]_conductors[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		   <button id="root_transactions[X]_startingActions[X]_conductors[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																		</p>
                                                                      </div>
                                                                   </fieldset>
@@ -1588,7 +1816,7 @@ function getStringNum(str)
                                                       </div>
                                                       <div class="col-xs-3 array-item-toolbox">
                                                          <div class="btn-group" style="display: flex; justify-content: space-around;">
-														    <button id="btn_transactions[X]_startingActions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														    <button id="root_transactions[X]_startingActions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 														</div>
                                                       </div>
                                                    </div>
@@ -1612,7 +1840,35 @@ function getStringNum(str)
                                                                      </div>
                                                                      <div class="form-group field field-integer">
 																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_dispositionTypeCode">dispositionTypeCode</label>
-																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_dispositionTypeCode" label="dispositionTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																		<!--<input class="form-control" id="root_transactions[X]_completingActions[X]_details_dispositionTypeCode" label="dispositionTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+																		<input type="hidden" id="root_transactions[X]_completingActions[X]_details_dispositionTypeCode" value="">
+																		<div class="form-group">
+																		   <select id="select_root_transactions[X]_completingActions[X]_details_dispositionTypeCode" class="form-control" label="dispositionTypeCode" required="" onchange="select_input(this)">
+																		      <option value="">Select Option</option>
+																		      <option value="1">1 - Deposit to an account</option>
+																			  <option value="3">3 - Conducted currency exchange</option>										
+																			  <option value="4">4 - Purchase of casino chips</option>
+																			  <option value="5">5 - Purchase of bank draft</option>
+																			  <option value="6">6 - Purchase of money order</option>
+																			  <option value="7">7 - Life insurance policy purchase/deposit</option>
+																			  <option value="8">8 - Securities purchase/deposit</option>
+																			  <option value="9">9 - Real estate purchase/deposit</option>
+																			  <option value="10">10 - Cash out</option>																			  
+																			  <option value="14">14 - Purchase jewellery</option>
+																			  <option value="15">15 - Purchase precious metals</option>
+																			  <option value="17">17 - Added to virtual currency wallet</option>
+																			  <option value="18">18 - Exchange to virtual currency</option>
+																			  <option value="19">19 - Outgoing virtual currency transfer</option>
+																			  <option value="20">20 - Outgoing email money transfer</option>
+																			  <option value="21">21 - Holding funds</option>
+																			  <option value="22">22 - Purchase of precious stones</option>
+																			  <option value="23">23 - Issued cheque</option>
+																			  <option value="24">24 - Outgoing domestic funds transfer</option>
+																			  <option value="25">25 - Outgoing international funds transfer</option>
+																			  <option value="26">26 - Purchase of prepaid payment product/card</option>
+																			  <option value="11">11 - Other</option>
+																		   </select>
+																		</div>
 																	 </div>
                                                                      <div class="form-group field field-string">
 																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_dispositionTypeOther">dispositionTypeOther</label>
@@ -1633,10 +1889,10 @@ function getStringNum(str)
                                                                      <div class="form-group field field-array">
                                                                         <fieldset class="field field-array field-array-of-string" id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses">
                                                                            <legend id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_title">receivingVirtualCurrencyAddresses</legend>
-                                                                           <div class="row array-item-list" id="receivingVirtualCurrencyAddresses[X]_array_list"></div>
+                                                                           <div class="row array-item-list" id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_array_list"></div>
                                                                            <div class="row">
                                                                               <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																			     <button id="btn_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																			     <button id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																			  </p>
                                                                            </div>
                                                                         </fieldset>
@@ -1671,7 +1927,18 @@ function getStringNum(str)
 																	 </div>
                                                                      <div class="form-group field field-integer">
 																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountTypeCode">accountTypeCode</label>
-																		<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountTypeCode" label="accountTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																		<!--<input class="form-control" id="root_transactions[X]_completingActions[X]_details_accountTypeCode" label="accountTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+																		<input type="hidden" id="root_transactions[X]_completingActions[X]_details_accountTypeCode" value="">
+																		<div class="form-group">
+																		   <select id="select_root_transactions[X]_completingActions[X]_details_accountTypeCode" class="form-control" label="accountTypeCode" required="" onchange="select_input(this)">
+																		      <option value="">Select Option</option>
+																		      <option value="1">1 - Personal</option>
+																			  <option value="2">2 - Business</option>										
+																			  <option value="3">3 - Trust</option>
+																			  <option value="5">5 - Casino</option>
+																			  <option value="4">4 - Other</option>
+																		   </select>
+																		</div>
 																	 </div>
                                                                      <div class="form-group field field-string">
 																	    <label class="control-label" for="root_transactions[X]_completingActions[X]_details_accountTypeOther">accountTypeOther</label>
@@ -1708,10 +1975,10 @@ function getStringNum(str)
                                                                <div class="form-group field field-array">
                                                                   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions[X]_accountHolders">
                                                                      <legend id="root_transactions[X]_completingActions[X]_accountHolders[X]_title">accountHolders</legend>
-                                                                     <div class="row array-item-list" id="accountHolders[X]_array_list"></div>
+                                                                     <div class="row array-item-list" id="root_transactions[X]_completingActions[X]_accountHolders[X]_array_list"></div>
                                                                      <div class="row">
                                                                         <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																		   <button id="btn_transactions[X]_completingActions[X]_accountHolders[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		   <button id="root_transactions[X]_completingActions[X]_accountHolders[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																		</p>																		
                                                                      </div>
                                                                   </fieldset>
@@ -1719,10 +1986,10 @@ function getStringNum(str)
                                                                <div class="form-group field field-array">
                                                                   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions[X]_involvements">
                                                                      <legend id="root_transactions[X]_completingActions[X]_involvements[X]_title">involvements</legend>
-                                                                     <div class="row array-item-list" id="involvements[X]_array_list"></div>
+                                                                     <div class="row array-item-list" id="root_transactions[X]_completingActions[X]_involvements[X]_array_list"></div>
                                                                      <div class="row">
                                                                         <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																		   <button id="btn_transactions[X]_completingActions[X]_involvements[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		   <button id="root_transactions[X]_completingActions[X]_involvements[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																		</p>
                                                                      </div>
                                                                   </fieldset>
@@ -1730,10 +1997,10 @@ function getStringNum(str)
                                                                <div class="form-group field field-array">
                                                                   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_completingActions[X]_beneficiaries">
                                                                      <legend id="root_transactions[X]_completingActions[X]_beneficiaries[X]_title">beneficiaries</legend>
-                                                                     <div class="row array-item-list" id="beneficiaries[X]_array_list"></div>
+                                                                     <div class="row array-item-list" id="root_transactions[X]_completingActions[X]_beneficiaries[X]_array_list"></div>
                                                                      <div class="row">
                                                                         <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																		   <button id="btn_transactions[X]_completingActions[X]_beneficiaries[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																		   <button id="root_transactions[X]_completingActions[X]_beneficiaries[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																		</p>
                                                                      </div>
                                                                   </fieldset>
@@ -1743,8 +2010,8 @@ function getStringNum(str)
                                                       </div>
                                                       <div class="col-xs-3 array-item-toolbox">
                                                          <div class="btn-group" style="display: flex; justify-content: space-around;">
-														   <!-- <button id="btn_transactions[X]_completingActions[X]_beneficiaries[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>-->
-														   <button id="btn_transactions[X]_completingActions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														   <!-- <button id="root_transactions[X]_completingActions[X]_beneficiaries[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>-->
+														   <button id="root_transactions[X]_completingActions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 														  </div>
                                                       </div>
                                                    </div>
@@ -1758,7 +2025,7 @@ function getStringNum(str)
 								</div>
 								<div class="col-xs-3 array-item-toolbox">
 								   <div class="btn-group" style="display: flex; justify-content: space-around;">
-								      <button id="btn_transactions[X]_details_transactionIdentifiers[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+								      <button id="root_transactions[X]_details_transactionIdentifiers[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 								   </div>
 								 </div>
 							  </div>
@@ -1771,7 +2038,7 @@ function getStringNum(str)
 								 </div>
 								 <div class="col-xs-3 array-item-toolbox">
 								    <div class="btn-group" style="display: flex; justify-content: space-around;">
-									   <button id="btn_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+									   <button id="root_transactions[X]_startingActions[X]_details_sendingVirtualCurrencyAddresses[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 									</div>
 								</div>
 							  </div>
@@ -1811,7 +2078,17 @@ function getStringNum(str)
 																	</div>
 																	<div class="form-group field field-integer">
 																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode">deviceTypeCode</label>
-																	   <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode" label="deviceTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																	   <!--<input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode" label="deviceTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+																	   <input type="hidden" id="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode" value="">
+																	   <div class="form-group">
+																	      <select id="select_root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeCode" class="form-control" label="deviceTypeCode" required="" onchange="select_input(this)">
+																	         <option value="">Select Option</option>
+										                                     <option value="1">1 - Computer/Laptop</option>
+																			 <option value="4">4 - Other</option>										
+																			 <option value="2">2 - Mobile phone</option>
+																			 <option value="3">3 - Tablet</option>
+																		  </select>            																   </div>
+
 																	</div>
 																	<div class="form-group field field-string">
 																	   <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_details_deviceTypeOther">deviceTypeOther</label>
@@ -1850,10 +2127,10 @@ function getStringNum(str)
 															<div class="form-group field field-array">
 															   <fieldset class="field field-array field-array-of-object" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs">
 															      <legend id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_title">onBehalfOfs</legend>
-																  <div class="row array-item-list" id="onBehalfOfs[X]_array_list"></div>
+																  <div class="row array-item-list" id="root_transactions[X]_startingActions[X]_onBehalfOfs[X]_array_list"></div>
 																  <div class="row">
 																     <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-																	    <button id="btn_transactions[X]_startingActions[X]_onBehalfOfs[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
+																	    <button id="root_transactions[X]_startingActions[X]_onBehalfOfs[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this)"><i class="glyphicon glyphicon-plus"></i></button>
 																	 </p>
 																  </div>
 																</fieldset>
@@ -1863,7 +2140,7 @@ function getStringNum(str)
 													</div>
 													<div class="col-xs-3 array-item-toolbox">
 													   <div class="btn-group" style="display: flex; justify-content: space-around;">
-														  <button id="btn_transactions[X]_startingActions[X]_conductors[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														  <button id="root_transactions[X]_startingActions[X]_conductors[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 													   </div>
 													</div>
 												</div>
@@ -1894,7 +2171,27 @@ function getStringNum(str)
 																   </div>
 																   <div class="form-group field field-integer">
 																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode">relationshipTypeCode</label>
-																      <input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode" label="relationshipTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+																      <!--<input class="form-control" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode" label="relationshipTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+																	  <input type="hidden" id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode" value="">
+																	  <div class="form-group">
+																	     <select id="select_root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeCode" class="form-control" label="relationshipTypeCode" required="" onchange="select_input(this)">
+																		    <option value="">Select Option</option>
+																			<option value="1">1 - Accountant</option>
+																			<option value="2">2 - Agent</option>										
+																			<option value="10">10 -Legal counsel</option>
+																			<option value="3">3 - Borrower</option>
+																			<option value="4">4 - Broker</option>
+																			<option value="11">11 -Employer</option>
+																			<option value="5">5 - Customer</option>
+																			<option value="6">6 - Employee</option>
+																			<option value="7">7 - Friend</option>
+																			<option value="8">8 - Relative</option>
+																			<option value="12">12 -Joint/Secondary owner</option>
+																			<option value="13">13 -Power of attorney</option>
+																			<option value="9">9 - Other</option>
+																		 </select>
+																	 </div>
+
 																   </div>
 																   <div class="form-group field field-string">
 																      <label class="control-label" for="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_details_relationshipTypeOther">relationshipTypeOther</label>
@@ -1916,7 +2213,7 @@ function getStringNum(str)
 												  </div>
 												  <div class="col-xs-3 array-item-toolbox">
 												      <div class="btn-group" style="display: flex; justify-content: space-around;">
-												         <button id="btn_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+												         <button id="root_transactions[X]_startingActions[X]_conductors[X]_onBehalfOfs[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 												      </div>
 												   </div>
 												</div>												
@@ -1964,7 +2261,7 @@ function getStringNum(str)
 													 </div>
 													 <div class="col-xs-3 array-item-toolbox">
 													    <div class="btn-group" style="display: flex; justify-content: space-around;">
-														   <button id="btn_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														   <button id="root_transactions[X]_startingActions[X]_sourcesOfVirtualCurrency[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 														</div>
 													 </div>
 												</div>
@@ -1980,7 +2277,7 @@ function getStringNum(str)
 								</div>
 							    <div class="col-xs-3 array-item-toolbox">
 								   <div class="btn-group" style="display: flex; justify-content: space-around;">
-								      <button id="btn_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+								      <button id="root_transactions[X]_completingActions[X]_details_receivingVirtualCurrencyAddresses[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 								   </div>
 								</div>
 							</div>
@@ -2033,7 +2330,7 @@ function getStringNum(str)
 													  </div>
 													  <div class="col-xs-3 array-item-toolbox">
 													     <div class="btn-group" style="display: flex; justify-content: space-around;">
-														    <button id="btn_transactions[X]_completingActions[X]_beneficiaries[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														    <button id="root_transactions[X]_completingActions[X]_beneficiaries[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 														 </div>
 													  </div>
 													</div>
@@ -2081,7 +2378,7 @@ function getStringNum(str)
 														</div>
 														<div class="col-xs-3 array-item-toolbox">
 														   <div class="btn-group" style="display: flex; justify-content: space-around;">
-														      <button id="btn_transactions[X]_completingActions[X]_involvements[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
+														      <button id="root_transactions[X]_completingActions[X]_involvements[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)"><i class="glyphicon glyphicon-remove"></i></button>
 														   </div>
 														</div>
 													</div>												   
@@ -2122,7 +2419,7 @@ function getStringNum(str)
 													  </div>													  
 													  <div class="col-xs-3 array-item-toolbox">
 													     <div class="btn-group" style="display: flex; justify-content: space-around;">
-															<button id="btn_transactions[X]_completingActions[X]_accountHolders[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+															<button id="root_transactions[X]_completingActions[X]_accountHolders[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
 															   <i class="glyphicon glyphicon-remove"></i>
 															</button>
 														</div>
@@ -2155,7 +2452,7 @@ function getStringNum(str)
 						</div>
 						<div class="col-xs-3 array-item-toolbox">
 						   <div class="btn-group" style="display: flex; justify-content: space-around;">
-						      <button id="btn_definitions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+						      <button id="root_definitions[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
 							    <i class="glyphicon glyphicon-remove"></i>
 							  </button>
 							</div>
@@ -2267,11 +2564,11 @@ function getStringNum(str)
                           <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrEntityIdentificationDetails">
                              <legend id="root_definitions[X]_LvctrEntityDetails_title">identifications</legend>                    
                              <!--root_definitions[X]_LvctrEntityIdentificationDetails[X]_array_list   root_definitions[X]_LvctrEntityIdentificationDetails[X]-->
-							 <div class="row array-item-list" id="LvctrEntityIdentificationDetails[X]_array_list">
+							 <div class="row array-item-list" id="root_definitions[X]_LvctrEntityIdentificationDetails[X]_array_list">
 							 </div>
                              <div class="row">
                                 <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-								<button id="btn_definitions[X]_LvctrEntityIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+								<button id="root_definitions[X]_LvctrEntityIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
 								</p>
                              </div>
                           </fieldset>
@@ -2280,11 +2577,11 @@ function getStringNum(str)
 					   <div class="form-group field field-array">
 					      <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons">
 						     <legend id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_title">authorizedPersons</legend>
-							 <div class="row array-item-list" id="authorizedPersons[X]_array_list">
+							 <div class="row array-item-list" id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_array_list">
 							</div>
 							<div class="row">
 							   <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-							      <button id="btn_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+							      <button id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
 							   </p>
 							</div>
 						 </fieldset>
@@ -2320,7 +2617,7 @@ function getStringNum(str)
 								    </div>
 									<div class="col-xs-3 array-item-toolbox">
 									   <div class="btn-group" style="display: flex; justify-content: space-around;">
-									      <button id="btn_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this);"><i class="glyphicon glyphicon-remove"></i></button>
+									      <button id="root_definitions[X]_LvctrEntityDetails_authorizedPersons[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this);"><i class="glyphicon glyphicon-remove"></i></button>
 									   </div>
 									</div>
 								</div>
@@ -2396,11 +2693,11 @@ function getStringNum(str)
                              <legend id="root_definitions[X]_LvctrPersonDetails_title">identifications</legend>                    
                              <!--root_definitions[X]_LvctrPersonIdentificationDetails[X]_array_list   root_definitions[X]_LvctrPersonIdentificationDetails[X]   
 							 LvctrPersonDetails_LvctrPersonIdentificationDetails[X]-->
-							 <div class="row array-item-list" id="LvctrPersonIdentificationDetails[X]_array_list">
-							 </div>
+							 <!--<div class="row array-item-list" id="LvctrPersonIdentificationDetails[X]_array_list"></div>-->
+							 <div class="row array-item-list" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_array_list"></div>
                              <div class="row">
                                 <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-								<button id="btn_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+								<button id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
 								</p>
                              </div>
                           </fieldset>
@@ -2417,7 +2714,30 @@ function getStringNum(str)
                            </div>
                            <div class="form-group field field-integer">
 					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode">identificationTypeCode</label>
-					    	  <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode" label="identificationTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+					    	  <!--<input class="form-control" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode" label="identificationTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+							  <input type="hidden" id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode" value="">
+							  <div class="form-group">
+							     <select id="select_root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeCode" class="form-control" label="identificationTypeCode" required="" onchange="select_input(this)">
+								    <option value="">Select Option</option>
+									<option value="4">4 - Driver's licence</option>
+									<option value="1">1 - Birth certificate</option>										
+									<option value="5">5 - Provincial health card</option>
+									<option value="34">34 - Credit file</option>
+									<option value="2">2 - Passport</option>
+									<option value="35">35 - Government issued identification</option>
+									<option value="36">36 - Insurance documents</option>
+									<option value="14">14 - Citizenship card</option>
+									<option value="15">15 - Indian status card</option>
+									<option value="32">32 - Permanent resident card</option>
+									<option value="37">37 - Provincial or territorial identity card</option>
+									<option value="38">38 - Record of employment</option>
+									<option value="33">33 - Record of landing</option>
+									<option value="39">39 - Travel visa</option>
+									<option value="40">40 - Utility statement</option>
+									<option value="3">3 - Other</option>
+							     </select>
+							  </div>
+
 					       </div>
                            <div class="form-group field field-string">
 					          <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_identificationTypeOther">identificationTypeOther</label>
@@ -2444,7 +2764,7 @@ function getStringNum(str)
                     </div>
                     <div class="col-xs-3 array-item-toolbox">
                        <div class="btn-group" style="display: flex; justify-content: space-around;">
-					      <button id="btn_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+					      <button id="root_definitions[X]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
 					         <i class="glyphicon glyphicon-remove"></i>
 					       </button>
 						</div>
@@ -2462,7 +2782,21 @@ function getStringNum(str)
                            </div>
                            <div class="form-group field field-integer">
 					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode">identificationTypeCode</label>
-					    	  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode" label="identificationTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">
+					    	  <!--<input class="form-control" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode" label="identificationTypeCode" placeholder="" type="number" step="1" min="1" max="99999" value="" onblur="MyOnBlur(this)">-->
+							  <input type="hidden" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode" value="">
+							  <div class="form-group">
+							        <select id="select_root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeCode" class="form-control" label="identificationTypeCode" required="" onchange="select_input(this)">
+									    <option value="">Select Option</option>
+										<option value="6">6 - Annual report</option>
+										<option value="1">1 - Articles of association</option>										
+										<option value="2">2 - Certificate of corporate status</option>
+										<option value="3">3 - Certificate of incorporation</option>
+										<option value="4">4 - Letter/Notice of assessment</option>
+										<option value="7">7 - Other</option>
+										<option value="5">5 - Partnership agreement</option>
+									</select>
+					           </div>
+
 					       </div>
                            <div class="form-group field field-string">
 					          <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_identificationTypeOther">identificationTypeOther</label>
@@ -2489,7 +2823,7 @@ function getStringNum(str)
                     </div>
                     <div class="col-xs-3 array-item-toolbox">
                        <div class="btn-group" style="display: flex; justify-content: space-around;">
-					      <button id="btn_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
+					      <button id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_remove" type="button" class="btn btn-danger array-item-remove" aria-label="Remove" tabindex="-1" style="flex: 1 1 0%; padding-left: 6px; padding-right: 6px; font-weight: bold;" onclick="button_ALL_remove(this)">
 					         <i class="glyphicon glyphicon-remove"></i>
 					       </button>
 						</div>
