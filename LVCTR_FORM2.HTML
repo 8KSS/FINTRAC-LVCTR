@@ -52,7 +52,7 @@ function MyBodyLoad()
       
    document.getElementById("root_definitions[0]_select").selectedIndex = 3;
    select_ALL_select(document.getElementById("root_definitions[0]_select"));
-   document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 1;
+   document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 2;
    select_ALL_select(document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select"));
    document.getElementById("root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add").click();         
    
@@ -70,29 +70,182 @@ function test_select(o)
 {
   var t = o.value;  
   var add = null;
-  var remove = null;
+  var d1_remove = null;
+  var d2_remove = null;
+  var t1_remove = null;
+  var t2_remove = null;
+  var t3_remove = null;
+  var t4_remove = null;
   
   if((t=="")||(t=="1"))
   {
-      remove = document.getElementById("root_definitions[1]_remove");
-	  if(remove){remove.click();}  
+      document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 2;
+      select_ALL_select(document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select"));
+
+	  d2_remove = document.getElementById("root_definitions[2]_remove");
+	  if(d2_remove){d2_remove.click();}  
+
+	  d1_remove = document.getElementById("root_definitions[1]_remove");
+	  if(d1_remove){d1_remove.click();}  
+	  
+	  t1_remove = document.getElementById("root_transactions[1]_remove");
+	  if(!t1_remove){ Add_Transactions("1");}
+
+ 	  t2_remove = document.getElementById("root_transactions[2]_remove");
+	  if(!t2_remove){ Add_Transactions("2");}
+
+ 	  t3_remove = document.getElementById("root_transactions[3]_remove");
+	  if(!t3_remove){ Add_Transactions("3");}
+	  
+	  t4_remove = document.getElementById("root_transactions[4]_remove");
+	  if(!t4_remove){ Add_Transactions("4");}
+
+ 	  t5_remove = document.getElementById("root_transactions[5]_remove");
+	  if(!t5_remove){ Add_Transactions("5");}
+
+ 	  t6_remove = document.getElementById("root_transactions[6]_remove");
+	  if(!t6_remove){ Add_Transactions("6");}
+	  
+	  t7_remove = document.getElementById("root_transactions[7]_remove");
+	  if(!t7_remove){ Add_Transactions("7");}
+	  
+	  t8_remove = document.getElementById("root_transactions[8]_remove");
+	  if(!t8_remove){ Add_Transactions("8");}
+
+	  t9_remove = document.getElementById("root_transactions[9]_remove");
+	  if(!t9_remove){ Add_Transactions("9");}
+
+	  t10_remove = document.getElementById("root_transactions[10]_remove");
+	  if(!t10_remove){ Add_Transactions("10");}
+
+	  t11_remove = document.getElementById("root_transactions[11]_remove");
+	  if(!t11_remove){ Add_Transactions("11");}
   }
   if(t=="2")
    {
-      remove = document.getElementById("root_definitions[1]_remove");
-	  if(!remove)
-	  {
-	    document.getElementById("root_definitions[X]_add").click();
-		document.getElementById("root_definitions[1]_select").selectedIndex = 3;
-        select_ALL_select(document.getElementById("root_definitions[1]_select"));
+      document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 1;
+      select_ALL_select(document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select"));
 
-		document.getElementById("root_definitions[1]_LvctrPersonDetails_address_select").selectedIndex = 1;
-        select_ALL_select(document.getElementById("root_definitions[1]_LvctrPersonDetails_address_select"));
-	  }
-	  document.getElementById("root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[X]_add").click(); 
+	  t1_remove = document.getElementById("root_transactions[1]_remove");
+	  if(t1_remove){t1_remove.click();}  
+
+	  t2_remove = document.getElementById("root_transactions[2]_remove");
+	  if(t2_remove){t2_remove.click();}  
+
+	  t3_remove = document.getElementById("root_transactions[3]_remove");
+	  if(t3_remove){t3_remove.click();}  
+
+	  t4_remove = document.getElementById("root_transactions[4]_remove");
+	  if(t4_remove){t4_remove.click();}  
+
+	  t5_remove = document.getElementById("root_transactions[5]_remove");
+	  if(t5_remove){t5_remove.click();}  
+
+	  t6_remove = document.getElementById("root_transactions[6]_remove");
+	  if(t6_remove){t6_remove.click();}  
+
+	  t7_remove = document.getElementById("root_transactions[7]_remove");
+	  if(t7_remove){t7_remove.click();}  
+
+	  t8_remove = document.getElementById("root_transactions[8]_remove");
+	  if(t8_remove){t8_remove.click();}  
+
+	  t9_remove = document.getElementById("root_transactions[9]_remove");
+	  if(t9_remove){t9_remove.click();}  
+
+	  t10_remove = document.getElementById("root_transactions[10]_remove");
+	  if(t10_remove){t10_remove.click();}  
+
+	  t11_remove = document.getElementById("root_transactions[11]_remove");
+	  if(t11_remove){t11_remove.click();}  
+
+	  d2_remove = document.getElementById("root_definitions[2]_remove");
+	  if(d2_remove){d2_remove.click();}  
+
+	  d1_remove = document.getElementById("root_definitions[1]_remove");
+	  if(!d1_remove) { Add_Definitions("1",3,1); }	  
+   }
+   if(t=="3")
+   {
+      document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select").selectedIndex = 2;
+      select_ALL_select(document.getElementById("root_definitions[0]_LvctrPersonDetails_address_select"));
+
+	  t1_remove = document.getElementById("root_transactions[1]_remove");
+	  if(t1_remove){t1_remove.click();}  
+
+	  t2_remove = document.getElementById("root_transactions[2]_remove");
+	  if(t2_remove){t2_remove.click();}  
+
+	  t3_remove = document.getElementById("root_transactions[3]_remove");
+	  if(t3_remove){t3_remove.click();}  
+
+	  t4_remove = document.getElementById("root_transactions[4]_remove");
+	  if(t4_remove){t4_remove.click();}  
+
+	  t5_remove = document.getElementById("root_transactions[5]_remove");
+	  if(t5_remove){t5_remove.click();}  
+
+	  t6_remove = document.getElementById("root_transactions[6]_remove");
+	  if(t6_remove){t6_remove.click();}  
+
+	  t7_remove = document.getElementById("root_transactions[7]_remove");
+	  if(t7_remove){t7_remove.click();}  
+
+	  t8_remove = document.getElementById("root_transactions[8]_remove");
+	  if(t8_remove){t8_remove.click();}  
+
+	  t9_remove = document.getElementById("root_transactions[9]_remove");
+	  if(t9_remove){t9_remove.click();}  
+
+	  t10_remove = document.getElementById("root_transactions[10]_remove");
+	  if(t10_remove){t10_remove.click();}  
+
+	  t11_remove = document.getElementById("root_transactions[11]_remove");
+	  if(t11_remove){t11_remove.click();}  
+
+	  d1_remove = document.getElementById("root_definitions[1]_remove");
+	  if(!d1_remove) { Add_Definitions("1",3,2); }	  
+	  
+	  d2_remove = document.getElementById("root_definitions[2]_remove");
+	  if(!d2_remove) { Add_Definitions("2",4,2); }	  
    }
   //alert(s);
 }
+
+function Add_Definitions(i,_type,_addr)
+{
+    s_type = "";
+	document.getElementById("root_definitions[X]_add").click();
+	document.getElementById("root_definitions[" + i.toString() + "]_select").selectedIndex = _type;
+    select_ALL_select(document.getElementById("root_definitions[" + i.toString() + "]_select"));
+
+	if(_type == 3){s_type = "Person";}
+    if(_type == 4){s_type = "Entity";}
+	
+	document.getElementById("root_definitions[" + i.toString() + "]_Lvctr" + s_type + "Details_address_select").selectedIndex = _addr;
+    select_ALL_select(document.getElementById("root_definitions[" + i.toString() + "]_Lvctr" + s_type + "Details_address_select"));
+	document.getElementById("root_definitions[" + i.toString() + "]_Lvctr" + s_type + "Details_Lvctr" + s_type + "IdentificationDetails[X]_add").click();
+    
+	if(_type == 4)
+	{
+	   document.getElementById("root_definitions[" + i.toString() + "]_Lvctr" + s_type + "Details_authorizedPersons[X]_add").click();
+	}
+}
+
+function Add_Transactions(i)
+{
+	document.getElementById("root_transactions[X]_add").click();
+    document.getElementById("root_transactions[" + i.toString() + "]_startingActions[X]_add").click();
+	document.getElementById("root_transactions[" + i.toString() + "]_completingActions[X]_add").click();   
+   
+    document.getElementById("root_transactions[" + i.toString() + "]_details_transactionIdentifiers[X]_add").click();   
+    document.getElementById("root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_sendingVirtualCurrencyAddresses[X]_add").click();
+   
+    document.getElementById("root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[X]_add").click();
+    document.getElementById("root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_receivingVirtualCurrencyAddresses[X]_add").click();   
+    document.getElementById("root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[X]_add").click();      	
+}
+
 function select_input(o)
 {
    var id = o.id;
@@ -108,97 +261,352 @@ function button_test_add()
    //alert(t);
    if((t=="")||(t=="1"))
    {
-	  test_root();
-      test_Person0("46067");
-      test_transactions();
-      test_transaction_startingActions();   
-      test_transaction_conductors("46067");
-      test_transaction_completingActions();
-      test_transaction_beneficiaries("46067");
+	  test_root("33112-080621-016","2021-06-04","2","11");
+      test_Person("0","33112","A");
+      test_transactions("0","241744940","3c8106b80aeb76e57f04a552ef77b67caffeb1b4a3358f4c209f2b4ac7ba2876","2021-06-04T08:07:49-04:00","3", false);
+      test_transaction_startingActions("0","0.16262158","BTC","44151.48","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+	  test_transaction_conductors("0","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T07:57:13-04:00");
+      test_transaction_completingActions("0","0.16262158","BTC","3c8106b80aeb76e57f04a552ef77b67caffeb1b4a3358f4c209f2b4ac7ba2876","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("0","33112","33112","0","TigerWoods","TigerWoods@hotmail.com");
+	  
+      test_transactions("1","241744941","12cc15f694d59b20ae77e5239ec1d0ed287a255766da8ebbc22af1fc103b1c4b","2021-06-04T08:07:49-04:00","3", false);
+      test_transaction_startingActions("1","0.10813871","BTC","44151.48","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("1","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T07:57:13-04:00");
+      test_transaction_completingActions("1","0.10813871","BTC","12cc15f694d59b20ae77e5239ec1d0ed287a255766da8ebbc22af1fc103b1c4b","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("1","33112","33112","1","TigerWoods","TigerWoods@hotmail.com");
+	  	  
+      test_transactions("2","241744942","20c317050f3c5d9cbaa2773c4042dae832d397054f0c282a72ff39334ee11c21","2021-06-04T08:07:51-04:00","3", true);
+      test_transaction_startingActions("2","0.40580325","BTC","44151.48","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("2","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T08:01:08-04:00");
+      test_transaction_completingActions("2","0.40580325","BTC","20c317050f3c5d9cbaa2773c4042dae832d397054f0c282a72ff39334ee11c21","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("2","33112","33112","2","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("3","241744946","709f7861b5c074eccfbf7c579d50c9ff83d2ebcac69bc2f270e06949196ccdc3","2021-06-04T08:46:17-04:00","3", false);
+      test_transaction_startingActions("3","0.13605","BTC","44517.39","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("3","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T08:10:46-04:00");
+      test_transaction_completingActions("3","0.13605","BTC","709f7861b5c074eccfbf7c579d50c9ff83d2ebcac69bc2f270e06949196ccdc3","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("3","33112","33112","3","TigerWoods","TigerWoods@hotmail.com");	  
+
+      test_transactions("4","241744947","bc0f34bea676b0d80d8cc7ae42c49844dee0fae7aea174ca4b6a4d709882497f","2021-06-04T08:46:18-04:00","3", false);
+      test_transaction_startingActions("4","0.19062656","BTC","44517.39","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("4","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T08:23:25-04:00");
+      test_transaction_completingActions("4","0.19062656","BTC","bc0f34bea676b0d80d8cc7ae42c49844dee0fae7aea174ca4b6a4d709882497f","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("4","33112","33112","4","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("5","241744948","9bd72dc51eaabc0acd02c5b0dfb06c94c8504be8fe77f5df1ff18b7d02c63534","2021-06-04T08:46:19-04:00","3", false);
+      test_transaction_startingActions("5","0.08133387","BTC","44517.39","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("5","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T08:23:25-04:00");
+      test_transaction_completingActions("5","0.08133387","BTC","9bd72dc51eaabc0acd02c5b0dfb06c94c8504be8fe77f5df1ff18b7d02c63534","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("5","33112","33112","5","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("6","241988012","576655a48912f631e6228768f65889c0bf6b36ea4a45378a2e908e5f32d29523","2021-06-04T10:37:13-04:00","3", false);
+      test_transaction_startingActions("6","0.08283693","BTC","44448.93","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("6","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T10:15:33-04:00");
+      test_transaction_completingActions("6","0.08283693","BTC","576655a48912f631e6228768f65889c0bf6b36ea4a45378a2e908e5f32d29523","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("6","33112","33112","6","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("7","241988013","3411770031a67e9c30cbc49ffb2db56d2f7e90c4cf4d5aeff48d7fa1877a5b8f","2021-06-04T10:37:14-04:00","3", false);
+      test_transaction_startingActions("7","0.06171981","BTC","44448.93","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("7","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T10:19:17-04:00");
+      test_transaction_completingActions("7","0.06171981","BTC","3411770031a67e9c30cbc49ffb2db56d2f7e90c4cf4d5aeff48d7fa1877a5b8f","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("7","33112","33112","7","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("8","241988014","fd6bfb0d41a5c878c46f17c03a3473f74d12e85ef3ef03afa3464b7c17b93a35","2021-06-04T10:37:15-04:00","3", false);
+      test_transaction_startingActions("8","0.1296084","BTC","44448.93","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("8","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T10:33:15-04:00");
+      test_transaction_completingActions("8","0.1296084","BTC","fd6bfb0d41a5c878c46f17c03a3473f74d12e85ef3ef03afa3464b7c17b93a35","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("8","33112","33112","8","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("9","241988026","1f97d9ec951d29ef3db94f0c2d6ba5012a62dbd9e7c342cbf69e40450c027b39","2021-06-04T11:52:32-04:00","3", false);
+      test_transaction_startingActions("9","0.08162429","BTC","44044.68","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("9","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T11:48:43-04:00");
+      test_transaction_completingActions("9","0.08162429","BTC","1f97d9ec951d29ef3db94f0c2d6ba5012a62dbd9e7c342cbf69e40450c027b39","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("9","33112","33112","9","TigerWoods","TigerWoods@hotmail.com");
+
+      test_transactions("10","241988037","89727a312cf5df5638b04646757923bc512a9c30948237ee4d243975c6a54d94","2021-06-04T12:26:40-04:00","3", false);
+      test_transaction_startingActions("10","0.02703493","BTC","43202.84","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("10","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T12:00:43-04:00");
+      test_transaction_completingActions("10","0.02703493","BTC","89727a312cf5df5638b04646757923bc512a9c30948237ee4d243975c6a54d94","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("10","33112","33112","10","TigerWoods","TigerWoods@hotmail.com");
+
+
+      test_transactions("11","241988038","23903b175042c8bf7575038b869fe5452a12e5d89f0117aa5f27c24df70c6698","2021-06-04T12:26:42-04:00","3", false);
+      test_transaction_startingActions("11","0.06441375","BTC","43202.84","3QTUxAKmHqLAkvAjSvPxYoi5yUVRPQm2Cx","PGA Tour Winnings")
+      test_transaction_conductors("11","33112","TigerWoods","TigerWoods@hotmail.com","2021-06-04T12:06:58-04:00");
+      test_transaction_completingActions("11","0.06441375","BTC","23903b175042c8bf7575038b869fe5452a12e5d89f0117aa5f27c24df70c6698","3NbYyK1dRG2KwTyekJ1SqUf223xNgkyNFp");
+      test_transaction_beneficiaries("11","33112","33112","11","TigerWoods","TigerWoods@hotmail.com");
+	  
    }
    else if(t=="2")
    {
-      test_root();
-      test_Person0("46067");
-	  test_Person1("46071");
-      test_transactions();
-      test_transaction_startingActions();   
-      test_transaction_conductors("46067");
-      test_transaction_completingActions();
-      test_transaction_beneficiaries("46071");   
+      test_root("33112-080677-001","2021-04-21","4","11");
+	  test_Person("0","46067","B");
+	  test_Person("1","46071","C");
+      test_transactions_OLD();
+      test_transaction_startingActions_OLD();   
+      test_transaction_conductors_OLD("46067");
+      test_transaction_completingActions_OLD();
+      test_transaction_beneficiaries_OLD("46071");   
+   }
+   else if(t=="3")
+   {
+      test_root("13326-061421-011","2021-06-01","4","11");
+	  test_Person("0","13326","D");
+	  test_Person("1","1332601","E");
+	  test_Person("2","1332602","F");
+	  test_transactions("0","239819631","0x1a130eacac12389bab750fe6abe45a690d851c0e60de9e0f6e099378ff57e42b","2021-06-01T16:58:22-04:00","3", true);
+	  test_transaction_startingActions("0","9.80","ETH","3057.26","0x030ee34f59bad4c3ee7f736009a03bc9b7b8eb74|0x275a051037bbef9aa3915304a00431de399278cd","");
+	  test_transaction_conductors("0","13326","WizardInc","team@WizardInc.net","2021-06-01T16:55:18-04:00");
+	  test_transaction_completingActions("0","9.80","ETH","0x1a130eacac12389bab750fe6abe45a690d851c0e60de9e0f6e099378ff57e42b","0x275a051037bbef9aa3915304a00431de399278cd");
+	  test_transaction_beneficiaries("0","13326","13326","0","WizardInc","team@WizardInc.net");
+	  test_transaction_beneficiaries("0","1332601","13326","1","WizardInc","team@WizardInc.net");
+	  test_transaction_beneficiaries("0","1332602","13326","2","WizardInc","team@WizardInc.net");
    }
 }
 
-function test_root()
+
+function test_root(_ref,_date,_TypeCode,_SectorCode)
 {   
    MyInputs["root_$schema"].value = "DEV1";
    MyInputs["root_reportingEntityNumber"].value = "160292";
-   MyInputs["root_reportReference"].value = "SAMPLE_TRANSACTION";   
-   document.getElementById("select_root_details_twentyFourHourAggregationTypeCode").value = "4";
+   MyInputs["root_reportReference"].value = _ref;   
+   document.getElementById("select_root_details_twentyFourHourAggregationTypeCode").value = _TypeCode;
    select_input(document.getElementById("select_root_details_twentyFourHourAggregationTypeCode"));
-   MyInputs["root_details_twentyFourHourStartDateTime"].value = "2021-04-21T00:00:00-05:00";
-   MyInputs["root_details_twentyFourHourEndDateTime"].value = "2021-04-21T23:59:59-05:00";
+   MyInputs["root_details_twentyFourHourStartDateTime"].value = _date + "T00:00:00-04:00";
+   MyInputs["root_details_twentyFourHourEndDateTime"].value = _date + "T23:59:59-04:00";
    MyInputs["root_details_ministerialDirectiveCode"].value = "";
-   document.getElementById("select_root_details_activitySectorCode").value = "11";
+   document.getElementById("select_root_details_activitySectorCode").value = _SectorCode;
    select_input(document.getElementById("select_root_details_activitySectorCode"));   
    MyInputs["root_details_contactNumber"].value = "77700";
 }
 
-function test_Person0(id)
+
+
+
+function test_Person(i, id, version)
 {
-   MyInputs["root_definitions[0]_LvctrPersonDetails_$id"].value = id;
-   MyInputs["root_definitions[0]_LvctrPersonDetails_givenName"].value = "Joseph";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_surname"].value = "Iuso";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_telephoneNumber"].value = "6478870623";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_birthDate"].value = "1970-10-31";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_occupation"].value = "CEO";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_employerName"].value = "UMF";
+  if(version == "A") 
+  {
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_$id"].value = id;
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_givenName"].value = "Tiger";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_surname"].value = "Woods";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_alias"].value = "TigerWoods";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_telephoneNumber"].value = "7744165655";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_birthDate"].value = "1975-12-30";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_occupation"].value = "Professional Golfer";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_employerName"].value = "PGA Inc";
+
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails"].value = "123 Gilley Avenue, Burnaby, BC, V5B4Y5";
+
+    document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode").value = "34";
+    select_input(document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"));
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationNumber"].value = "074-3010332918";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionProvinceCode"].value = "BC";   
+  }
+  if(version == "B") 
+  {
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_$id"].value = id;
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_givenName"].value = "Peter";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_surname"].value = "Pan";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_telephoneNumber"].value = "6479871234";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_birthDate"].value = "1970-01-14";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_occupation"].value = "Developer";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_employerName"].value = "ABC";
    
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "204";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "370";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Main St E";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Hamilton";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "L8N1J6";
-         
-   //MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode"].value = "1";
-   document.getElementById("select_root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode").value = "4";
-   select_input(document.getElementById("select_root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationTypeCode"));
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationNumber"].value = "P45568-49567-70307";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionCountryCode"].value = "CA";
-   MyInputs["root_definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]_identificationJurisdictionProvinceCode"].value = "ON";   
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "101";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "12";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Front St";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Toronto";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "M4J2P5";     
+   
+    //MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"].value = "1";
+    document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode").value = "4";
+    select_input(document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"));
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationNumber"].value = "P45532-49123-75557";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionProvinceCode"].value = "ON";   
+  }
+  if(version == "C") 
+  {
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_$id"].value = id;
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_givenName"].value = "Karter";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_surname"].value = "Spouke";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_telephoneNumber"].value = "4169871234";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_birthDate"].value = "1957-11-14";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_occupation"].value = "Tester";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_employerName"].value = "ABC Inc";
+   
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "1123";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "12";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Bloor St";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Toronto";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "M4J2P5";     
+   
+    //MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"].value = "1";
+    document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode").value = "4";
+    select_input(document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"));
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationNumber"].value = "P42132-43323-44557";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionProvinceCode"].value = "ON";   
+  }
+  if(version == "D") 
+  {
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_$id"].value = id;
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_givenName"].value = "Joseph";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_surname"].value = "Mah";
+    //MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_alias"].value = "JosephMah";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_telephoneNumber"].value = "6478783483";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_birthDate"].value = "1972-06-09";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_occupation"].value = "Chief Operating Officer";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_employerName"].value = "Wizard Inc..";
+
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails"].value = "165-648 24th Ave, Surrey, BC, V3B5X1";
+
+    document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode").value = "34";
+    select_input(document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"));
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationNumber"].value = "074-5555555534";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionProvinceCode"].value = "BC";   
+  }
+  if(version == "E") 
+  {
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_$id"].value = id;
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_givenName"].value = "Jojo";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_surname"].value = "Mah";
+    //MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_alias"].value = "JojoMah";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_telephoneNumber"].value = "674-259-9933";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_birthDate"].value = "1974-02-23";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_occupation"].value = "Gamer";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_employerName"].value = "Wizard Inc..";
+
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails"].value = "852 22A Ave, Langley, BC, V2E1T5";
+
+    document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode").value = "34";
+    select_input(document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationTypeCode"));
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationNumber"].value = "074-6666666605";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + i.toString() + "]_identificationJurisdictionProvinceCode"].value = "ON";   
+  }
+  if(version == "F") 
+  {    
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_$id"].value = id;
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_legalName"].value = "Wizard Inc..";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_businessNature"].value = "Blockchain Investment and Holdings";    
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_telephoneNumber"].value = "64783547673";	
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_registrationIndicator"].click();	
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_registrationNumber"].value = "BC1789003";
+	MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_registrationJurisdictionCountryCode"].value = "CA";
+	MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_registrationJurisdictionProvinceCode"].value = "BC";	
+
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails"].value = "9 RICHMOND ST UNIT 22 VANCOUVER BC V6N UM4";
+    
+	document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrEntityDetails_LvctrEntityIdentificationDetails[" + document.getElementById("LvctrEntityIdentificationDetails[X]_num").value + "]_identificationTypeCode").value = "3";
+    select_input(document.getElementById("select_root_definitions[" + i.toString() + "]_LvctrEntityDetails_LvctrEntityIdentificationDetails[" + document.getElementById("LvctrEntityIdentificationDetails[X]_num").value + "]_identificationTypeCode"));
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_LvctrEntityIdentificationDetails[" + document.getElementById("LvctrEntityIdentificationDetails[X]_num").value + "]_identificationNumber"].value = "BC1789003";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_LvctrEntityIdentificationDetails[" + document.getElementById("LvctrEntityIdentificationDetails[X]_num").value + "]_identificationJurisdictionCountryCode"].value = "CA";
+    MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_LvctrEntityIdentificationDetails[" + document.getElementById("LvctrEntityIdentificationDetails[X]_num").value + "]_identificationJurisdictionProvinceCode"].value = "BC"; 
+
+	MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_authorizedPersons[" + document.getElementById("authorizedPersons[X]_num").value + "]_$id"].value = "13326";
+	MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_authorizedPersons[" + document.getElementById("authorizedPersons[X]_num").value + "]_givenName"].value = "Joseph";
+	MyInputs["root_definitions[" + i.toString() + "]_LvctrEntityDetails_authorizedPersons[" + document.getElementById("authorizedPersons[X]_num").value + "]_surname"].value = "Mah";
+  }
 }
 
-function test_Person1(id)
+function test_transactions(i, _ref, Identif, _date, loc_Ref, _thresholdIndicator)
 {
-   MyInputs["root_definitions[1]_LvctrPersonDetails_$id"].value = id;
-   MyInputs["root_definitions[1]_LvctrPersonDetails_givenName"].value = "Peter";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_surname"].value = "Pan";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_telephoneNumber"].value = "6479871234";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_birthDate"].value = "1970-01-14";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_residenceCountryCode"].value = "CA";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_occupation"].value = "Developer";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_employerName"].value = "ABC";
-   
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_unitNumber"].value = "301";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_buildingNumber"].value = "12";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_streetAddress"].value = "Front St";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_city"].value = "Toronto";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_countryCode"].value = "CA";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_provinceCode"].value = "ON";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress_postalCode"].value = "M4J2P5";     
-   
-   //MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationTypeCode"].value = "1";
-   document.getElementById("select_root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationTypeCode").value = "4";
-   select_input(document.getElementById("select_root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationTypeCode"));
-   MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationNumber"].value = "P45532-49123-75557";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationJurisdictionCountryCode"].value = "CA";
-   MyInputs["root_definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]_identificationJurisdictionProvinceCode"].value = "ON";   
+   if(_thresholdIndicator){MyInputs["root_transactions[" + i.toString() + "]_details_thresholdIndicator"].click();}   
+   MyInputs["root_transactions[" + i.toString() + "]_details_locationReference"].value = loc_Ref;
+   MyInputs["root_transactions[" + i.toString() + "]_details_transactionReference"].value = _ref;   
+   MyInputs["root_transactions[" + i.toString() + "]_details_transactionDateTime"].value = _date;
+   document.getElementById("select_root_transactions[" + i.toString() + "]_details_transactionMethodTypeCode").value = "8";
+   select_input(document.getElementById("select_root_transactions[" + i.toString() + "]_details_transactionMethodTypeCode"));   
+   MyInputs["root_transactions[" + i.toString() + "]_details_transactionIdentifiers[" + i.toString() + "]_item"].value = Identif;
 }
 
-function test_transactions()
+
+function test_transaction_startingActions(i,vCurAmount,vCur,exRate,vAddress,vtext)
+{
+   var n=0;
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_virtualCurrencyAmount"].value = vCurAmount;
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_virtualCurrencyTypeCode"].value = vCur;
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_canadianExchangeRate"].value = exRate;
+   if(vAddress.indexOf("|")>-1)
+   {
+      var i2 = parseInt(i);
+	  arr_vAddress = vAddress.split("|");
+	  for(n=0;n<arr_vAddress.length;n++)
+	  {
+	     MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_sendingVirtualCurrencyAddresses[" + i2.toString() + "]_item"].value = arr_vAddress[n];
+		 i2++;
+	     if(n<arr_vAddress.length-1)
+		 {
+		    document.getElementById("root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_sendingVirtualCurrencyAddresses[X]_add").click();
+		 }
+	  }
+   }
+   else
+   {
+      MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_sendingVirtualCurrencyAddresses[" + i.toString() + "]_item"].value = vAddress;
+   }
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_obtained"].value = vtext;      
+}
+
+function test_transaction_conductors(i,id,_uname,_email,_date)
+{      
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_conductorIndicator"].click();      
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_clientIndicator"].click();
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_clientNumber"].value = id;   
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_username"].value = _uname;   
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_email"].value = _email;
+   document.getElementById("select_root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_deviceTypeCode").value = "4";
+   select_input(document.getElementById("select_root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_deviceTypeCode"));      
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_deviceTypeOther"].value = "unknown";
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details_requestDateTime"].value = _date;
+   MyInputs["root_transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_subject_$ref"].value = id;
+}
+
+function test_transaction_completingActions(i,vCurAmount,vCur,id,vAddress)
+{   
+   document.getElementById("select_root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_dispositionTypeCode").value = "17";
+   select_input(document.getElementById("select_root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_dispositionTypeCode"));   
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_dispositionTypeOther"].value = "";
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_virtualCurrencyAmount"].value = vCurAmount;
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_virtualCurrencyTypeCode"].value = vCur;
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_referenceNumber"].value = id;
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_receivingVirtualCurrencyAddresses[" + i.toString() + "]_item"].value = vAddress;   
+}
+
+function test_transaction_beneficiaries(i, _ref, uid, bi, _uname, _email)
+{
+   if(i==bi)
+   {
+      document.getElementById("root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_beneficiaryIndicator").click();
+   }
+   else
+   {
+      document.getElementById("root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[X]_add").click();
+   }   
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + bi.toString() + "]_details_clientNumber"].value = uid;
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + bi.toString() + "]_details_username"].value = _uname;
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + bi.toString() + "]_details_email"].value = _email;
+   MyInputs["root_transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + bi.toString() + "]_subject_$ref"].value = _ref;      
+}
+
+function test_transactions_OLD()
 {
    MyInputs["root_transactions[0]_details_locationReference"].value = "1";
    MyInputs["root_transactions[0]_details_thresholdIndicator"].click();      
@@ -211,7 +619,7 @@ function test_transactions()
    MyInputs["root_transactions[0]_details_transactionPurpose"].value = "Deposit to VC wallet";      
 }
 
-function test_transaction_startingActions()
+function test_transaction_startingActions_OLD()
 {
    MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyAmount"].value = "7.82771671";
    MyInputs["root_transactions[0]_startingActions[0]_details_virtualCurrencyTypeCode"].value = "ETH";
@@ -220,7 +628,7 @@ function test_transaction_startingActions()
    MyInputs["root_transactions[0]_startingActions[0]_details_obtained"].value = "From external unname wallet";      
 }
 
-function test_transaction_conductors(id)
+function test_transaction_conductors_OLD(id)
 {      
    MyInputs["root_transactions[0]_startingActions[0]_details_conductorIndicator"].click();      
    MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_details_clientIndicator"].click();
@@ -237,29 +645,26 @@ function test_transaction_conductors(id)
    MyInputs["root_transactions[0]_startingActions[0]_conductors[0]_subject_$ref"].value = id;
 }
 
-function test_transaction_completingActions()
-{
-   
-   //MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeCode"].value = 11;
-   document.getElementById("select_root_transactions[0]_completingActions[0]_details_dispositionTypeCode").value = "11";
+function test_transaction_completingActions_OLD()
+{   
+   document.getElementById("select_root_transactions[0]_completingActions[0]_details_dispositionTypeCode").value = "17";
    select_input(document.getElementById("select_root_transactions[0]_completingActions[0]_details_dispositionTypeCode"));   
-   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeOther"].value = "OTHER";
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value ="2021-04-20";   
+   MyInputs["root_transactions[0]_completingActions[0]_details_dispositionTypeOther"].value = "";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountOpenDate"].value ="2021-04-20";   
    MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyAmount"].value = "7.82771671";
    MyInputs["root_transactions[0]_completingActions[0]_details_virtualCurrencyTypeCode"].value = "ETH";
    MyInputs["root_transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]_item"].value = "0x12e692ba9d86a622931bd0ebadca34d693f5d319";
    
-   MyInputs["root_transactions[0]_completingActions[0]_details_canadianEquivalentAmount"].value = "30499";
-   //MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeCode"].value = 4;
-   document.getElementById("select_root_transactions[0]_completingActions[0]_details_accountTypeCode").value = "4";
-   select_input(document.getElementById("select_root_transactions[0]_completingActions[0]_details_accountTypeCode"));   
+   //MyInputs["root_transactions[0]_completingActions[0]_details_canadianEquivalentAmount"].value = "30499";
+   //document.getElementById("select_root_transactions[0]_completingActions[0]_details_accountTypeCode").value = "4";
+   //select_input(document.getElementById("select_root_transactions[0]_completingActions[0]_details_accountTypeCode"));   
 
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeOther"].value = "OTHER";   
-   MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "CAD";
-   MyInputs["root_transactions[0]_completingActions[0]_details_currencyTypeCode"].value = "CAD";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountTypeOther"].value = "OTHER";   
+   //MyInputs["root_transactions[0]_completingActions[0]_details_accountCurrencyTypeCode"].value = "CAD";
+   //MyInputs["root_transactions[0]_completingActions[0]_details_currencyTypeCode"].value = "CAD";
 }
 
-function test_transaction_beneficiaries(id)
+function test_transaction_beneficiaries_OLD(id)
 {
    MyInputs["root_transactions[0]_completingActions[0]_details_beneficiaryIndicator"].click();
    MyInputs["root_transactions[0]_completingActions[0]_beneficiaries[0]_details_clientNumber"].value = id;
@@ -292,7 +697,7 @@ function button_ALL_add(o)
   //MyClone(str+"[X]_array_list",str+"[X]",ART);
   parent = o.id.replace("_add","_array_list");
   MyClone(parent,str+"[X]",ART);
-  document.getElementById(str+"[X]_num").value = num.toString();  
+  document.getElementById(str+"[X]_num").value = num.toString();    
 }
 
 function select_ALL_select(o)
@@ -322,6 +727,15 @@ function select_ALL_select(o)
 	 ch_old+=val+"_";
      MyClone(parent,ch_old,ART);
   }  
+
+  /*
+  if(o.value.indexOf("LvctrEntityDetails")>-1)
+  {
+    console.log(parent);
+	console.log(ch_old);
+	console.log(ART);
+  }
+  */
 }
 
 function MyClone(parent,child_old,ART)
@@ -329,7 +743,7 @@ function MyClone(parent,child_old,ART)
   child_new = ART[ART.length-1];
   
   /*
-  if(parent.indexOf("LvctrPersonIdentificationDetails")>-1)
+  if(parent.indexOf("LvctrEntityIdentificationDetails")>-1)
   {
   console.log("parent="+parent);
   console.log("child_old="+child_old);
@@ -382,7 +796,7 @@ function MyRanameIdByTagName(vobj, TagName,child_old,child_new)
 
       var s_id2 = s_id.replace(child_old,child_new);	  
       /*
-	  if(child_old.indexOf("LvctrPersonIdentificationDetails")>-1)	
+	  if(child_old.indexOf("LvctrEntityIdentificationDetails")>-1)	
 	  {
 		 console.log("child_old="+child_old);
 		 console.log("child_new="+child_new);	  
@@ -800,19 +1214,23 @@ function GetBlock(key, my_type)
   {  
      tmpArr = rArrayRoot[i];	 
 	 str = tmpArr[tmpArr.length-1];
-	 if(my_type)
+	 var val_res = tmpArr[tmpArr.length-3];
+	 if(val_res!="")
 	 {
-	    if(str==key)
-		{
-		   BlockArr.push(GetElementAsJsonString(rArrayRoot[i]));
-		}
-	 }
-	 else 
-	 {
-	    if(str==key)
-		{
-		   BlockArr.push(GetElementAsString(rArrayRoot[i]));
-		}
+	    if(my_type)
+	    {
+	       if(str==key)
+		   {
+		      BlockArr.push(GetElementAsJsonString(rArrayRoot[i]));
+		   }
+	    }
+	    else 
+	    {
+	       if(str==key)
+		   {
+		      BlockArr.push(GetElementAsString(rArrayRoot[i]));
+		   }
+	    }
 	 }
   }
   for(var n=0;n<BlockArr.length;n++)
@@ -826,33 +1244,35 @@ function GetBlock(key, my_type)
   }
   return tmp;
 }
-/*
-0: "definitions[0]_LvctrPersonDetails"
-1: "definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress"
-2: "definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]"
 
-0: "transactions[0]"
-1: "transactions[0]_details"
-2: "transactions[0]_details_transactionIdentifiers[0]"
-3: "transactions[0]_startingActions[0]"
-4: "transactions[0]_startingActions[0]_details"
-5: "transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]"
-6: "transactions[0]_startingActions[0]_conductors[0]"
-7: "transactions[0]_startingActions[0]_conductors[0]_details"
-8: "transactions[0]_startingActions[0]_conductors[0]_subject"
-9: "transactions[0]_completingActions[0]"
-10: "transactions[0]_completingActions[0]_details"
-11: "transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]"
-12: "transactions[0]_completingActions[0]_beneficiaries[0]"
-13: "transactions[0]_completingActions[0]_beneficiaries[0]_details"
-14: "transactions[0]_completingActions[0]_beneficiaries[0]_subject"
-*/
 function MyGetJSON()
 {  
+  var Multi_Trans = [];
+  var Multi_Def = [];
   rArrayRoot = GetArrayRoot();
-  rArr = GetRelationsByKey(rArrayRoot,"transactions[0]");
+
+  for(var x=0;x<100;x++)
+  {
+     var xtmp = GetRelationsByKey(rArrayRoot,"transactions[" + x.toString() + "]");
+	 if(xtmp.length>0){Multi_Trans.push(xtmp);}
+	 else{x=100;}
+  } 
+  
+  for(var y=0;y<100;y++)
+  {
+     var ytmp = GetRelationsByKey(rArrayRoot,"definitions[" + y.toString() + "]");
+	 if(ytmp.length>0){Multi_Def.push(ytmp);}
+	 else{y=100;}
+  } 
+  
+  
   var dArr0 = GetRelationsByKey(rArrayRoot,"definitions[0]");
   var dArr1 = GetRelationsByKey(rArrayRoot,"definitions[1]");
+  
+  
+  console.log(Multi_Trans);
+  console.log(Multi_Def);
+  
   r_tmp = "";
   r_tmp += "{" + BR;
   r_tmp += GetBlock("", true) + EOL + BR;
@@ -860,317 +1280,279 @@ function MyGetJSON()
   r_tmp += GetBlock("details", true) + BR;
   r_tmp += "}" + EOL + BR;
   
-  r_tmp += "\"definitions\": [" + BR;      
-  r_tmp += "{" + BR;
-  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails", true) + EOL + BR;
-  r_tmp += "\"address\": {" + BR;
-  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
-  r_tmp += "}" + EOL + BR;
-  r_tmp += "\"identifications\": [{" + BR;
-  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]", true) + BR;
-  r_tmp += "}]" + BR;
-  r_tmp += "}";
-  if(ArrExists(dArr1, "definitions[1]_LvctrPersonDetails"))
+  /////////////////////////////////////////////
+  
+  r_tmp += "\"definitions\": [" + BR;  
+  
+  /*
+  0: "definitions[0]_LvctrPersonDetails"
+  1: "definitions[0]_LvctrPersonDetails_address_LvctrUnstructuredAddress"
+  2: "definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]"
+
+  0: "definitions[1]_LvctrPersonDetails"
+  1: "definitions[1]_LvctrPersonDetails_address_LvctrUnstructuredAddress"
+  2: "definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]"
+
+  0: "definitions[2]_LvctrEntityDetails"
+  1: "definitions[2]_LvctrEntityDetails_address_LvctrUnstructuredAddress"
+  2: "definitions[2]_LvctrEntityDetails_LvctrEntityIdentificationDetails[0]"
+  3: "definitions[2]_LvctrEntityDetails_authorizedPersons[0]"
+  */
+  
+  //GetArrInd
+  for(var n=0;n<Multi_Def.length;n++)  
   {
-     r_tmp += EOL + BR;
-	 r_tmp += "{" + BR;
-     r_tmp += GetBlock("definitions[1]_LvctrPersonDetails", true) + EOL + BR;
-     r_tmp += "\"address\": {" + BR;
-     r_tmp += GetBlock("definitions[1]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
-     r_tmp += "}" + EOL + BR;
-     r_tmp += "\"identifications\": [{" + BR;
-     r_tmp += GetBlock("definitions[1]_LvctrPersonDetails_LvctrPersonIdentificationDetails[1]", true) + BR;
-     r_tmp += "}]" + BR;
-     r_tmp += "}";
+     dArr = Multi_Def[n];
+	 if(dArr[0].indexOf("LvctrPersonDetails")>-1)
+	 {	 
+        r_tmp += "{" + BR;
+        r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrPersonDetails", true) + EOL + BR;
+        r_tmp += "\"address\": {" + BR;
+        if(ArrExists(dArr, "definitions[" + n.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress"))
+        {
+           r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
+        }
+        if(ArrExists(dArr, "definitions[" + n.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress"))
+        {
+           r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrPersonDetails_address_LvctrUnstructuredAddress", true) + BR;
+        }  
+        r_tmp += "}" + EOL + BR;
+        r_tmp += "\"identifications\": [{" + BR;
+        r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrPersonDetails_LvctrPersonIdentificationDetails[" + n.toString() + "]", true) + BR;
+        r_tmp += "}]" + BR;
+        r_tmp += "}";  
+	 }
+	 if(dArr[0].indexOf("LvctrEntityDetails")>-1)
+	 {	 
+        r_tmp += "{" + BR;
+        r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrEntityDetails", true) + EOL + BR;
+        r_tmp += "\"address\": {" + BR;
+        if(ArrExists(dArr, "definitions[" + n.toString() + "]_LvctrEntityDetails_address_LvctrStructuredAddress"))
+        {
+           r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrEntityDetails_address_LvctrStructuredAddress", true) + BR;
+        }
+        if(ArrExists(dArr, "definitions[" + n.toString() + "]_LvctrEntityDetails_address_LvctrUnstructuredAddress"))
+        {
+           r_tmp += GetBlock("definitions[" + n.toString() + "]_LvctrEntityDetails_address_LvctrUnstructuredAddress", true) + BR;
+        }  
+        r_tmp += "}" + EOL + BR;
+        r_tmp += "\"identifications\": [{" + BR;		
+		r_tmp += GetBlock(dArr[GetArrInd2(dArr,"definitions[" + n.toString() + "]_LvctrEntityDetails_LvctrEntityIdentificationDetails")], true) + BR;
+        //r_tmp += "}]" + BR;
+		r_tmp += "}]" + EOL + BR;
+
+        r_tmp += "\"authorizedPersons\": [{" + BR;		
+		r_tmp += GetBlock(dArr[GetArrInd2(dArr,"definitions[" + n.toString() + "]_LvctrEntityDetails_authorizedPersons")], true) + BR;
+        r_tmp += "}]" + BR;
+
+
+		
+        r_tmp += "}";  
+	 }
+	 if(n<Multi_Def.length-1)
+     {
+        r_tmp += EOL + BR;
+     }
   }
   r_tmp += BR;
   r_tmp += "]" + EOL + BR;
   
-  r_tmp += "\"transactions\": [" + BR;      
-  r_tmp += "{" + BR;
-  r_tmp += GetBlock("transactions[0]", true) + "," + BR;		  
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("transactions[0]_details", true) + EOL + BR;
-  r_tmp += "\"transactionIdentifiers\": [" + GetBlock("transactions[0]_details_transactionIdentifiers[0]", false) + "]" + BR;
-  r_tmp += "}" + EOL + BR;
-
-  r_tmp += "\"startingActions\": [" + BR;      
-  r_tmp += "{" + BR;  
-  r_tmp += GetBlock("transactions[0]_startingActions[0]", true) + EOL + BR;		  
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("transactions[0]_startingActions[0]_details", true) + EOL + BR;
-  r_tmp += "\"sendingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]", false) + "]" + BR;
-  r_tmp += "}" + EOL + BR;
-
-  if(ArrExists(rArr, "transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]"))
-  {
-     r_tmp += "\"sourcesOfVirtualCurrency\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]_details", true) + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"sourcesOfVirtualCurrency\": []";
-  }
-  r_tmp += EOL + BR;  
-  if(ArrExists(rArr, "transactions[0]_startingActions[0]_conductors[0]"))
-  {
-     r_tmp += "\"conductors\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]_details", true) + BR;	 
-     r_tmp += "}" + EOL + BR;
-	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_startingActions[0]_conductors[0]_subject", true) + "}" + BR; 
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"conductors\": []";
-  }
-  r_tmp += BR; 
-  //r_tmp += "]" + EOL + BR;	
-  //r_tmp += "]" + BR;	
-
-  r_tmp += "}" + BR;
-  r_tmp += "]," + BR;
-
-  r_tmp += "\"completingActions\": [" + BR;      
-  r_tmp += "{" + BR;  
-  r_tmp += GetBlock("transactions[0]_completingActions[0]", true) + EOL + BR;  
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("transactions[0]_completingActions[0]_details", true) + EOL + BR;
-  r_tmp += "\"receivingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]", false) + "]" + BR;  
-  //r_tmp += "}" + BR;
-  r_tmp += "}" + EOL + BR;
- 
-
-  if(ArrExists(rArr, "transactions[0]_completingActions[0]_accountHolders[0]"))
-  {
-     r_tmp += "\"accountHolders\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]_details", true) + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"accountHolders\": []";
-  }
-  r_tmp += EOL + BR;    
-  if(ArrExists(rArr, "transactions[0]_completingActions[0]_involvements[0]"))
-  {
-     r_tmp += "\"involvements\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]_details", true) + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"involvements\": []";
-  }
-  r_tmp += EOL + BR;
-
-  if(ArrExists(rArr, "transactions[0]_completingActions[0]_beneficiaries[0]"))
-  {
-     r_tmp += "\"beneficiaries\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_details", true) + BR;
-     r_tmp += "}" + EOL + BR;
-	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_subject", true) + "}" + BR; 
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"beneficiaries\": []";
-  }
-  r_tmp += BR; 
-
-  
-  
-  r_tmp += "}" + BR;
-  r_tmp += "]" + BR;
-  
-  r_tmp += "}" + BR;
-  r_tmp += "]" + BR;
-    
-  r_tmp += "}" + BR;
-
-  console.log(rArrayRoot);
-  console.log(rArr);
-  console.log(dArr);
-  
-  return r_tmp;
-}
-
-function MyGetJSON_OLD()
-{  
-  rArrayRoot = GetArrayRoot();
-  rArr = GetRelationsByKey(rArrayRoot,"transactions[0]");
-  dArr = GetRelationsByKey(rArrayRoot,"definitions[0]");
-  r_tmp = "";
-  r_tmp += "{" + BR;
-  r_tmp += GetBlock("", true) + EOL + BR;
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("details", true) + BR;
-  r_tmp += "}" + EOL + BR;
-  
-  r_tmp += "\"definitions\": [" + BR;      
-  r_tmp += "{" + BR;
-  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails", true) + EOL + BR;
-  r_tmp += "\"address\": {" + BR;
-  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_address_LvctrStructuredAddress", true) + BR;
-  r_tmp += "}" + EOL + BR;
-  r_tmp += "\"identifications\": [{" + BR;
-  r_tmp += GetBlock("definitions[0]_LvctrPersonDetails_LvctrPersonIdentificationDetails[0]", true) + BR;
-  r_tmp += "}]" + BR;
-  r_tmp += "}" + BR;
-  r_tmp += "]" + EOL + BR;
+  //////////////////////////////////////////////////////
   
   r_tmp += "\"transactions\": [" + BR;      
   r_tmp += "{" + BR;
-  r_tmp += GetBlock("transactions[0]", true) + "," + BR;		  
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("transactions[0]_details", true) + EOL + BR;
-  r_tmp += "\"transactionIdentifiers\": [" + GetBlock("transactions[0]_details_transactionIdentifiers[0]", false) + "]" + BR;
-  r_tmp += "}" + EOL + BR;
-
-  r_tmp += "\"startingActions\": [" + BR;      
-  r_tmp += "{" + BR;  
-  r_tmp += GetBlock("transactions[0]_startingActions[0]", true) + EOL + BR;		  
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("transactions[0]_startingActions[0]_details", true) + EOL + BR;
-  r_tmp += "\"sendingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]", false) + "]" + BR;
-  r_tmp += "}" + EOL + BR;
-
-  if(ArrExists(rArr, "transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]"))
-  {
-     r_tmp += "\"sourcesOfVirtualCurrency\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_sourcesOfVirtualCurrency[0]_details", true) + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"sourcesOfVirtualCurrency\": []";
-  }
-  r_tmp += EOL + BR;  
-  if(ArrExists(rArr, "transactions[0]_startingActions[0]_conductors[0]"))
-  {
-     r_tmp += "\"conductors\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_startingActions[0]_conductors[0]_details", true) + BR;	 
-     r_tmp += "}" + EOL + BR;
-	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_startingActions[0]_conductors[0]_subject", true) + "}" + BR; 
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"conductors\": []";
-  }
-  r_tmp += BR; 
-  //r_tmp += "]" + EOL + BR;	
-  //r_tmp += "]" + BR;	
-
-  r_tmp += "}" + BR;
-  r_tmp += "]," + BR;
-
-  r_tmp += "\"completingActions\": [" + BR;      
-  r_tmp += "{" + BR;  
-  r_tmp += GetBlock("transactions[0]_completingActions[0]", true) + EOL + BR;  
-  r_tmp += "\"details\": {" + BR;
-  r_tmp += GetBlock("transactions[0]_completingActions[0]_details", true) + EOL + BR;
-  r_tmp += "\"receivingVirtualCurrencyAddresses\": [" + GetBlock("transactions[0]_completingActions[0]_details_receivingVirtualCurrencyAddresses[0]", false) + "]" + BR;  
-  //r_tmp += "}" + BR;
-  r_tmp += "}" + EOL + BR;
- 
-
-  if(ArrExists(rArr, "transactions[0]_completingActions[0]_accountHolders[0]"))
-  {
-     r_tmp += "\"accountHolders\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_accountHolders[0]_details", true) + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"accountHolders\": []";
-  }
-  r_tmp += EOL + BR;    
-  if(ArrExists(rArr, "transactions[0]_completingActions[0]_involvements[0]"))
-  {
-     r_tmp += "\"involvements\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_involvements[0]_details", true) + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"involvements\": []";
-  }
-  r_tmp += EOL + BR;
-
-  if(ArrExists(rArr, "transactions[0]_completingActions[0]_beneficiaries[0]"))
-  {
-     r_tmp += "\"beneficiaries\": [" + BR;      
-     r_tmp += "{" + BR;  
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]", true) + EOL + BR;		  
-     r_tmp += "\"details\": {" + BR;
-     r_tmp += GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_details", true) + BR;
-     r_tmp += "}" + EOL + BR;
-	 r_tmp += "\"subject\": {" + GetBlock("transactions[0]_completingActions[0]_beneficiaries[0]_subject", true) + "}" + BR; 
-     r_tmp += "}" + BR;
-     r_tmp += "]";
-  }
-  else
-  {
-     r_tmp += "\"beneficiaries\": []";
-  }
-  r_tmp += BR; 
-
-    
-  r_tmp += "}" + BR;
-  r_tmp += "]" + BR;
   
-  r_tmp += "}" + BR;
+  for(var i=0;i<Multi_Trans.length;i++)
+  {
+     rArr = Multi_Trans[i]
+     /////////////////////////////////////////////////////////////////////    
+     r_tmp += GetBlock("transactions[" + i.toString() + "]", true) + "," + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[" + i.toString() + "]_details", true) + EOL + BR;
+     r_tmp += "\"transactionIdentifiers\": [" + GetBlock("transactions[" + i.toString() + "]_details_transactionIdentifiers[" + i.toString() + "]", false) + "]" + BR;
+     r_tmp += "}" + EOL + BR;
+
+     r_tmp += "\"startingActions\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]", true) + EOL + BR;		  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details", true) + EOL + BR;
+     
+	 /*
+	 "transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[0]"
+     "transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[1]"
+     "transactions[0]_startingActions[0]_details_sendingVirtualCurrencyAddresses[2]"
+	 */
+	 var SVA = [];
+	 for(var z=0;z<20;z++)
+     {
+	   if(ArrExists(rArr, "transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_sendingVirtualCurrencyAddresses[" + z.toString() + "]"))
+	   {
+	      SVA.push("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_sendingVirtualCurrencyAddresses[" + z.toString() + "]");
+	   }
+     } 
+
+	 
+	 r_tmp += "\"sendingVirtualCurrencyAddresses\": [";
+	 for(var z=0;z<SVA.length;z++)
+	 {
+	   //var df_tmp = GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_details_sendingVirtualCurrencyAddresses[" + z.toString() + "]", false);
+	   //if(df_tmp != ""){r_tmp += df_tmp}
+       r_tmp += GetBlock(SVA[z], false);
+	   if(z<SVA.length-1)
+       {
+          r_tmp += EOL + BR;
+       }		
+	 }
+	 r_tmp += "]" + BR;     
+	 r_tmp += "}" + EOL + BR;
+
+     if(ArrExists(rArr, "transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_sourcesOfVirtualCurrency[" + i.toString() + "]"))
+     {
+        r_tmp += "\"sourcesOfVirtualCurrency\": [" + BR;      
+        r_tmp += "{" + BR;  
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_sourcesOfVirtualCurrency[" + i.toString() + "]", true) + EOL + BR;		  
+        r_tmp += "\"details\": {" + BR;
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_sourcesOfVirtualCurrency[" + i.toString() + "]_details", true) + BR;
+        r_tmp += "}" + BR;
+        r_tmp += "}" + BR;
+        r_tmp += "]";
+     }
+     else
+     {
+        r_tmp += "\"sourcesOfVirtualCurrency\": []";
+     }
+     r_tmp += EOL + BR;  
+     if(ArrExists(rArr, "transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]"))
+     {
+        r_tmp += "\"conductors\": [" + BR;      
+        r_tmp += "{" + BR;  
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]", true) + EOL + BR;		  
+        r_tmp += "\"details\": {" + BR;
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_details", true) + BR;	 
+        r_tmp += "}" + EOL + BR;
+   	 r_tmp += "\"subject\": {" + GetBlock("transactions[" + i.toString() + "]_startingActions[" + i.toString() + "]_conductors[" + i.toString() + "]_subject", true) + "}" + BR; 
+        r_tmp += "}" + BR;
+        r_tmp += "]";
+     }
+     else
+     {
+        r_tmp += "\"conductors\": []";
+     }
+     r_tmp += BR; 
+     //r_tmp += "]" + EOL + BR;	
+     //r_tmp += "]" + BR;	
+
+     r_tmp += "}" + BR;
+     r_tmp += "]," + BR;
+
+     r_tmp += "\"completingActions\": [" + BR;      
+     r_tmp += "{" + BR;  
+     r_tmp += GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]", true) + EOL + BR;  
+     r_tmp += "\"details\": {" + BR;
+     r_tmp += GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details", true) + EOL + BR;
+     r_tmp += "\"receivingVirtualCurrencyAddresses\": [" + GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_details_receivingVirtualCurrencyAddresses[" + i.toString() + "]", false) + "]" + BR;  
+     //r_tmp += "}" + BR;
+     r_tmp += "}" + EOL + BR;
+    
+
+     if(ArrExists(rArr, "transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_accountHolders[" + i.toString() + "]"))
+     {
+        r_tmp += "\"accountHolders\": [" + BR;      
+        r_tmp += "{" + BR;  
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_accountHolders[" + i.toString() + "]", true) + EOL + BR;		  
+        r_tmp += "\"details\": {" + BR;
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_accountHolders[" + i.toString() + "]_details", true) + BR;
+        r_tmp += "}" + BR;
+        r_tmp += "}" + BR;
+        r_tmp += "]";
+     }
+     else
+     {
+        r_tmp += "\"accountHolders\": []";
+     }
+     r_tmp += EOL + BR;    
+     if(ArrExists(rArr, "transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_involvements[" + i.toString() + "]"))
+     {
+        r_tmp += "\"involvements\": [" + BR;      
+        r_tmp += "{" + BR;  
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_involvements[" + i.toString() + "]", true) + EOL + BR;		  
+        r_tmp += "\"details\": {" + BR;
+        r_tmp += GetBlock("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_involvements[" + i.toString() + "]_details", true) + BR;
+        r_tmp += "}" + BR;
+        r_tmp += "}" + BR;
+        r_tmp += "]";
+     }
+     else
+     {
+        r_tmp += "\"involvements\": []";
+     }
+     r_tmp += EOL + BR;
+
+     /*
+ "transactions[0]_completingActions[0]_beneficiaries[0]"
+ "transactions[0]_completingActions[0]_beneficiaries[0]_details"
+ "transactions[0]_completingActions[0]_beneficiaries[0]_subject"
+ "transactions[0]_completingActions[0]_beneficiaries[1]"
+ "transactions[0]_completingActions[0]_beneficiaries[1]_details"
+ "transactions[0]_completingActions[0]_beneficiaries[1]_subject"
+ "transactions[0]_completingActions[0]_beneficiaries[2]"
+ "transactions[0]_completingActions[0]_beneficiaries[2]_details"
+ "transactions[0]_completingActions[0]_beneficiaries[2]_subject"
+	 */
+	 
+     var BEN = [];
+	 for(var z=0;z<20;z++)
+     {
+	   if(ArrExists(rArr, "transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + z.toString() + "]"))
+	   {
+	      BEN.push("transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + z.toString() + "]");
+	   }
+     } 
+	 
+	 //if(ArrExists(rArr, "transactions[" + i.toString() + "]_completingActions[" + i.toString() + "]_beneficiaries[" + i.toString() + "]"))
+	 if(BEN.length>0)
+     {
+        r_tmp += "\"beneficiaries\": [" + BR;      
+        for(var z=0;z<BEN.length;z++)
+		{
+		   r_tmp += "{" + BR;  
+           r_tmp += GetBlock(BEN[z], true) + EOL + BR;		  
+           r_tmp += "\"details\": {" + BR;
+           r_tmp += GetBlock(BEN[z] + "_details", true) + BR;
+           r_tmp += "}" + EOL + BR;
+   	       r_tmp += "\"subject\": {" + GetBlock(BEN[z] + "_subject", true) + "}" + BR; 
+           r_tmp += "}" + BR;
+		   if(z<BEN.length-1)
+           {
+             r_tmp += EOL + BR;
+           }		   
+        }
+		r_tmp += "]";
+     }
+     else
+     {
+        r_tmp += "\"beneficiaries\": []";
+     }
+     r_tmp += BR;   
+     r_tmp += "}" + BR;
+     r_tmp += "]" + BR;
+     
+     r_tmp += "}" + BR;
+     
+     //////////////////////////////////
+     if(i<Multi_Trans.length-1)
+     {
+        r_tmp += EOL + BR;
+        r_tmp += "{" + BR;
+     }
+  }
+  //////////////////////////////////////////////////////////////////
+
+  
   r_tmp += "]" + BR;
     
   r_tmp += "}" + BR;
-
-  console.log(rArrayRoot);
-  console.log(rArr);
-  console.log(dArr);
   
   return r_tmp;
 }
@@ -1296,6 +1678,26 @@ function ArrExists2(arr, str)
   }   
   return false;
 }
+
+function GetArrInd(arr, str)
+{
+  for(var i=0;i<arr.length;i++)
+  {
+	 if(arr[i]==str){ return i;}
+  }   
+  return -1;
+}
+
+function GetArrInd2(arr, str)
+{
+  for(var i=0;i<arr.length;i++)
+  {
+	 var s = arr[i];
+	 if(s.indexOf(str)>-1){ return i;}
+  }   
+  return -1;
+}
+
 function ArrWithoutRecords(arr, str, exact)
 {
   var tt = [];
@@ -1325,7 +1727,7 @@ function GetElementAsJsonString(arr)
 {   
    var tmp="";   
    var MyReturn="";   
-   var val = "";
+   var val = "";   
    if(arr[arr.length-2]=="text"){val = "\"" + arr[arr.length-3] + "\"";}
    else{val = arr[arr.length-3];}
    tmp = "\"" + arr[arr.length-5] + "\"";
@@ -1463,8 +1865,8 @@ function getStringNum(str)
 									    <option value="">Select Option</option>
 										<option value="1">1 - Conductor-Beneficiary: Same Person</option>
 										<option value="2">2 - Conductor-Beneficiary: Different Persons</option>
-										<!--<option value="3">Conductor(Entity+Person)-Beneficiary(Entity+Person): Same Enters</option>
-										<option value="3">Conductor(Entity+Person)-Beneficiary(Entity+Person): Different Enters</option>-->
+										<option value="3">3 - Conductor-MultipleBeneficiary</option>
+										<1--<option value="3">Conductor(Entity+Person)-Beneficiary(Entity+Person): Different Enters</option>-->
 									</select>
 					     </div>
 					 </div>
@@ -1755,7 +2157,7 @@ function getStringNum(str)
 																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeCode" label="virtualCurrencyTypeCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 																	 </div>
                                                                      <div class="form-group field field-string">
-																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_twentyFourHourAggregationTypeCode">virtualCurrencyTypeOther</label>
+																	    <label class="control-label" for="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeOther">virtualCurrencyTypeOther</label>
 																		<input class="form-control" id="root_transactions[X]_startingActions[X]_details_virtualCurrencyTypeOther" label="virtualCurrencyTypeOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 																	 </div>
                                                                      <div class="form-group field field-string">
@@ -2561,14 +2963,14 @@ function getStringNum(str)
 						  <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_registrationJurisdictionProvinceOther" label="registrationJurisdictionProvinceOther" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 					   </div>
                        <div class="form-group field field-array">
-                          <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrEntityIdentificationDetails">
-                             <legend id="root_definitions[X]_LvctrEntityDetails_title">identifications</legend>                    
+                          <fieldset class="field field-array field-array-of-object" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails">
+                             <legend id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails_title">identifications</legend>                    
                              <!--root_definitions[X]_LvctrEntityIdentificationDetails[X]_array_list   root_definitions[X]_LvctrEntityIdentificationDetails[X]-->
-							 <div class="row array-item-list" id="root_definitions[X]_LvctrEntityIdentificationDetails[X]_array_list">
+							 <div class="row array-item-list" id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_array_list">
 							 </div>
                              <div class="row">
                                 <p class="col-xs-3 col-xs-offset-9 text-right array-item-add">
-								<button id="root_definitions[X]_LvctrEntityIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
+								<button id="root_definitions[X]_LvctrEntityDetails_LvctrEntityIdentificationDetails[X]_add" type="button" class="btn btn-info btn-add col-xs-12" aria-label="Add" tabindex="0" onclick="button_ALL_add(this);"><i class="glyphicon glyphicon-plus"></i></button>
 								</p>
                              </div>
                           </fieldset>
@@ -2886,7 +3288,7 @@ function getStringNum(str)
                       </div>
                       <div class="form-group field field-string">
 					     <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode">unstructuredCountryCode</label>
-						 <input class="form-control" id="rroot_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode" label="unstructuredCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						 <input class="form-control" id="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode" label="unstructuredCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 					  </div>
                       <div class="form-group field field-string">
 					     <label class="control-label" for="root_definitions[X]_LvctrPersonDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails">unstructuredAddressDetails</label>
@@ -2948,7 +3350,7 @@ function getStringNum(str)
                       </div>
                       <div class="form-group field field-string">
 					     <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode">unstructuredCountryCode</label>
-						 <input class="form-control" id="rroot_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode" label="unstructuredCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
+						 <input class="form-control" id="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredCountryCode" label="unstructuredCountryCode" placeholder="" type="text" value="" onblur="MyOnBlur(this)">
 					  </div>
                       <div class="form-group field field-string">
 					     <label class="control-label" for="root_definitions[X]_LvctrEntityDetails_address_LvctrUnstructuredAddress_unstructuredAddressDetails">unstructuredAddressDetails</label>
